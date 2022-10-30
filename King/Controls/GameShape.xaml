@@ -5,8 +5,8 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 			 xmlns:local="clr-namespace:King.Controls"
 			 mc:Ignorable="d" 
-             Height="1000"
-			 Width="1200">
+             Height="770.5"
+			 Width="1194">
 	<Image 
         Source="/Resources/TableColor.jpg" 
         Stretch="Fill" />

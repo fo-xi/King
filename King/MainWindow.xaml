@@ -7,9 +7,10 @@
 		xmlns:local="clr-namespace:King"
 		mc:Ignorable="d"
 		Title="MainWindow" 
-		Height="1000" 
+		Height="800" 
 		Width="1200"
-        ResizeMode="CanMinimize">
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen">
     
     <Canvas x:Name="LayoutRoot"
 			Background="#FFFFFFFF"
@@ -24,18 +25,11 @@
 				Canvas.Top="0"/>
 
         <!--  Dealer Deck  -->
-        <TextBlock 
-                Canvas.Right="12"
-				Canvas.Bottom="209"
-				Width="134"
-				Height="20"
-				Style="{StaticResource DefaultLabelText}"
-				Text="Dealer" />
 
         <Controls:DeckShape 
                 x:Name="Dealer"
-				Canvas.Right="10"
-				Canvas.Bottom="10"
+				Canvas.Right="25"
+				Canvas.Top="25"
 				CardSpacerX="1"
 				CardSpacerY="0"
 				MaxCardsSpace="10" />
