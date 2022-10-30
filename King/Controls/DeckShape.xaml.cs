@@ -1,7 +1,6 @@
 ﻿using King.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -24,11 +23,32 @@ namespace King.Controls
 
 		private static List<DeckShape> PlayingDecks = new List<DeckShape>();
 
-		public double CardSpacerX { get; set; }
+		private double cardSpacerX = 0;
+		public double CardSpacerX
+		{
+			get { return cardSpacerX; }
+			set { cardSpacerX = value; }
+		}
 
-		public double CardSpacerY { get; set; }
+		private double cardSpacerY = 0;
+		public double CardSpacerY
+		{
+			get { return cardSpacerY; }
+			set { cardSpacerY = value; }
+		}
 
-		public int MaxCardsSpace { get; set; }
+		private int maxCardsSpace = 0;
+		public int MaxCardsSpace
+		{
+			get
+			{
+				return maxCardsSpace;
+			}
+			set
+			{
+				maxCardsSpace = value;
+			}
+		}
 
 		public double NextCardX { get; set; }
 
