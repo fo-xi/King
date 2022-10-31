@@ -79,7 +79,7 @@ namespace King.Controls
 					//Define the card position in the cards image
 					if (Card.Number <= 10)
 					{
-						x = (Card.Number - 1) % 2;
+						x = (Card.Number - 1 + 0.3) % 2;
 						y = (Card.Number - 1) / 2;
 
 						switch (Card.Suit)
@@ -144,6 +144,7 @@ namespace King.Controls
 					y = 6;
 				}
 
+				//Расположение карт на руках
 				((RectangleGeometry)imgCard.Clip).Rect = 
 					new Rect(x * CardWidthRect + CardOrigX, y * CardHeightRect + CardOrigY,
 					CardWidth, CardHeight);

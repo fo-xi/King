@@ -53,8 +53,8 @@
 
     <Canvas x:Name="LayoutRoot">
         <Canvas x:Name="CardCanvas"
-                Width="144"
-                Height="194"
+                Width="101"
+                Height="137"
                 RenderTransformOrigin="0.5,0.5">
             <Canvas.RenderTransform>
                 <TransformGroup>
@@ -73,7 +73,7 @@
                    MouseLeftButtonUp="ImgCardMouseLeftButtonUp"
                    MouseMove="ImgCardMouseMove"
                    RenderTransformOrigin="0.05,0.08"
-                   Source="/Resources/Cards.JPG"
+                   Source="/Resources/Cards1.JPG"
                    Stretch="None">
                 <Image.RenderTransform>
                     <TransformGroup>
@@ -86,14 +86,14 @@
                 <Image.Clip>
                     <RectangleGeometry RadiusX="8"
                                        RadiusY="8"
-                                       Rect="76,61,144,194" />
+                                       Rect="57,46,101,137" />
                 </Image.Clip>
             </Image>
             <Rectangle x:Name="rectBorder"
                        Canvas.Left="-3"
                        Canvas.Top="-3"
-                       Width="152"
-                       Height="202"
+                       Width="109"
+                       Height="145"
                        Opacity="0.7"
                        RadiusX="8"
                        RadiusY="8"
