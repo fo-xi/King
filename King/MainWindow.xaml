@@ -11,7 +11,7 @@
 		Width="1200"
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
-    
+
     <Canvas x:Name="LayoutRoot"
 			Background="#FFFFFFFF"
             HorizontalAlignment="Stretch" 
@@ -37,17 +37,17 @@
         <!--  Trick Decks  -->
         <Controls:DeckShape 
                 x:Name="Player1Trick"
-				Canvas.Left="371"
-				Canvas.Top="384" />
+				Canvas.Left="415"
+				Canvas.Top="348" />
         <Controls:DeckShape x:Name="Player2Trick"
 							Canvas.Left="521"
 							Canvas.Top="277" />
         <Controls:DeckShape x:Name="Player3Trick"
-							Canvas.Left="671"
-							Canvas.Top="384" />
+							Canvas.Left="627"
+							Canvas.Top="348" />
         <Controls:DeckShape x:Name="Player4Trick"
 							Canvas.Left="521"
-							Canvas.Top="477" />
+							Canvas.Top="419" />
 
         <!--  Player Hand Decks  -->
         <TextBlock Canvas.Left="32"
@@ -62,8 +62,8 @@
 							CardSpacerX="0"
 							CardSpacerY="20"
 							MaxCardsSpace="10" />
-        <TextBlock Canvas.Left="402"
-				   Canvas.Top="225"
+        <TextBlock Canvas.Left="398"
+				   Canvas.Top="173"
 				   Width="134"
 				   Height="20"
 				   Style="{StaticResource DefaultLabelText}"
@@ -76,22 +76,22 @@
 							MaxCardsSpace="10" />
         <TextBlock Canvas.Top="245"
 				   Canvas.Right="25"
-				   Width="134"
+				   Width="90"
 				   Height="20"
 				   Style="{StaticResource DefaultLabelText}"
-				   Text="Player 3" />
+				   Text="Player 3" Canvas.Left="1068" />
         <Controls:DeckShape x:Name="Player3Hand"
 							Canvas.Top="273"
 							Canvas.Right="25"
 							CardSpacerX="0"
 							CardSpacerY="20"
 							MaxCardsSpace="10" />
-        <TextBlock Canvas.Left="286"
+        <TextBlock Canvas.Left="284"
 				   Canvas.Bottom="225"
 				   Width="134"
 				   Height="20"
 				   Style="{StaticResource DefaultLabelText}"
-				   Text="Player 4" />
+				   Text="Player 4" Canvas.Top="580" />
         <Controls:DeckShape x:Name="Player4Hand"
 							Canvas.Left="279"
 							Canvas.Bottom="25"

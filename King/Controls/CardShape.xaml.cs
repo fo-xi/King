@@ -23,13 +23,13 @@ namespace King.Controls
 
 		public const double CardOrigY = 61;
 
-		public const double CardWidth = 72 * 2;
+		public const double CardWidth = 101;
 
-		public const double CardHeight = 97 * 2;
+		public const double CardHeight = 137;
 
-		public const double CardWidthRect = 73 * 2;
+		public const double CardWidthRect = 101;
 
-		public const double CardHeightRect = 98 * 2;
+		public const double CardHeightRect = 137;
 
 		#endregion
 
