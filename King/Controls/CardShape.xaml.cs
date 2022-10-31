@@ -140,8 +140,8 @@ namespace King.Controls
 				else
 				{
 					//Show back of the card
-					x = 8;
-					y = 6;
+					x = 8.22;
+					y = 6.13;
 				}
 
 				//Расположение карт на руках

@@ -91,7 +91,7 @@
 				   Width="134"
 				   Height="20"
 				   Style="{StaticResource DefaultLabelText}"
-				   Text="Player 4" Canvas.Top="580" />
+				   Text="Player 4" Canvas.Top="573" />
         <Controls:DeckShape x:Name="Player4Hand"
 							Canvas.Left="279"
 							Canvas.Bottom="25"
@@ -103,10 +103,10 @@
         <Button x:Name="MainWindow_DealButton"
 				Canvas.Left="10"
 				Canvas.Top="10"
-				Width="150"
-				Height="80"
+				Width="50"
+				Height="20"
 				Click="MainWindow_DealButton_Click"
-				Content="Deal New Hand" />
+				Content="deal" />
 
     </Canvas>
 </Window>
