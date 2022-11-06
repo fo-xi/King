@@ -30,8 +30,14 @@ namespace King.ViewModel
 
         public bool Enabled
         {
-            get { return _enabled; }
-            set { _enabled = value; }
+            get 
+            { 
+                return _enabled; 
+            }
+            set 
+            { 
+                _enabled = value; 
+            }
         }
 
         public GameVM Game

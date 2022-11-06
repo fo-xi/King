@@ -19,17 +19,17 @@ namespace King.Controls
 	{
 		#region Constants
 
-		public const double CardOrigX = 76;
+		public const double CardOrigX = 57;
 
-		public const double CardOrigY = 61;
+		public const double CardOrigY = 45.75;
 
-		public const double CardWidth = 101;
+		public const double CardWidth = 54 * 2;
 
-		public const double CardHeight = 137;
+		public const double CardHeight = 72.75 * 2;
 
-		public const double CardWidthRect = 101;
+		public const double CardWidthRect = 54.75 * 2;
 
-		public const double CardHeightRect = 137;
+		public const double CardHeightRect = 73.5 * 2;
 
 		#endregion
 
@@ -79,58 +79,42 @@ namespace King.Controls
 					//Define the card position in the cards image
 					if (Card.Number <= 10)
 					{
-						x = (Card.Number - 1 + 0.3) % 2;
+						x = (Card.Number - 1) % 2;
 						y = (Card.Number - 1) / 2;
 
 						switch (Card.Suit)
 						{
 							case CardSuit.Spades:
-							{
 								x += 6;
 								break;
-							}
 							case CardSuit.Hearts:
-							{
 								x += 0;
 								break;
-							}
 							case CardSuit.Diamonds:
-							{
 								x += 2;
 								break;
-							}
 							case CardSuit.Clubs:
-							{
 								x += 4;
 								break;
-							}
 						}
 					}
 					else
 					{
-						int number = Card.Number - 11;
+						int number = (Card.Number - 11);
 						switch (Card.Suit)
 						{
 							case CardSuit.Spades:
-							{
 								number += 6;
 								break;
-							}
 							case CardSuit.Hearts:
-							{
 								number += 9;
 								break;
-							}
 							case CardSuit.Diamonds:
-							{
 								number += 3;
 								break;
-							}
 							case CardSuit.Clubs:
-							{
 								number += 0;
 								break;
-							}
 						}
 
 						x = (number % 2) + 8;
@@ -140,14 +124,11 @@ namespace King.Controls
 				else
 				{
 					//Show back of the card
-					x = 8.22;
-					y = 6.13;
+					x = 8;
+					y = 6;
 				}
 
-				//Расположение карт на руках
-				((RectangleGeometry)imgCard.Clip).Rect = 
-					new Rect(x * CardWidthRect + CardOrigX, y * CardHeightRect + CardOrigY,
-					CardWidth, CardHeight);
+				((RectangleGeometry)imgCard.Clip).Rect = new Rect(x * CardWidthRect + CardOrigX, y * CardHeightRect + CardOrigY, CardWidth, CardHeight);
 				foreach (Transform tran in ((TransformGroup)imgCard.RenderTransform).Children)
 				{
 					if (tran.GetType() == typeof(TranslateTransform))
@@ -156,7 +137,6 @@ namespace King.Controls
 						tran.SetValue(TranslateTransform.YProperty, -y * CardHeightRect - CardOrigY);
 					}
 				}
-
 				imgCard.RenderTransformOrigin = new Point(0.05 + (x * 0.1), 0.08 + (y * 0.166666));
 			}
 		}

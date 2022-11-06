@@ -37,25 +37,25 @@
         <!--  Trick Decks  -->
         <Controls:DeckShape 
                 x:Name="Player1Trick"
-				Canvas.Left="415"
-				Canvas.Top="348" />
+				Canvas.Left="408"
+				Canvas.Top="348" Height="146" />
         <Controls:DeckShape x:Name="Player2Trick"
 							Canvas.Left="521"
-							Canvas.Top="277" />
+							Canvas.Top="269" Height="145" />
         <Controls:DeckShape x:Name="Player3Trick"
-							Canvas.Left="627"
-							Canvas.Top="348" />
+							Canvas.Left="634"
+							Canvas.Top="348" Height="145" />
         <Controls:DeckShape x:Name="Player4Trick"
 							Canvas.Left="521"
 							Canvas.Top="419" />
 
         <!--  Player Hand Decks  -->
-        <TextBlock Canvas.Left="32"
-				   Canvas.Top="245"
+        <TextBlock Canvas.Left="25"
+				   Canvas.Top="248"
 				   Width="134"
 				   Height="20"
 				   Style="{StaticResource DefaultLabelText}"
-				   Text="Player 1" />
+				   Text="Player 1" RenderTransformOrigin="0.088,0.287" />
         <Controls:DeckShape x:Name="Player1Hand"
 							Canvas.Left="25"
 							Canvas.Top="273"
@@ -63,7 +63,7 @@
 							CardSpacerY="20"
 							MaxCardsSpace="10" />
         <TextBlock Canvas.Left="398"
-				   Canvas.Top="173"
+				   Canvas.Top="175"
 				   Width="134"
 				   Height="20"
 				   Style="{StaticResource DefaultLabelText}"
@@ -74,24 +74,24 @@
 							CardSpacerX="20"
 							CardSpacerY="0"
 							MaxCardsSpace="10" />
-        <TextBlock Canvas.Top="245"
+        <TextBlock Canvas.Top="248"
 				   Canvas.Right="25"
 				   Width="90"
 				   Height="20"
 				   Style="{StaticResource DefaultLabelText}"
-				   Text="Player 3" Canvas.Left="1068" />
+				   Text="Player 3" Canvas.Left="1061" />
         <Controls:DeckShape x:Name="Player3Hand"
 							Canvas.Top="273"
 							Canvas.Right="25"
 							CardSpacerX="0"
 							CardSpacerY="20"
 							MaxCardsSpace="10" />
-        <TextBlock Canvas.Left="284"
+        <TextBlock Canvas.Left="279"
 				   Canvas.Bottom="225"
 				   Width="134"
 				   Height="20"
 				   Style="{StaticResource DefaultLabelText}"
-				   Text="Player 4" Canvas.Top="573" />
+				   Text="Player 4" Canvas.Top="568" RenderTransformOrigin="0.445,0.523" />
         <Controls:DeckShape x:Name="Player4Hand"
 							Canvas.Left="279"
 							Canvas.Bottom="25"

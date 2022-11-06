@@ -34,7 +34,17 @@ namespace King.ViewModel
 			}
 		}
 
-		public CardSuit Suit { get; set; }
+		public CardSuit Suit
+		{
+			get
+			{
+				return _suit;
+			}
+			set
+			{
+				_suit = value;
+			}
+		}
 
 		public DeckVM Deck
 		{
@@ -84,9 +94,29 @@ namespace King.ViewModel
 			}
 		}
 
-		public bool Enabled { get; set; }
+		public bool Enabled
+		{
+			get
+			{
+				return _enabled;
+			}
+			set
+			{
+				_enabled = value;
+			}
+		}
 
-		public bool IsDragable { get; set; }
+		public bool IsDragable
+        {
+			get 
+			{ 
+				return _isDragable; 
+			}
+			set 
+			{
+				_isDragable = value; 
+			}
+		}
 
 		public CardColor Color
 		{
