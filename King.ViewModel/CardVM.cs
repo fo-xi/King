@@ -3,7 +3,7 @@ using System;
 
 namespace King.ViewModel
 {
-	public class CardVM : IComparable<CardVM>
+	public class CardVM
 	{
 
 		#region Fields
@@ -54,23 +54,13 @@ namespace King.ViewModel
 			}
 			set
 			{
-				if (_deck.Game != value.Game)
-				{
-					throw new InvalidOperationException("The new deck must be in the same" +
-						"game like the old deck of the card.");
-				}
-
 				if (_deck != value)
 				{
 					_deck.Cards.Remove(this);
 					_deck = value;
 					_deck.Cards.Add(this);
-
-					if (DeckChanged != null)
-					{
-						DeckChanged(this, null);
-					}
-				}
+                    DeckChanged?.Invoke(this, null);
+                }
 			}
 		}
 
@@ -85,12 +75,8 @@ namespace King.ViewModel
 				if (_visible != value)
 				{
 					_visible = value;
-
-					if (VisibleChanged != null)
-					{
-						VisibleChanged(this, null);
-					}
-				}
+                    VisibleChanged?.Invoke(this, null);
+                }
 			}
 		}
 
@@ -215,82 +201,30 @@ namespace King.ViewModel
 
 		public CardVM(CardRank rank, CardSuit suit, DeckVM deck)
 		{
-			this._rank = rank;
-			this._suit = suit;
-			this._deck = deck;
-			this._deck.Game.Cards.Add(this);
+			_rank = rank;
+			_suit = suit;
+			_deck = deck;
+			_deck.Game.Cards.Add(this);
 		}
 
 		public CardVM(int number, CardSuit suit, DeckVM deck)
 		{
-			this._rank = (CardRank)number;
-			this._suit = suit;
-			this._deck = deck;
-			this._deck.Game.Cards.Add(this);
+			_rank = (CardRank)number;
+			_suit = suit;
+			_deck = deck;
+			_deck.Game.Cards.Add(this);
 		}
 
 		#endregion
 
 		#region Methods
 
-		public int CompareTo(CardVM other)
-		{
-			int value1 = this.Number;
-			int value2 = other.Number;
-
-			if (IsAceBiggest)
-			{
-				if (value1 == 1)
-				{
-					value1 = 14;
-				}
-
-				if (value2 == 1)
-				{
-					value2 = 14;
-				}
-			}
-
-			if (value1 > value2)
-			{
-				return 1;
-			}
-			else if (value1 < value2)
-			{
-				return -1;
-			}
-			else
-			{
-				return 0;
-			}
-		}
-
-		public void MoveToFirst()
-		{
-			MoveToIndex(0);
-		}
-
-		public void MoveToLast()
-		{
-			MoveToIndex(Deck.Cards.Count);
-		}
-
 		public void Shuffle()
 		{
-			MoveToIndex(Deck.Game.random.Next(0, Deck.Cards.Count));
-		}
-
-		public void MoveToIndex(int index)
-		{
 			Deck.Cards.Remove(this);
-			Deck.Cards.Insert(index, this);
+			Deck.Cards.Insert(Deck.Game.Random.Next(0, Deck.Cards.Count), this);
 		}
 
-		public override string ToString()
-		{
-			return NumberString + "" + SuitString;
-		}
-
-		#endregion
-	}
+        #endregion
+    }
 }

@@ -63,7 +63,6 @@ namespace King.Controls
 
 		public GameShape()
 		{
-			// Required to initialize variables
 			InitializeComponent();
 
 			GameShapes.Add(this);
@@ -130,7 +129,9 @@ namespace King.Controls
 			for (int i = 0; i < GameShapes.Count; i++)
 			{
 				if (GameShapes[i].Game == game)
+				{
 					return GameShapes[i];
+				}
 			}
 
 			return null;
@@ -150,7 +151,6 @@ namespace King.Controls
 				}
 			}
 
-			//If not found, create a new card shape
 			CardShape cardShape = new CardShape();
 			cardShape.Card = card;
 			CardShapes.Add(cardShape);

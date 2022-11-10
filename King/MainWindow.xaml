@@ -9,104 +9,144 @@
 		Title="MainWindow" 
 		Height="800" 
 		Width="1200"
-        ResizeMode="CanMinimize"
-        WindowStartupLocation="CenterScreen">
+		ResizeMode="CanMinimize"
+		WindowStartupLocation="CenterScreen">
 
-    <Canvas x:Name="LayoutRoot"
-			Background="#FFFFFFFF"
-            HorizontalAlignment="Stretch" 
-            VerticalAlignment="Stretch"
-			Loaded="LayoutRoot_Loaded">
+	<Canvas 
+		x:Name="LayoutRoot"
+		Background="#FFFFFFFF"
+		HorizontalAlignment="Stretch"
+		VerticalAlignment="Stretch"
+		Loaded="LayoutRoot_Loaded">
 
-        <!--  Game Board  -->
-        <Controls:GameShape 
-				x:Name="GameShape"
-				Canvas.Left="0"
-				Canvas.Top="0"/>
+		<!--  Game Board  -->
+		<Controls:GameShape
+			x:Name="GameShape"
+			Canvas.Left="0"
+			Canvas.Top="0"/>
 
-        <!--  Dealer Deck  -->
+		<!--  Dealer Deck  -->
+		<Controls:DeckShape
+			x:Name="Dealer"
+			Canvas.Right="25"
+			Canvas.Bottom="25"
+			CardSpacerX="1"
+			CardSpacerY="0"
+			MaxCardsSpace="10" />
 
-        <Controls:DeckShape 
-                x:Name="Dealer"
-				Canvas.Right="25"
-				Canvas.Top="25"
-				CardSpacerX="1"
-				CardSpacerY="0"
-				MaxCardsSpace="10" />
+		<!--  Trick Decks  -->
+		<Controls:DeckShape
+			x:Name="Player1Trick"
+			Canvas.Left="408"
+			Canvas.Top="318" 
+			Height="146" />
+		<Controls:DeckShape 
+			x:Name="Player2Trick"
+			Canvas.Left="521"
+			Canvas.Top="240" 
+			Height="145" />
+		<Controls:DeckShape 
+			x:Name="Player3Trick"
+			Canvas.Left="634"
+			Canvas.Top="319" 
+			Height="145" />
+		<Controls:DeckShape 
+			x:Name="Player4Trick"
+			Canvas.Left="521"
+			Canvas.Top="390" Height="146" />
 
-        <!--  Trick Decks  -->
-        <Controls:DeckShape 
-                x:Name="Player1Trick"
-				Canvas.Left="408"
-				Canvas.Top="348" Height="146" />
-        <Controls:DeckShape x:Name="Player2Trick"
-							Canvas.Left="521"
-							Canvas.Top="269" Height="145" />
-        <Controls:DeckShape x:Name="Player3Trick"
-							Canvas.Left="634"
-							Canvas.Top="348" Height="145" />
-        <Controls:DeckShape x:Name="Player4Trick"
-							Canvas.Left="521"
-							Canvas.Top="419" />
+		<!--  Player Hand Decks  -->
+		<TextBlock 
+			Canvas.Left="25"
+			Canvas.Top="209"
+			Width="134"
+			Height="20"
+			Style="{StaticResource DefaultLabelText}"
+			Text="Player 1" 
+			RenderTransformOrigin="0.088,0.287" />
+		<Controls:DeckShape 
+			x:Name="Player1Hand"
+			Canvas.Left="25"
+			Canvas.Top="240"
+			CardSpacerX="0"
+			CardSpacerY="20"
+			MaxCardsSpace="10" />
+		<TextBlock 
+			Canvas.Left="398"
+			Canvas.Top="185"
+			Width="134"
+			Height="20"
+			Style="{StaticResource DefaultLabelText}"
+			Text="Player 2" />
+		<Controls:DeckShape 
+			x:Name="Player2Hand"
+			Canvas.Left="398"
+			Canvas.Top="25"
+			CardSpacerX="20"
+			CardSpacerY="0"
+			MaxCardsSpace="10" />
+		<TextBlock 
+			Canvas.Top="209"
+			Canvas.Right="25"
+			Width="90"
+			Height="20"
+			Style="{StaticResource DefaultLabelText}"
+			Text="Player 3" 
+			Canvas.Left="1061" />
+		<Controls:DeckShape 
+			x:Name="Player3Hand"
+			Canvas.Top="240"
+			Canvas.Right="25"
+			CardSpacerX="0"
+			CardSpacerY="20"
+			MaxCardsSpace="10" Height="145" Canvas.Left="1061" />
+		<TextBlock 
+			Canvas.Left="279"
+			Canvas.Bottom="225"
+			Width="134"
+			Height="20"
+			Style="{StaticResource DefaultLabelText}"
+			Text="Player 4" 
+			Canvas.Top="568" 
+			RenderTransformOrigin="0.445,0.523" />
+		<Controls:DeckShape 
+			x:Name="Player4Hand"
+			Canvas.Left="279"
+			Canvas.Bottom="25"
+			CardSpacerX="50"
+			CardSpacerY="0"
+			MaxCardsSpace="10" />
 
-        <!--  Player Hand Decks  -->
-        <TextBlock Canvas.Left="25"
-				   Canvas.Top="248"
-				   Width="134"
-				   Height="20"
-				   Style="{StaticResource DefaultLabelText}"
-				   Text="Player 1" RenderTransformOrigin="0.088,0.287" />
-        <Controls:DeckShape x:Name="Player1Hand"
-							Canvas.Left="25"
-							Canvas.Top="273"
-							CardSpacerX="0"
-							CardSpacerY="20"
-							MaxCardsSpace="10" />
-        <TextBlock Canvas.Left="398"
-				   Canvas.Top="175"
-				   Width="134"
-				   Height="20"
-				   Style="{StaticResource DefaultLabelText}"
-				   Text="Player 2" />
-        <Controls:DeckShape x:Name="Player2Hand"
-							Canvas.Left="398"
-							Canvas.Top="25"
-							CardSpacerX="20"
-							CardSpacerY="0"
-							MaxCardsSpace="10" />
-        <TextBlock Canvas.Top="248"
-				   Canvas.Right="25"
-				   Width="90"
-				   Height="20"
-				   Style="{StaticResource DefaultLabelText}"
-				   Text="Player 3" Canvas.Left="1061" />
-        <Controls:DeckShape x:Name="Player3Hand"
-							Canvas.Top="273"
-							Canvas.Right="25"
-							CardSpacerX="0"
-							CardSpacerY="20"
-							MaxCardsSpace="10" />
-        <TextBlock Canvas.Left="279"
-				   Canvas.Bottom="225"
-				   Width="134"
-				   Height="20"
-				   Style="{StaticResource DefaultLabelText}"
-				   Text="Player 4" Canvas.Top="568" RenderTransformOrigin="0.445,0.523" />
-        <Controls:DeckShape x:Name="Player4Hand"
-							Canvas.Left="279"
-							Canvas.Bottom="25"
-							CardSpacerX="50"
-							CardSpacerY="0"
-							MaxCardsSpace="10" />
+		<!--  Deal Button  -->
+		<Button 
+			x:Name="MainWindow_DealButton"
+			Canvas.Left="14"
+			Canvas.Top="34"
+			Width="50"
+			Height="20"
+			Click="MainWindow_DealButton_Click"
+			Content="deal" />
 
-        <!--  Deal Button  -->
-        <Button x:Name="MainWindow_DealButton"
-				Canvas.Left="10"
-				Canvas.Top="10"
-				Width="50"
-				Height="20"
-				Click="MainWindow_DealButton_Click"
-				Content="deal" />
+        <Button 
+            Width="25"
+            Height="25"
+			Canvas.Left="70"
+			Canvas.Top="25"
+			Command="{Binding OpenRulesCommand}"
+			Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+			<Image
+				Source="/Resources/RulesIcon.png" />
+		</Button>
 
-    </Canvas>
+		<Button
+            Width="25"
+            Height="25"
+			Canvas.Left="100"
+			Canvas.Top="25"
+			Command="{Binding OpenRulesCommand}"
+			Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+            <Image
+				Source="/Resources/StatisticalIcon.png" />
+        </Button>
+	</Canvas>
 </Window>

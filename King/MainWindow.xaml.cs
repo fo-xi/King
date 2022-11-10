@@ -15,11 +15,11 @@ namespace King
 
         private const int CardsPerPlayer = 12;
 
-        private const int NumberOfPlayers = 4;
-
         #endregion
 
         #region Fields
+
+        private MainWindowVM _mainWindowVM = new MainWindowVM();
 
         private DeckVM _dealer;
 
@@ -30,32 +30,23 @@ namespace King
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = _mainWindowVM;
         }
 
         #endregion
 
         #region Methods
 
-        /// <summary>
-        /// Initialize a new game.
-        /// </summary>
         private void NewGame()
         {
-            // create new game instance for our main window gameshape control
             GameShape.Game = new GameVM();
-
-            // call some setup methods to initialize the game components
             SetupDealerDeck();
             SetupPlayerHandDecks();
             SetupTrickDecks();
         }
 
-        /// <summary>
-        /// Deals the next hand.
-        /// </summary>
         private void DealNextHand()
         {
-            // collection cards if any are out
             if (_dealer.Cards.Count < 52)
             {
                 CollectCards();
@@ -63,7 +54,6 @@ namespace King
 
             _dealer.Shuffle(5);
 
-            // deal 13 cards to each of the four players
             for (var cardCount = 0; cardCount < CardsPerPlayer; cardCount++)
             {
                 _dealer.Draw(Player1Hand.Deck, 1);
@@ -72,42 +62,20 @@ namespace King
                 _dealer.Draw(Player4Hand.Deck, 1);
             }
 
-            // turn over human player [4] hand
             Player4Hand.Deck.Sort();
             Player4Hand.Deck.MakeAllCardsDragable(true);
             Player4Hand.Deck.FlipAllCards();
 
         }
 
-        /// <summary>
-        /// Collects the cards.
-        /// </summary>
         private void CollectCards()
         {
             Player1Hand.Deck.Draw(_dealer, Player1Hand.Deck.Cards.Count);
             Player2Hand.Deck.Draw(_dealer, Player2Hand.Deck.Cards.Count);
             Player3Hand.Deck.Draw(_dealer, Player3Hand.Deck.Cards.Count);
-            Player4Hand.Deck.FlipAllCards();    // flip user cards face down
+            Player4Hand.Deck.FlipAllCards();
             Player4Hand.Deck.Draw(_dealer, Player4Hand.Deck.Cards.Count);
-            Player1Trick.Deck.FlipAllCards();
-            Player1Trick.Deck.Draw(_dealer, Player1Trick.Deck.Cards.Count);
-            Player2Trick.Deck.FlipAllCards();
-            Player2Trick.Deck.Draw(_dealer, Player1Trick.Deck.Cards.Count);
-            Player3Trick.Deck.FlipAllCards();
-            Player3Trick.Deck.Draw(_dealer, Player1Trick.Deck.Cards.Count);
-            Player4Trick.Deck.FlipAllCards();
-            Player4Trick.Deck.Draw(_dealer, Player1Trick.Deck.Cards.Count);
         }
-
-        private void PlayCard(DeckVM playerHand, DeckVM playerTrick, CardVM cardToPlay)
-        {
-
-        }
-
-        /*
-         *  Setup Methods
-         *      initialize game/deck/hand objects etc.
-         */
 
         private void SetupDealerDeck()
         {
@@ -120,7 +88,8 @@ namespace King
 
             Dealer.Deck = _dealer;
             GameShape.DeckShapes.Add(Dealer);
-            Dealer.DeckMouseLeftButtonDown += new MouseButtonEventHandler(Dealer_DeckMouseLeftButtonDown);
+            Dealer.DeckMouseLeftButtonDown +=
+                new MouseButtonEventHandler(Dealer_DeckMouseLeftButtonDown);
         }
 
         private void SetupTrickDecks()
@@ -207,17 +176,13 @@ namespace King
 
         private void GameShape_CardDrag(CardShape cardShape, DeckShape oldDeckShape, DeckShape newDeckShape)
         {
-            // check for lead suit renege
-
             if (((newDeckShape.Deck.TopCard == null) && (cardShape.Card.Number == 1)) ||
                 ((newDeckShape.Deck.TopCard != null) && 
                 (cardShape.Card.Suit == newDeckShape.Deck.TopCard.Suit) && 
                 (cardShape.Card.Number - 1 == newDeckShape.Deck.TopCard.Number)))
             {
-                //Move card to stack
                 cardShape.Card.Deck = newDeckShape.Deck;
 
-                //Flip the first remaining card in the old deck
                 if (oldDeckShape.Deck.TopCard != null)
                 {
                     oldDeckShape.Deck.TopCard.Visible = true;
@@ -229,10 +194,8 @@ namespace King
 
         private void GameShape_CardMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            // click on player 4 hand will move the clicked card to the player 4 trick
             var card = (CardShape)sender;
             var gameShape = GameShape.GetGameShape(card.Card.Deck.Game);
-            var cardShape = gameShape.GetCardShape(card.Card);
             var oldDeckShape = gameShape.GetDeckShape(card.Card.Deck);
 
             if (oldDeckShape.Name == "Player4Hand")
@@ -246,14 +209,11 @@ namespace King
 
         #endregion
 
-
         private void MainWindow_DealButton_Click(object sender, RoutedEventArgs e)
         {
-            // prompt user to confirm deal new game
             var result = MessageBox.Show("Deal a new hand?", "Confirm New Deal", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.No) return;
 
-            // deal new hand
             DealNextHand();
         }
     }

@@ -56,22 +56,6 @@ namespace King.ViewModel
             }
         }
 
-        public CardVM BottomCard
-        {
-            get
-            {
-                return Cards.Count > 0 ? Cards[0] : null;
-            }
-        }
-
-        public bool HasCards
-        {
-            get
-            {
-                return Cards.Count > 0;
-            }
-        }
-
         #endregion
 
         #region Events
@@ -82,22 +66,12 @@ namespace King.ViewModel
 
         #region Constructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Deck"/> class.
-        /// </summary>
-        /// <param name="game">The game.</param>
         public DeckVM(GameVM game)
         {
-            this._game = game;
-            this._game.Decks.Add(this);
+            _game = game;
+            _game.Decks.Add(this);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Deck"/> class.
-        /// </summary>
-        /// <param name="numberOfDecks">The number of decks.</param>
-        /// <param name="uptoNumber">The upto number.</param>
-        /// <param name="game">The game.</param>
         public DeckVM(int numberOfDecks, int uptoNumber, GameVM game)
             : this(game)
         {
@@ -113,37 +87,6 @@ namespace King.ViewModel
             }
 
             Shuffle();
-        }
-
-        #endregion
-
-        #region Get Methods
-
-        public bool Has(int number, CardSuit suit)
-        {
-            return Has((CardRank)number, suit);
-        }
-
-        public bool Has(CardRank rank, CardSuit suit)
-        {
-            if (GetCard(rank, suit) != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public CardVM GetCard(int number, CardSuit suit)
-        {
-            return GetCard((CardRank)number, suit);
-        }
-
-        public CardVM GetCard(CardRank rank, CardSuit suit)
-        {
-            return Cards.FirstOrDefault(card => (card.Rank == rank) && (card.Suit == suit));
         }
 
         #endregion
@@ -165,20 +108,12 @@ namespace King.ViewModel
                 }
             }
 
-            if (SortChanged != null)
-            {
-                SortChanged(this, null);
-            }
+            SortChanged?.Invoke(this, null);
         }
 
         public void Sort()
         {
-            Cards.Sort(Game.CardSuitComparer);
-
-            if (SortChanged != null)
-            {
-                SortChanged(this, null);
-            }
+            SortChanged?.Invoke(this, null);
         }
 
         #endregion
@@ -205,35 +140,12 @@ namespace King.ViewModel
             }
         }
 
-        public void EnableAllCards(bool enable)
-        {
-            foreach (var t in Cards)
-            {
-                t.Enabled = enable;
-            }
-        }
-
         public void MakeAllCardsDragable(bool isDragable)
         {
             foreach (var t in Cards)
             {
                 t.IsDragable = isDragable;
             }
-        }
-
-        public override string ToString()
-        {
-            var output = new StringBuilder();
-
-            output.Append("[" + Environment.NewLine);
-
-            foreach (var t in Cards)
-            {
-                output.Append(t.ToString() + Environment.NewLine);
-            }
-
-            output.Append("]" + Environment.NewLine);
-            return output.ToString();
         }
 
         #endregion

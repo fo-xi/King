@@ -17,36 +17,51 @@ namespace King.Controls
 
 		private DeckVM _deck = null;
 
+		private double _cardSpacerX = 0;
+
+		private double _cardSpacerY = 0;
+
+		private int _maxCardsSpace = 0;
+
 		#endregion
 
 		#region Properties
 
 		private static List<DeckShape> PlayingDecks = new List<DeckShape>();
 
-		private double cardSpacerX = 0;
 		public double CardSpacerX
 		{
-			get { return cardSpacerX; }
-			set { cardSpacerX = value; }
+			get 
+			{ 
+				return _cardSpacerX; 
+			}
+			set 
+			{ 
+				_cardSpacerX = value; 
+			}
 		}
 
-		private double cardSpacerY = 0;
 		public double CardSpacerY
 		{
-			get { return cardSpacerY; }
-			set { cardSpacerY = value; }
+			get 
+			{ 
+				return _cardSpacerY; 
+			}
+			set 
+			{ 
+				_cardSpacerY = value; 
+			}
 		}
 
-		private int maxCardsSpace = 0;
 		public int MaxCardsSpace
 		{
 			get
 			{
-				return maxCardsSpace;
+				return _maxCardsSpace;
 			}
 			set
 			{
-				maxCardsSpace = value;
+				_maxCardsSpace = value;
 			}
 		}
 
@@ -104,20 +119,6 @@ namespace King.Controls
 
 		#region Methods
 
-		public Point GetNextCardPosition()
-		{
-			Point p = new Point(NextCardX, NextCardY);
-
-			NextCardX += CardSpacerX;
-			NextCardY += CardSpacerY;
-
-			return p;
-		}
-
-		/// <summary>
-		/// Recalculate all the card positions and animate them to the new positions
-		/// Should be called when the deck change its cards order or count
-		/// </summary>
 		public void UpdateCardShapes()
 		{
 			GameShape game = GameShape.GetGameShape(Deck.Game);
@@ -129,28 +130,23 @@ namespace King.Controls
 
 			if ((MaxCardsSpace > 0) && (Deck.Cards.Count > MaxCardsSpace))
 			{
-				//override the spacers values to squeez cards
 				localCardSpacerX = (CardSpacerX * MaxCardsSpace) / Deck.Cards.Count;
 				localCardSpacerY = (CardSpacerY * MaxCardsSpace) / Deck.Cards.Count;
 			}
 
-			////Create the animation to move the card from one deck to the other
 			Duration duration = new Duration(TimeSpan.FromSeconds(0.2));
 
 			Storyboard sb = new Storyboard();
 			sb.Duration = duration;
 
-			//Loop on the Deck Cards (not playing cards)
 			for (int i = 0; i < Deck.Cards.Count; i++)
 			{
-				//Get the card shape
 				CardShape cardShape = game.GetCardShape(Deck.Cards[i]);
-				if (cardShape.Parent != this.LayoutRoot)
+				if (cardShape.Parent != LayoutRoot)
 				{
 					LayoutRoot.Children.Add(cardShape);
 				}
 
-				// set left and top values
 				if (double.IsNaN(Canvas.GetLeft(cardShape)))
 				{
 					cardShape.SetValue(Canvas.LeftProperty, Convert.ToDouble(0));
@@ -160,7 +156,6 @@ namespace King.Controls
 					cardShape.SetValue(Canvas.TopProperty, Convert.ToDouble(0));
 				}
 
-				//Animate card to its correct position
 				DoubleAnimation xAnim = new DoubleAnimation();
 				xAnim.Duration = duration;
 				sb.Children.Add(xAnim);
@@ -177,13 +172,14 @@ namespace King.Controls
 
 				Canvas.SetZIndex(cardShape, i);
 
-				//Increment the next card position
 				NextCardX += localCardSpacerX;
 				NextCardY += localCardSpacerY;
 			}
 
 			if (LayoutRoot.Resources.Contains("sb"))
+			{
 				LayoutRoot.Resources.Remove("sb");
+			}
 
 			LayoutRoot.Resources.Add("sb", sb);
 			sb.Begin();
@@ -193,11 +189,6 @@ namespace King.Controls
 
 		#region DeckShape Event Handlers
 
-		/// <summary>
-		/// Handles the SortChanged event of the deck control.
-		/// </summary>
-		/// <param name="sender">The source of the event.</param>
-		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		private void DeckSortChanged(object sender, EventArgs e)
 		{
 			UpdateCardShapes();

@@ -45,38 +45,37 @@ namespace King.Controls
 
 		private bool _isDrag = false;
 
+		private CardVM _card = null;
+
 		#endregion
 
 		#region Properties
 
-		private CardVM card = null;
 		public CardVM Card
 		{
 			get
 			{
-				return card;
+				return _card;
 			}
 			set
 			{
-				if (card != null)
+				if (_card != null)
 				{
-					card.VisibleChanged -= new EventHandler(CardVisibleChanged);
-					card.DeckChanged -= new EventHandler(CardDeckChanged);
+					_card.VisibleChanged -= new EventHandler(CardVisibleChanged);
+					_card.DeckChanged -= new EventHandler(CardDeckChanged);
 				}
 
-				card = value;
+				_card = value;
 
-				//Handle Card Events
-				card.VisibleChanged += new EventHandler(CardVisibleChanged);
-				card.DeckChanged += new EventHandler(CardDeckChanged);
+				_card.VisibleChanged += new EventHandler(CardVisibleChanged);
+				_card.DeckChanged += new EventHandler(CardDeckChanged);
 
-				//Adjust the clipping of the cards image to reflect the current card
 				double x = 0;
 				double y = 0;
 
 				if (Card.Visible)
 				{
-					//Define the card position in the cards image
+					//Отображение карты
 					if (Card.Number <= 10)
 					{
 						x = (Card.Number - 1) % 2;
@@ -100,7 +99,7 @@ namespace King.Controls
 					}
 					else
 					{
-						int number = (Card.Number - 11);
+						int number = Card.Number - 11;
 						switch (Card.Suit)
 						{
 							case CardSuit.Spades:
@@ -123,11 +122,12 @@ namespace King.Controls
 				}
 				else
 				{
-					//Show back of the card
+					//Отображение рубашки
 					x = 8;
 					y = 6;
 				}
 
+				//Отображение карт на руках (как у себя, так и других)
 				((RectangleGeometry)imgCard.Clip).Rect = new Rect(x * CardWidthRect + CardOrigX, y * CardHeightRect + CardOrigY, CardWidth, CardHeight);
 				foreach (Transform tran in ((TransformGroup)imgCard.RenderTransform).Children)
 				{
@@ -157,21 +157,12 @@ namespace King.Controls
 
 		public event CardDragEventHandler CardDrag;
 
-		public void OnCardDrag(DeckShape fromDeckShape, DeckShape toDeckShape)
-		{
-			if ((fromDeckShape != null) && (CardDrag != null))
-			{
-				CardDrag(this, fromDeckShape, toDeckShape);
-			}
-		}
-
 		#endregion
 
 		#region Constructor
 
 		public CardShape()
 		{
-			// Required to initialize variables
 			InitializeComponent();
 
 			_aniFlipStart = (Storyboard)Resources["aniFlipStart"];
@@ -186,14 +177,8 @@ namespace King.Controls
 
 		#region Card Event Handlers
 
-		/// <summary>
-		/// Event handler for the card visible property changed event.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		private void CardVisibleChanged(object sender, EventArgs e)
 		{
-			// set left and top values
 			var gameShape = GameShape.GetGameShape(this.Card.Deck.Game);
 			var cardShape = gameShape.GetCardShape((CardVM)sender);
 
@@ -210,34 +195,24 @@ namespace King.Controls
 			_aniFlipStart.Begin();
 		}
 
-		/// <summary>
-		/// Event handler for the card deck property changed event.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		private void CardDeckChanged(object sender, EventArgs e)
 		{
-			//Get Decks Shapes
 			GameShape gameShape = GameShape.GetGameShape(this.Card.Deck.Game);
 			DeckShape oldDeck = (DeckShape)((Canvas)this.Parent).Parent;
 			DeckShape newDeck = gameShape.GetDeckShape(this.Card.Deck);
 
-			//Get the animation positions in relation to the world (background)
 			double startX = Canvas.GetLeft(oldDeck) + Canvas.GetLeft(this);
 			double startY = Canvas.GetTop(oldDeck) + Canvas.GetTop(this);
 
 			double endX = Canvas.GetLeft(newDeck);
 			double endY = Canvas.GetTop(newDeck);
 
-			//Change the card parent
 			((Canvas)this.Parent).Children.Remove(this);
 			newDeck.LayoutRoot.Children.Add(this);
 
-			//Maintain the same card position relative to the new parent
 			Canvas.SetLeft(this, (double.IsNaN(startX) ? Convert.ToDouble(0) : startX) - endX);
 			Canvas.SetTop(this, (double.IsNaN(startY) ? Convert.ToDouble(0) : startY) - endY);
 
-			//Reorder decks
 			oldDeck.UpdateCardShapes();
 			newDeck.UpdateCardShapes();
 		}
@@ -246,22 +221,12 @@ namespace King.Controls
 
 		#region CardShape Event Handlers
 
-		/// <summary>
-		/// Event handler for the flip start animation completed event.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		protected void AniFlipStartCompleted(object sender, EventArgs e)
 		{
 			this.Card = this.Card;
 			_aniFlipEnd.Begin();
 		}
 
-		/// <summary>
-		/// Event handler for the image card mouse left button down event.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
 		private void ImgCardMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
 			if (Card != null && Card.IsDragable)
@@ -277,11 +242,6 @@ namespace King.Controls
 			}
 		}
 
-		/// <summary>
-		/// Event handler for the image card mouse left button up.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
 		private void ImgCardMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			if (_isDrag)
@@ -289,7 +249,6 @@ namespace King.Controls
 				imgCard.ReleaseMouseCapture();
 				_isDrag = false;
 
-				//Get which deck this card was dropped into
 				GameShape gameShape = GameShape.GetGameShape(this.Card.Deck.Game);
 				DeckShape oldDeckShape = gameShape.GetDeckShape(this.Card.Deck);
 				DeckShape nearestDeckShape = null;
@@ -331,11 +290,6 @@ namespace King.Controls
 			}
 		}
 
-		/// <summary>
-		/// Event handler for the image card mouse move event.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="System.Windows.Input.MouseEventArgs"/> instance containing the event data.</param>
 		private void ImgCardMouseMove(object sender, MouseEventArgs e)
 		{
 			if (_isDrag)
@@ -362,11 +316,6 @@ namespace King.Controls
 			}
 		}
 
-		/// <summary>
-		/// Event handler for the image card mouse enter event.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="System.Windows.Input.MouseEventArgs"/> instance containing the event data.</param>
 		private void ImgCardMouseEnter(object sender, MouseEventArgs e)
 		{
 			if (Card != null && Card.Enabled)
@@ -380,11 +329,6 @@ namespace King.Controls
 			}
 		}
 
-		/// <summary>
-		/// Event handler for the Image Card mouse leave event.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="System.Windows.Input.MouseEventArgs"/> instance containing the event data.</param>
 		private void ImgCardMouseLeave(object sender, MouseEventArgs e)
 		{
 			if (Card != null && Card.Enabled)
@@ -396,16 +340,6 @@ namespace King.Controls
 			{
 				CardMouseLeave(this, e);
 			}
-		}
-
-		#endregion
-
-		#region Methods
-
-		public void Rotate(double speedRatio)
-		{
-			_animRotate.SpeedRatio = speedRatio;
-			_animRotate.Begin();
 		}
 
 		#endregion

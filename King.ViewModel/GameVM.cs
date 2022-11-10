@@ -31,9 +31,7 @@ namespace King.ViewModel
 			}
 		}
 
-		internal Random random = new Random();
-
-		internal HighCardSuitComparer CardSuitComparer = new HighCardSuitComparer();
+		internal Random Random = new Random();
 
 		#endregion
 	}
