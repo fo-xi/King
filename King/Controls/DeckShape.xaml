@@ -6,7 +6,8 @@
              Width="108"
              Height="145.5"
              mc:Ignorable="d">
-    <Canvas x:Name="LayoutRoot">
+    <Canvas 
+        x:Name="LayoutRoot">
         <Rectangle
             x:Name="rectBorderBack"
             Canvas.Left="0"

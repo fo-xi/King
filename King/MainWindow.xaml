@@ -4,7 +4,7 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:Controls="clr-namespace:King.Controls"
-        xmlns:vms="clr-namespace:King.ViewModel;assembly=King.ViewModel"
+        xmlns:Converters="clr-namespace:King.VisibilityConverters"
 		xmlns:local="clr-namespace:King"
 		mc:Ignorable="d"
 		Title="MainWindow" 
@@ -12,17 +12,12 @@
 		Width="1200"
 		ResizeMode="CanMinimize"
 		WindowStartupLocation="CenterScreen">
-
-    <Window.Resources>
-        <DataTemplate DataType="{x:Type vms:MainTabControlVM}">
-            <Controls:MainTabControl/>
-        </DataTemplate>
-        
-        <DataTemplate DataType="{x:Type vms:RulesControlVM}">
-            <Controls:RulesControl/>
-        </DataTemplate>
-    </Window.Resources>
-
-    <ContentControl
-        Content="{Binding SelectedControl}"/>
+    <Grid
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch">
+        <Controls:RulesControl 
+            DataContext="{Binding RulesControlVM}"/>
+        <Controls:MainTabControl 
+            DataContext="{Binding MainTabControlVM}"/>
+    </Grid>
 </Window>

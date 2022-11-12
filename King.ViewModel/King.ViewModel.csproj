@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CardVM.cs" />
+    <Compile Include="CurrentAccountVM.cs" />
     <Compile Include="DeckVM.cs" />
     <Compile Include="Enumerations\CardColor.cs" />
     <Compile Include="Enumerations\CardRank.cs" />

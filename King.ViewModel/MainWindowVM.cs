@@ -10,43 +10,60 @@ namespace King.ViewModel
 {
 	public class MainWindowVM : ViewModelBase
 	{
-		private MainTabControlVM _mainTabControlVM = new MainTabControlVM();
+		public MainTabControlVM _mainTabControlVM;
 
-		private RulesControlVM _rulesControlVM = new RulesControlVM();
+		public RulesControlVM _rulesControlVM;
 
-		private ViewModelBase _selectedControl;
+		public MainTabControlVM MainTabControlVM 
+		{
+			get
+            {
+				return _mainTabControlVM;
 
-		/// <summary>
-		/// Выбранный контрол
-		/// </summary>
-		public ViewModelBase SelectedControl
+			}
+            set
+            {
+				_mainTabControlVM = value;
+				RaisePropertyChanged();
+            }
+		}
+
+		public RulesControlVM RulesControlVM
 		{
 			get
 			{
-				return _selectedControl;
+				return _rulesControlVM;
+
 			}
 			set
 			{
-				_selectedControl = value;
+				_rulesControlVM = value;
 				RaisePropertyChanged();
 			}
 		}
 
 		public MainWindowVM()
 		{
-			_mainTabControlVM.OpenRulesCommand = new RelayCommand(OpenRules);
-			_rulesControlVM.BackCommand = new RelayCommand(Back);
-			SelectedControl = _mainTabControlVM;
+			MainTabControlVM = new MainTabControlVM();
+			RulesControlVM = new RulesControlVM();
+
+			MainTabControlVM.OpenRulesCommand = new RelayCommand(OpenRules);
+			RulesControlVM.BackCommand = new RelayCommand(Back);
+
+			MainTabControlVM.IsVisableState = true;
+			RulesControlVM.IsVisableState = false;
 		}
 
 		private void OpenRules()
 		{
-			SelectedControl = _rulesControlVM;
+			RulesControlVM.IsVisableState = true;
+			MainTabControlVM.IsVisableState = false;
 		}
 
 		private void Back()
 		{
-			SelectedControl = _mainTabControlVM;
+			MainTabControlVM.IsVisableState = true;
+			RulesControlVM.IsVisableState = false;
 		}
 	}
 }
