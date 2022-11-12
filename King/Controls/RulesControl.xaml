@@ -28,6 +28,7 @@
 				Foreground="#D6DBEF"
 				HorizontalAlignment="Center"
 				Canvas.Left="457"
+                Canvas.Top="20"
 				Text="Правила игры"/>
 
             <Button

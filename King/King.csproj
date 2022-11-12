@@ -82,6 +82,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\MainTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\RulesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -102,6 +106,9 @@
     </Compile>
     <Compile Include="Controls\GameShape.xaml.cs">
       <DependentUpon>GameShape.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MainTabControl.xaml.cs">
+      <DependentUpon>MainTabControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RulesControl.xaml.cs">
       <DependentUpon>RulesControl.xaml</DependentUpon>
