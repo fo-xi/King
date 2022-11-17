@@ -17,8 +17,7 @@
 
 		<TextBlock
 			Grid.Row="0"
-			FontSize="15"
-			Foreground="#D6DBEF"
+            Style="{StaticResource DefaultLabelText}"
 			HorizontalAlignment="Left"
             Margin="0 0 0 5"
 			Text="Текущий счет:"/>
@@ -31,16 +30,13 @@
 			</Grid.ColumnDefinitions>
             <TextBlock
 				Grid.Column="0"
-				FontSize="15"
-				Foreground="#D6DBEF"
+                Style="{StaticResource DefaultLabelText}"
 				HorizontalAlignment="Left"
                 Margin="0 0 5 2"
 				Text="Player 1:"/>
             <TextBlock
 				Grid.Column="1"
-				FontSize="15"
-                FontWeight="Bold"
-				Foreground="#D6DBEF"
+                Style="{StaticResource DefaultLabelText}"
 				HorizontalAlignment="Left"
 				Text="{Binding FirstPlayerScore}"/>
         </Grid>
@@ -53,16 +49,12 @@
             </Grid.ColumnDefinitions>
             <TextBlock
 				Grid.Column="0"
-				FontSize="15"
-				Foreground="#D6DBEF"
-				HorizontalAlignment="Left"
+                Style="{StaticResource DefaultLabelText}"
                 Margin="0 0 5 2"
 				Text="Player 2:"/>
             <TextBlock
 				Grid.Column="1"
-				FontSize="15"
-                FontWeight="Bold"
-				Foreground="#D6DBEF"
+                Style="{StaticResource DefaultLabelText}"
 				HorizontalAlignment="Left"
 				Text="{Binding SecondPlayerScore}"/>
         </Grid>
@@ -75,16 +67,12 @@
             </Grid.ColumnDefinitions>
             <TextBlock
 				Grid.Column="0"
-				FontSize="15"
-				Foreground="#D6DBEF"
-				HorizontalAlignment="Left"
+                Style="{StaticResource DefaultLabelText}"
                 Margin="0 0 5 2"
 				Text="Player 3:"/>
             <TextBlock
 				Grid.Column="1"
-				FontSize="15"
-                FontWeight="Bold"
-				Foreground="#D6DBEF"
+                Style="{StaticResource DefaultLabelText}"
 				HorizontalAlignment="Left"
 				Text="{Binding ThirdPlayerScore}"/>
         </Grid>
@@ -97,16 +85,13 @@
             </Grid.ColumnDefinitions>
             <TextBlock
 				Grid.Column="0"
-				FontSize="15"
-				Foreground="#D6DBEF"
+                Style="{StaticResource DefaultLabelText}"
 				HorizontalAlignment="Left"
                 Margin="0 0 5 2"
 				Text="Вы:"/>
             <TextBlock
 				Grid.Column="1"
-				FontSize="15"
-                FontWeight="Bold"
-				Foreground="#D6DBEF"
+                Style="{StaticResource DefaultLabelText}"
 				HorizontalAlignment="Left"
 				Text="{Binding FourthPlayerScore}"/>
         </Grid>

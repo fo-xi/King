@@ -78,7 +78,7 @@
 			MaxCardsSpace="10" />
 
         <TextBlock 
-			Canvas.Left="398"
+			Canvas.Left="470"
 			Canvas.Top="182"
 			Width="134"
 			Height="20"
@@ -87,7 +87,7 @@
 
         <Controls:DeckShape 
 			x:Name="Player2Hand"
-			Canvas.Left="398"
+			Canvas.Left="470"
 			Canvas.Top="25"
 			CardSpacerX="20"
 			CardSpacerY="0"
@@ -112,7 +112,7 @@
 			Canvas.Left="1051" />
 
         <TextBlock 
-			Canvas.Left="280"
+			Canvas.Left="350"
 			Canvas.Bottom="225"
 			Width="134"
 			Height="20"
@@ -123,7 +123,7 @@
 
         <Controls:DeckShape 
 			x:Name="Player4Hand"
-			Canvas.Left="280"
+			Canvas.Left="350"
 			Canvas.Top="595"
 			CardSpacerX="50"
 			CardSpacerY="0"
@@ -169,10 +169,16 @@
 
         <TextBlock
             FontSize="25"
-            Canvas.Left="800"
+            Canvas.Left="810"
 			Canvas.Top="25"
             FontWeight="Bold"
-            Foreground="#D6DBEF"
+            Style="{StaticResource DefaultLabelText}"
             Text="{Binding CurrentNameGame}"/>
+
+        <TextBlock
+            Canvas.Left="543"
+			Canvas.Top="552"
+            Style="{StaticResource DefaultLabelText}"
+            Text="Ваш ход"/>
     </Canvas>
 </UserControl>
