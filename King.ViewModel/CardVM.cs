@@ -58,7 +58,14 @@ namespace King.ViewModel
 				{
 					_deck.Cards.Remove(this);
 					_deck = value;
-					_deck.Cards.Add(this);
+
+					if (!(Rank == CardRank.Deuce) || !(Rank == CardRank.Three) 
+						|| !(Rank == CardRank.Four) || !(Rank == CardRank.Five)
+						|| !(Rank == CardRank.Six))
+                    {
+						_deck.Cards.Add(this);
+					}
+
                     DeckChanged?.Invoke(this, null);
                 }
 			}

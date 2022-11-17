@@ -23,7 +23,7 @@ namespace King.Controls
     {
         #region Constants
 
-        private const int CardsPerPlayer = 12;
+        private const int CardsPerPlayer = 8;
 
         #endregion
 
@@ -54,7 +54,7 @@ namespace King.Controls
 
         private void DealNextHand()
         {
-            if (_dealer.Cards.Count < 52)
+            if (_dealer.Cards.Count < 32)
             {
                 CollectCards();
             }
@@ -88,7 +88,7 @@ namespace King.Controls
         {
             _dealer = new DeckVM(1, 13, GameShape.Game);
 
-            _dealer.Shuffle(5);
+            //? _dealer.Shuffle(5);
             _dealer.MakeAllCardsDragable(false);
             _dealer.Enabled = true;
             _dealer.FlipAllCards();

@@ -6,148 +6,155 @@ using System.Text;
 
 namespace King.ViewModel
 {
-    public class DeckVM
-    {
-        #region Fields
+	public class DeckVM
+	{
+		#region Fields
 
-        private List<CardVM> _cards = new List<CardVM>();
+		private List<CardVM> _cards = new List<CardVM>();
 
-        private bool _enabled = true;
+		private bool _enabled = true;
 
-        private GameVM _game;
+		private GameVM _game;
 
-        #endregion
+		#endregion
 
-        #region Properties
+		#region Properties
 
-        public List<CardVM> Cards
-        {
-            get
-            {
-                return _cards;
-            }
-        }
+		public List<CardVM> Cards
+		{
+			get
+			{
+				return _cards;
+			}
+		}
 
-        public bool Enabled
-        {
-            get 
-            { 
-                return _enabled; 
-            }
-            set 
-            { 
-                _enabled = value; 
-            }
-        }
+		public bool Enabled
+		{
+			get 
+			{ 
+				return _enabled; 
+			}
+			set 
+			{ 
+				_enabled = value; 
+			}
+		}
 
-        public GameVM Game
-        {
-            get
-            {
-                return _game;
-            }
-        }
+		public GameVM Game
+		{
+			get
+			{
+				return _game;
+			}
+		}
 
-        public CardVM TopCard
-        {
-            get
-            {
-                return Cards.Count > 0 ? Cards[Cards.Count - 1] : null;
-            }
-        }
+		public CardVM TopCard
+		{
+			get
+			{
+				return Cards.Count > 0 ? Cards[Cards.Count - 1] : null;
+			}
+		}
 
-        #endregion
+		#endregion
 
-        #region Events
+		#region Events
 
-        public event EventHandler SortChanged;
+		public event EventHandler SortChanged;
 
-        #endregion
+		#endregion
 
-        #region Constructors
+		#region Constructors
 
-        public DeckVM(GameVM game)
-        {
-            _game = game;
-            _game.Decks.Add(this);
-        }
+		public DeckVM(GameVM game)
+		{
+			_game = game;
+			_game.Decks.Add(this);
+		}
 
-        public DeckVM(int numberOfDecks, int uptoNumber, GameVM game)
-            : this(game)
-        {
-            for (int deck = 0; deck < numberOfDecks; deck++)
-            {
-                for (int suit = 1; suit <= 4; suit++)
-                {
-                    for (int number = 1; number <= uptoNumber; number++)
-                    {
-                        Cards.Add(new CardVM(number, (CardSuit)suit, this));
-                    }
-                }
-            }
+		public DeckVM(int numberOfDecks, int uptoNumber, GameVM game)
+			: this(game)
+		{
+			for (int deck = 0; deck < numberOfDecks; deck++)
+			{
+				for (int suit = 1; suit <= 4; suit++)
+				{
+					for (int number = 1; number <= uptoNumber; number++)
+					{
+						if (number == 2 || number == 3
+						|| number == 4 || number == 5
+						|| number == 6)
+						{
+							continue;
+						}
 
-            Shuffle();
-        }
+						Cards.Add(new CardVM(number, (CardSuit)suit, this));
+					}
+				}
+			}
 
-        #endregion
+			Shuffle();
+		}
 
-        #region Sort Methods
+		#endregion
 
-        public void Shuffle()
-        {
-            Shuffle(1);
-        }
+		#region Sort Methods
 
-        public void Shuffle(int times)
-        {
-            for (int time = 0; time < times; time++)
-            {
-                for (int i = 0; i < Cards.Count; i++)
-                {
-                    Cards[i].Shuffle();
-                }
-            }
+		public void Shuffle()
+		{
+			Shuffle(1);
+		}
 
-            SortChanged?.Invoke(this, null);
-        }
+		public void Shuffle(int times)
+		{
+			for (int time = 0; time < times; time++)
+			{
+				for (int i = 0; i < Cards.Count; i++)
+				{
+					Cards[i].Shuffle();
+				}
+			}
 
-        public void Sort()
-        {
-            SortChanged?.Invoke(this, null);
-        }
+			SortChanged?.Invoke(this, null);
+		}
 
-        #endregion
+		public void Sort()
+		{
+			SortChanged?.Invoke(this, null);
+		}
 
-        #region Draw Cards Methods
+		#endregion
 
-        public void Draw(DeckVM toDeck, int count)
-        {
-            for (var i = 0; i < count; i++)
-            {
-                TopCard.Deck = toDeck;
-            }
-        }
+		#region Draw Cards Methods
 
-        #endregion
+		public void Draw(DeckVM toDeck, int count)
+		{
+			for (var i = 0; i < count; i++)
+			{
+				TopCard.Deck = toDeck;
+			}
+		}
 
-        #region Methods
+		#endregion
 
-        public void FlipAllCards()
-        {
-            foreach (var t in Cards)
-            {
-                t.Visible = !t.Visible;
-            }
-        }
+		#region Methods
 
-        public void MakeAllCardsDragable(bool isDragable)
-        {
-            foreach (var t in Cards)
-            {
-                t.IsDragable = isDragable;
-            }
-        }
+		public void FlipAllCards()
+		{
+			foreach (var t in Cards)
+			{
+				t.Visible = !t.Visible;
+			}
+		}
 
-        #endregion
-    }
+		public void MakeAllCardsDragable(bool isDragable)
+		{
+			foreach (var t in Cards)
+			{
+				t.IsDragable = isDragable;
+			}
+		}
+
+		#endregion
+	}
 }

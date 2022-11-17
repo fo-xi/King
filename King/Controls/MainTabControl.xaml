@@ -150,6 +150,17 @@
 				Source="/Resources/RulesIcon.png" />
         </Button>
 
+        <Button 
+			Width="25"
+			Height="25"
+			Canvas.Left="100"
+			Canvas.Top="25"
+			Command="{Binding OpenRulesCommand}"
+			Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+            <Image
+				Source="/Resources/StatisticsIcon.png" />
+        </Button>
+
         <Controls:CurrentAccount 
 			x:Name="CurrentAccount"
 			Canvas.Left="50"
