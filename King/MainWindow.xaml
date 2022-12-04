@@ -4,6 +4,7 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:Controls="clr-namespace:King.Controls"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:Converters="clr-namespace:King.VisibilityConverters"
 		xmlns:local="clr-namespace:King"
 		mc:Ignorable="d"
@@ -12,6 +13,13 @@
 		Width="1200"
 		ResizeMode="CanMinimize"
 		WindowStartupLocation="CenterScreen">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding CloseWindowCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Grid
         HorizontalAlignment="Stretch"
         VerticalAlignment="Stretch">
@@ -19,5 +27,7 @@
             DataContext="{Binding RulesControlVM}"/>
         <Controls:MainTabControl 
             DataContext="{Binding MainTabControlVM}"/>
+        <Controls:StartControl 
+            DataContext="{Binding StartControlVM}"/>
     </Grid>
 </Window>

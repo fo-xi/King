@@ -73,6 +73,9 @@
     <Compile Include="Controls\CurrentAccount.xaml.cs">
       <DependentUpon>CurrentAccount.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\StartControl.xaml.cs">
+      <DependentUpon>StartControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VisibilityConverters\BooleanToVisibilityConverter.cs" />
     <Page Include="Controls\CardShape.xaml">
       <SubType>Designer</SubType>
@@ -95,6 +98,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\RulesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\StartControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

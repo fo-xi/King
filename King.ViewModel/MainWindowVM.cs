@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using Client.WebSocket;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,13 @@ namespace King.ViewModel
 {
 	public class MainWindowVM : ViewModelBase
 	{
-		public MainTabControlVM _mainTabControlVM;
+		private MainTabControlVM _mainTabControlVM;
 
-		public RulesControlVM _rulesControlVM;
+		private RulesControlVM _rulesControlVM;
+
+		private StartControlVM _startControlVM;
+
+		private WebSocketClient _webSocketClient;
 
 		public MainTabControlVM MainTabControlVM 
 		{
@@ -42,15 +47,37 @@ namespace King.ViewModel
 			}
 		}
 
+		public StartControlVM StartControlVM
+		{
+			get
+			{
+				return _startControlVM;
+
+			}
+			set
+			{
+				_startControlVM = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		public RelayCommand CloseWindowCommand { get; set; }
+
 		public MainWindowVM()
 		{
+			_webSocketClient = new WebSocketClient();
+
 			MainTabControlVM = new MainTabControlVM();
 			RulesControlVM = new RulesControlVM();
+			StartControlVM = new StartControlVM();
 
 			MainTabControlVM.OpenRulesCommand = new RelayCommand(OpenRules);
 			RulesControlVM.BackCommand = new RelayCommand(Back);
+			StartControlVM.StartGameCommand = new RelayCommand(StartGame);
+			CloseWindowCommand = new RelayCommand(CloseWindow);
 
-			MainTabControlVM.IsVisableState = true;
+			StartControlVM.IsVisableState = true;
+			MainTabControlVM.IsVisableState = false;
 			RulesControlVM.IsVisableState = false;
 		}
 
@@ -64,6 +91,19 @@ namespace King.ViewModel
 		{
 			MainTabControlVM.IsVisableState = true;
 			RulesControlVM.IsVisableState = false;
+		}
+
+		private void StartGame()
+        {
+			_webSocketClient.StartGame(StartControlVM.PlayerName);
+			StartControlVM.IsVisableState = false;
+			MainTabControlVM.IsVisableState = true;
+		}
+
+		private void CloseWindow()
+        {
+			_webSocketClient.CloseClient();
+
 		}
 	}
 }
