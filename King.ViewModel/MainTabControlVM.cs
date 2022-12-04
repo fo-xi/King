@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using Client.WebSocket;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace King.ViewModel
         private bool _isVisableState;
 
         private string _currentNameGame;
+
+        private WebSocketClient _webSocketClient;
 
         public CurrentAccountVM CurrentAccountVM
         {
@@ -57,10 +60,18 @@ namespace King.ViewModel
 
         public RelayCommand OpenRulesCommand { get; set; }
 
-        public MainTabControlVM()
+        public MainTabControlVM(WebSocketClient webSocketClient)
         {
+            _webSocketClient = webSocketClient;
+            _webSocketClient.DataChanged += OnDataChanged;
+
             CurrentAccountVM = new CurrentAccountVM();
             CurrentNameGame = "Не брать 2х последних";
+        }
+
+        private void OnDataChanged(object sender, EventArgs e)
+        {
+            //CurrentAccountVM.FirstPlayerScore = _webSocketClient.....
         }
     }
 }

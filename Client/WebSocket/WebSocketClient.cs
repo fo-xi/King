@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Core;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,17 +15,38 @@ namespace Client.WebSocket
 		private const int BufferSize = 1024;
 
 		private static Uri _uri = new Uri("ws://localhost:5050/ws");
+
 		private static IPHostEntry _host = Dns.GetHostEntry(_uri.Host);
+
 		private static IPAddress _ipAddress = _host.AddressList[0];
+
 		private static IPEndPoint _ipEndPoint = new IPEndPoint(_ipAddress, _uri.Port);
+
 		Socket _socket = new Socket(_ipAddress.AddressFamily,
 			SocketType.Stream, ProtocolType.Tcp);
 
 		private Socket _listener;
+
 		private string _sessionID;
+
 		private bool _isRunning;
 
+		private Game _game;
+
 		public event EventHandler DataChanged;
+
+		public Game Game
+		{
+			get
+			{
+				return Game;
+			}
+			set
+			{
+				Game = value;
+				DataChanged?.Invoke(this, EventArgs.Empty);
+			}
+		}
 
 		public WebSocketClient()
 		{
@@ -113,7 +135,8 @@ namespace Client.WebSocket
 				json.ContainsKey("state") &&
 				json["state"].ToString() == "started")
 			{
-				//аьяи
+				//TODO: Десериализация вместо создания объекта
+				Game = new Game();
 				return;
 			}
 		}

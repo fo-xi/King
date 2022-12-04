@@ -67,7 +67,7 @@ namespace King.ViewModel
 		{
 			_webSocketClient = new WebSocketClient();
 
-			MainTabControlVM = new MainTabControlVM();
+			MainTabControlVM = new MainTabControlVM(_webSocketClient);
 			RulesControlVM = new RulesControlVM();
 			StartControlVM = new StartControlVM();
 
@@ -81,7 +81,7 @@ namespace King.ViewModel
 			RulesControlVM.IsVisableState = false;
 		}
 
-		private void OpenRules()
+        private void OpenRules()
 		{
 			RulesControlVM.IsVisableState = true;
 			MainTabControlVM.IsVisableState = false;
