@@ -1,4 +1,5 @@
 ﻿using Core;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Client.WebSocket
 	{
 		private const int BufferSize = 1024;
 
-		private static Uri _uri = new Uri("ws://localhost:5050/ws");
+		private static Uri _uri = new Uri("ws://localhost:8080/ws");
 
 		private static IPHostEntry _host = Dns.GetHostEntry(_uri.Host);
 
@@ -39,11 +40,11 @@ namespace Client.WebSocket
 		{
 			get
 			{
-				return Game;
+				return _game;
 			}
 			set
 			{
-				Game = value;
+				_game = value;
 				DataChanged?.Invoke(this, EventArgs.Empty);
 			}
 		}
@@ -88,7 +89,6 @@ namespace Client.WebSocket
 				_socket.Bind(_ipEndPoint);
 				_socket.Listen(4);
 
-				// Программа приостанавливается, ожидая входящее соединение
 				_listener = _socket.Accept();
 				_isRunning = true;
 
@@ -97,7 +97,6 @@ namespace Client.WebSocket
 				{
 					string data = null;
 
-					// Мы дождались клиента, пытающегося с нами соединиться
 					int bytesRec;
 
 					do
@@ -135,8 +134,11 @@ namespace Client.WebSocket
 				json.ContainsKey("state") &&
 				json["state"].ToString() == "started")
 			{
+
 				//TODO: Десериализация вместо создания объекта
-				Game = new Game();
+				var jsonGame = JsonConvert.DeserializeObject<Game>((string)json);
+				Game.SessionID = jsonGame.SessionID;
+				Game.State = jsonGame.State;
 				return;
 			}
 		}

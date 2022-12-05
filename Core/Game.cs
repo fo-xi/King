@@ -9,19 +9,19 @@ namespace Core
 {
     public class Game : ViewModelBase
     {
-        private string _sessioID;
+        private string _sessionID;
 
         private GameState _state;
 
-        public string SessioID
+        public string SessionID
         {
             get
             {
-                return _sessioID;
+                return _sessionID;
             }
             set
             {
-                _sessioID = value;
+                _sessionID = value;
                 RaisePropertyChanged();
             }
         }
