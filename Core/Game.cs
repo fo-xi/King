@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Core
 {
@@ -13,6 +14,7 @@ namespace Core
 
         private GameState _state;
 
+        [JsonProperty("game_session_id")]
         public string SessionID
         {
             get
@@ -26,6 +28,7 @@ namespace Core
             }
         }
 
+        [JsonProperty("game_state")]
         public GameState State
         {
             get

@@ -1,4 +1,4 @@
-﻿using Client.WebSocket;
+﻿using Client.WebSocketClient;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;

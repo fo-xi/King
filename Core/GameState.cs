@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace Core
 
         private List<Card> _cards = new List<Card>();
 
+        [JsonProperty("state")]
         public string State
         {
             get
@@ -36,6 +38,7 @@ namespace Core
             }
         }
 
+        [JsonProperty("started_by")]
         public int StartedBy
         {
             get
@@ -49,6 +52,7 @@ namespace Core
             }
         }
 
+        [JsonProperty("game_num")]
         public int GameNum
         {
             get
@@ -62,6 +66,7 @@ namespace Core
             }
         }
 
+        [JsonProperty("circle_num")]
         public int CircleNum
         {
             get
@@ -75,6 +80,7 @@ namespace Core
             }
         }
 
+        [JsonProperty("player_turn")]
         public int PlayerTurn
         {
             get
@@ -88,6 +94,7 @@ namespace Core
             }
         }
 
+        [JsonProperty("players")]
         public List<Player> Players
         {
             get
@@ -101,6 +108,7 @@ namespace Core
             }
         }
 
+        [JsonProperty("cards")]
         public List<Card> Cards
         {
             get

@@ -6,8 +6,7 @@
 			 xmlns:local="clr-namespace:King.Controls"
 			 mc:Ignorable="d" 
 			 d:DesignHeight="450" 
-			 d:DesignWidth="800"
-			 Background="#233444">
+			 d:DesignWidth="800">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="VisibilityConverter"></BooleanToVisibilityConverter>

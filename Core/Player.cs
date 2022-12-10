@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace Core
 
         private int _points;
 
+        [JsonProperty("player_id")]
         public int ID
         {
             get
@@ -28,6 +30,7 @@ namespace Core
             }
         }
 
+        [JsonProperty("player_name")]
         public string Name
         {
             get
@@ -41,6 +44,7 @@ namespace Core
             }
         }
 
+        [JsonProperty("points")]
         public int Points
         {
             get
