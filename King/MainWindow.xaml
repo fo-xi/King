@@ -20,13 +20,11 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Grid
+    <Grid x:Name="grid"
         HorizontalAlignment="Stretch"
         VerticalAlignment="Stretch">
         <Controls:RulesControl 
             DataContext="{Binding RulesControlVM}"/>
-        <Controls:MainTabControl 
-            DataContext="{Binding MainTabControlVM}"/>
         <Controls:StartControl 
             DataContext="{Binding StartControlVM}"/>
     </Grid>

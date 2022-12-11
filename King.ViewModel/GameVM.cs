@@ -3,19 +3,20 @@ using System.Collections.Generic;
 
 namespace King.ViewModel
 {
-	public class GameVM
+	/// <summary>
+	/// Колода всех 32 карт по порядку с картинки
+	/// </summary>
+	public class GameVM 
 	{
 		#region Fields
 
 		private List<CardVM> _cards = new List<CardVM>();
 
-		private List<DeckVM> _decks = new List<DeckVM>();
-
 		#endregion
 
 		#region Properties
 
-		public List<CardVM> Cards
+		public List<CardVM> CardsOLD
 		{
 			get
 			{
@@ -23,16 +24,13 @@ namespace King.ViewModel
 			}
 		}
 
-		public List<DeckVM> Decks
-		{
-			get
-			{
-				return _decks;
-			}
-		}
-
 		internal Random Random = new Random();
 
-		#endregion
-	}
+		public GameVM ()
+		{
+
+		}
+
+        #endregion
+    }
 }

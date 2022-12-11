@@ -63,13 +63,13 @@ namespace King.ViewModel
 
 		public RelayCommand CloseWindowCommand { get; set; }
 
-		public MainWindowVM()
+		public MainWindowVM(WebSocketClient webSocketClient)
 		{
-			_webSocketClient = new WebSocketClient();
-
-			MainTabControlVM = new MainTabControlVM(_webSocketClient);
+			MainTabControlVM = new MainTabControlVM(webSocketClient);
 			RulesControlVM = new RulesControlVM();
 			StartControlVM = new StartControlVM();
+
+			_webSocketClient = webSocketClient;
 
 			MainTabControlVM.OpenRulesCommand = new RelayCommand(OpenRules);
 			RulesControlVM.BackCommand = new RelayCommand(Back);
@@ -103,7 +103,6 @@ namespace King.ViewModel
 		private void CloseWindow()
         {
 			_webSocketClient.CloseClient();
-
 		}
 	}
 }

@@ -38,7 +38,6 @@ namespace Client.WebSocketClient
 		public void StartGame(string playerName)
 		{
 			// Формируем запрос
-			//var json = new JObject();
 			var data = new
 			{
 				session_id = _sessionID,
@@ -46,7 +45,7 @@ namespace Client.WebSocketClient
 				action = "play",
 			};
 
-			//Tranform it to Json object
+			// Трансформируем
 			string jsonData = JsonConvert.SerializeObject(data);
 			_webSocketClient.Send(jsonData);
 		}
@@ -93,7 +92,7 @@ namespace Client.WebSocketClient
                 state == "started")
 			{
 				Game = JsonConvert.DeserializeObject<Game>(json.ToString());
-                return;
+				return;
 			}
 		}
 	}

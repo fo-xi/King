@@ -1,4 +1,5 @@
-﻿using King.Controls;
+﻿using Client.WebSocketClient;
+using King.Controls;
 using King.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,25 +7,35 @@ using System.Windows.Input;
 
 namespace King
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
-    {
-        #region Fields
+	/// <summary>
+	/// Логика взаимодействия для MainWindow.xaml
+	/// </summary>
+	public partial class MainWindow : Window
+	{
+		#region Fields
 
-        private MainWindowVM _mainWindowVM = new MainWindowVM();
+		private WebSocketClient _webSocketClient;
 
-        #endregion
+		private MainWindowVM _mainWindowVM;
 
-        #region Constructor
+		#endregion
 
-        public MainWindow()
-        {
-            InitializeComponent();
-            DataContext = _mainWindowVM;
-        }
+		#region Constructor
 
-        #endregion
-    }
+		public MainWindow()
+		{
+			InitializeComponent();
+
+			_webSocketClient = new WebSocketClient();
+			_mainWindowVM = new MainWindowVM(_webSocketClient);
+			DataContext = _mainWindowVM;
+
+			grid.Children.Add(new MainTabControl(_webSocketClient)
+			{
+				DataContext = _mainWindowVM.MainTabControlVM
+			});
+		}
+
+		#endregion
+	}
 }

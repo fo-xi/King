@@ -19,6 +19,8 @@ namespace King.ViewModel
 
         private WebSocketClient _webSocketClient;
 
+        private DeckVM _deckVM;
+
         public CurrentAccountVM CurrentAccountVM
         {
             get
@@ -71,7 +73,7 @@ namespace King.ViewModel
 
         private void OnDataChanged(object sender, EventArgs e)
         {
-            //CurrentAccountVM.FirstPlayerScore = _webSocketClient.....
+            _deckVM = new DeckVM(_webSocketClient.Game.State.Cards);
         }
     }
 }

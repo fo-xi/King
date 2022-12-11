@@ -128,10 +128,10 @@ namespace King.Controls
 			double localCardSpacerX = CardSpacerX;
 			double localCardSpacerY = CardSpacerY;
 
-			if ((MaxCardsSpace > 0) && (Deck.Cards.Count > MaxCardsSpace))
+			if ((MaxCardsSpace > 0) && (Deck.CARDS.Count > MaxCardsSpace))
 			{
-				localCardSpacerX = (CardSpacerX * MaxCardsSpace) / Deck.Cards.Count;
-				localCardSpacerY = (CardSpacerY * MaxCardsSpace) / Deck.Cards.Count;
+				localCardSpacerX = (CardSpacerX * MaxCardsSpace) / Deck.CARDS.Count;
+				localCardSpacerY = (CardSpacerY * MaxCardsSpace) / Deck.CARDS.Count;
 			}
 
 			Duration duration = new Duration(TimeSpan.FromSeconds(0.2));
@@ -139,9 +139,9 @@ namespace King.Controls
 			Storyboard sb = new Storyboard();
 			sb.Duration = duration;
 
-			for (int i = 0; i < Deck.Cards.Count; i++)
+			for (int i = 0; i < Deck.CARDS.Count; i++)
 			{
-				CardShape cardShape = game.GetCardShape(Deck.Cards[i]);
+				CardShape cardShape = game.GetCardShape(Deck.CARDS[i]);
 				if (cardShape.Parent != LayoutRoot)
 				{
 					LayoutRoot.Children.Add(cardShape);

@@ -16,8 +16,6 @@ namespace King.Controls
 
 		private List<DeckShape> _deckShapes = new List<DeckShape>();
 
-		private GameVM _game = new GameVM();
-
 		#endregion
 
 		#region Properties

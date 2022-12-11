@@ -175,6 +175,14 @@
     <Resource Include="Resources\TableColor.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Client\Client.csproj">
+      <Project>{62abb173-d2f8-4205-b33e-63bbc1846b44}</Project>
+      <Name>Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{523120CC-92B1-4CE0-B1CC-E05ADBACD6CA}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\King.ViewModel\King.ViewModel.csproj">
       <Project>{72AA7126-38AF-427E-9F7B-73E34E6DA0F5}</Project>
       <Name>King.ViewModel</Name>

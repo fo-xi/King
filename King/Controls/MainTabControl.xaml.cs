@@ -1,18 +1,9 @@
-﻿using King.ViewModel;
+﻿using Client.WebSocketClient;
+using King.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace King.Controls
 {
@@ -29,15 +20,19 @@ namespace King.Controls
 
         #region Fields
 
+        private WebSocketClient _webSocketClient;
+
         private DeckVM _dealer;
 
         #endregion
 
         #region Constructor
 
-        public MainTabControl()
+        public MainTabControl(WebSocketClient webSocketClient)
         {
             InitializeComponent();
+
+            _webSocketClient = webSocketClient;
         }
 
         #endregion
@@ -54,12 +49,12 @@ namespace King.Controls
 
         private void DealNextHand()
         {
-            if (_dealer.Cards.Count < 32)
+            if (_dealer.CARDS.Count < 32)
             {
                 CollectCards();
             }
 
-            _dealer.Shuffle(5);
+            //_dealer.Shuffle(5);
 
             for (var cardCount = 0; cardCount < CardsPerPlayer; cardCount++)
             {
@@ -69,7 +64,7 @@ namespace King.Controls
                 _dealer.Draw(Player4Hand.Deck, 1);
             }
 
-            Player4Hand.Deck.Sort();
+            //Player4Hand.Deck.Sort();
             Player4Hand.Deck.MakeAllCardsDragable(true);
             Player4Hand.Deck.FlipAllCards();
 
@@ -77,11 +72,11 @@ namespace King.Controls
 
         private void CollectCards()
         {
-            Player1Hand.Deck.Draw(_dealer, Player1Hand.Deck.Cards.Count);
-            Player2Hand.Deck.Draw(_dealer, Player2Hand.Deck.Cards.Count);
-            Player3Hand.Deck.Draw(_dealer, Player3Hand.Deck.Cards.Count);
+            Player1Hand.Deck.Draw(_dealer, Player1Hand.Deck.CARDS.Count);
+            Player2Hand.Deck.Draw(_dealer, Player2Hand.Deck.CARDS.Count);
+            Player3Hand.Deck.Draw(_dealer, Player3Hand.Deck.CARDS.Count);
             Player4Hand.Deck.FlipAllCards();
-            Player4Hand.Deck.Draw(_dealer, Player4Hand.Deck.Cards.Count);
+            Player4Hand.Deck.Draw(_dealer, Player4Hand.Deck.GameStateVM.Cards.Count);
         }
 
         private void SetupDealerDeck()
@@ -116,7 +111,7 @@ namespace King.Controls
                 Enabled = true
             };
 
-            Player4Trick.Deck = new DeckVM(GameShape.Game)
+            Player4Trick.Deck = new DeckVM(_webSocketClient.Game.State.Cards)
             {
                 Enabled = true
             };
@@ -168,12 +163,11 @@ namespace King.Controls
 
         private void LayoutRoot_Loaded(object sender, RoutedEventArgs e)
         {
-            NewGame();
+            //NewGame();
 
             GameShape.CardMouseLeftButtonDown +=
                 new MouseButtonEventHandler(GameShape_CardMouseLeftButtonDown);
             GameShape.CardDrag += new CardDragEventHandler(GameShape_CardDrag);
-
         }
 
         private void Dealer_DeckMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -218,6 +212,8 @@ namespace King.Controls
 
         private void MainWindow_DealButton_Click(object sender, RoutedEventArgs e)
         {
+            NewGame();
+
             var result = MessageBox.Show("Deal a new hand?", "Confirm New Deal", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.No) return;
 

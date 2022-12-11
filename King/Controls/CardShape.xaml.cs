@@ -301,9 +301,9 @@ namespace King.Controls
 
 				GameShape gameShape = GameShape.GetGameShape(this.Card.Deck.Game);
 
-				for (int i = this.Card.Deck.Cards.IndexOf(this.Card); i < this.Card.Deck.Cards.Count; i++)
+				for (int i = this.Card.Deck.CARDS.IndexOf(this.Card); i < this.Card.Deck.CARDS.Count; i++)
 				{
-					CardShape cardShape = gameShape.GetCardShape(this.Card.Deck.Cards[i]);
+					CardShape cardShape = gameShape.GetCardShape(this.Card.Deck.CARDS[i]);
 					Canvas.SetLeft(cardShape, Canvas.GetLeft(cardShape) + dx);
 					Canvas.SetTop(cardShape, Canvas.GetTop(cardShape) + dy);
 					Canvas.SetZIndex(gameShape.GetDeckShape(this.Card.Deck), 100);
