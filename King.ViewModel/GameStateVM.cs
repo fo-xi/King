@@ -23,9 +23,13 @@ namespace King.ViewModel
 
         //private List<Player> _players = new List<Player>();
 
-        private List<DeckVM> _deck = new List<DeckVM>();
+        //private List<CardVM> _bribes = new List<CardVM>();
 
         private List<CardVM> _cards = new List<CardVM>();
+
+        //private List<CardVM> _bribes = new List<CardVM>();
+
+        private List<DeckVM> _deck = new List<DeckVM>();
 
         public Dictionary<string, CardSuit> GetCardSuit { get; }
 
@@ -119,6 +123,19 @@ namespace King.ViewModel
                 RaisePropertyChanged();
             }
         }
+
+        //public List<CardVM> Bribes
+        //{
+        //    get
+        //    {
+        //        return _bribes;
+        //    }
+        //    set
+        //    {
+        //        _bribes = value;
+        //        RaisePropertyChanged();
+        //    }
+        //}
 
         public List<DeckVM> Deck
         {

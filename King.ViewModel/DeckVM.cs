@@ -44,7 +44,6 @@ namespace King.ViewModel
             set
             {
 				_gameStateVM = value;
-
 			}
 		}
 
