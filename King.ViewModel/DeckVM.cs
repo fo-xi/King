@@ -15,23 +15,23 @@ namespace King.ViewModel
 	{
 		#region Fields
 
-		private List<CardVM> _CARDS = new List<CardVM>();
+		private List<CardVM> _cards = new List<CardVM>();
 
 		private GameStateVM _gameStateVM;
 
         private bool _enabled = true;
 
-		private GameVM _game;
-
 		#endregion
 
 		#region Properties
 
-		public List<CardVM> CARDS
+		public Dictionary<string, CardSuit> GetCardSuit { get; }
+
+		public List<CardVM> Cards
 		{
 			get
 			{
-				return _CARDS;
+				return _cards;
 			}
 		}
 
@@ -60,19 +60,11 @@ namespace King.ViewModel
 			}
 		}
 
-		public GameVM Game
-		{
-			get
-			{
-				return _game;
-			}
-		}
-
 		public CardVM TopCard
 		{
 			get
 			{
-				return CARDS.Count > 0 ? CARDS[CARDS.Count - 1] : null;
+				return Cards.Count > 0 ? Cards[Cards.Count - 1] : null;
 			}
 		}
 
@@ -86,63 +78,35 @@ namespace King.ViewModel
 
 		#region Constructors
 
-		public DeckVM(GameVM game)
+		public DeckVM()
 		{
-			_game = game;
+
 		}
 
-        public DeckVM(List<Card> cards)
+		public DeckVM(GameStateVM gameStateVM)
         {
-			GameStateVM = new GameStateVM(cards);
-        }
-
-        public DeckVM(int numberOfDecks, int uptoNumber, GameVM game)
-			: this(game)
-		{
-			for (int deck = 0; deck < numberOfDecks; deck++)
-			{
-				for (int suit = 1; suit <= 4; suit++)
-				{
-					for (int number = 1; number <= uptoNumber; number++)
-					{
-						if (number >= 2 && number <= 6)
-						{
-							continue;
-						}
-
-						CARDS.Add(new CardVM(number, suit));
-					}
-				}
-			}
-
-			//Shuffle();
+			GameStateVM = gameStateVM;
+			GameStateVM.Deck.Add(this);
 		}
 
-		#endregion
-
-		#region Sort Methods
-
-		/*public void Shuffle()
+		public DeckVM(int numberOfDecks, List<Card> cards, GameStateVM gameStateVM) 
+			: this(gameStateVM)
 		{
-			Shuffle(1);
-		}*/
-
-		/*public void Shuffle(int times)
-		{
-			for (int time = 0; time < times; time++)
+			GetCardSuit = new Dictionary<string, CardSuit>
 			{
-				for (int i = 0; i < CARDS.Count; i++)
+				{ "hearts", CardSuit.Hearts },
+				{ "clubs", CardSuit.Clubs },
+				{ "diamonds", CardSuit.Diamonds },
+				{ "spades", CardSuit.Spades }
+			};
+
+			for (int i = 0; i < numberOfDecks; i++)
+			{
+				foreach (var card in cards)
 				{
-					CARDS[i].Shuffle();
+					Cards.Add(new CardVM(card.Magnitude, Convert.ToInt32(GetCardSuit[card.Suit]), this));
 				}
 			}
-
-			SortChanged?.Invoke(this, null);
-		}*/
-
-		public void Sort()
-		{
-			SortChanged?.Invoke(this, null);
 		}
 
 		#endregion
@@ -163,7 +127,7 @@ namespace King.ViewModel
 
 		public void FlipAllCards()
 		{
-			foreach (var t in CARDS)
+			foreach (var t in Cards)
 			{
 				t.Visible = !t.Visible;
 			}
@@ -171,7 +135,7 @@ namespace King.ViewModel
 
 		public void MakeAllCardsDragable(bool isDragable)
 		{
-			foreach (var t in CARDS)
+			foreach (var t in Cards)
 			{
 				t.IsDragable = isDragable;
 			}

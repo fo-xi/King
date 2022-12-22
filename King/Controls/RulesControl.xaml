@@ -6,8 +6,7 @@
 			 xmlns:local="clr-namespace:King.Controls"
 			 mc:Ignorable="d" 
 			 Height="770.5"
-			 Width="1194"
-			 Background="#233444">
+			 Width="1194">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="VisibilityConverter"></BooleanToVisibilityConverter>
@@ -26,6 +25,11 @@
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
+        <Grid.Background>
+            <ImageBrush
+                ImageSource="../Resources/TableColorNew.jpg" Stretch="Fill"/>
+        </Grid.Background>
+        
 		<Canvas Margin="0 0 0 60" Grid.Row="0">
 			<TextBlock
 				Grid.Row="0"

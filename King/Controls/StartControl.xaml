@@ -12,16 +12,21 @@
         <BooleanToVisibilityConverter x:Key="VisibilityConverter"></BooleanToVisibilityConverter>
     </UserControl.Resources>
 
+    <UserControl.Background>
+        <ImageBrush
+                ImageSource="../Resources/TableColorNew.jpg" Stretch="Fill"/>
+    </UserControl.Background>
+
     <Grid 
         VerticalAlignment="Center"
         Visibility="{Binding IsVisableState, Converter={StaticResource VisibilityConverter}}">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
-
-		<TextBlock
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <TextBlock
 			Grid.Row="0"
 			FontSize="19"
 			Foreground="#D6DBEF"

@@ -56,9 +56,9 @@ namespace King.ViewModel
 			{
 				if (_deck != value)
 				{
-					_deck.CARDS.Remove(this);
+					_deck.Cards.Remove(this);
 					_deck = value;
-					_deck.CARDS.Add(this);
+					_deck.Cards.Add(this);
                     DeckChanged?.Invoke(this, null);
                 }
 			}
@@ -199,31 +199,14 @@ namespace King.ViewModel
 
         #region Constructors
 
-        /*public CardVM(int number, int suit, DeckVM deck)
+        public CardVM(int number, int suit, DeckVM deck)
         {
 			_rank = (CardRank)number;
 			_suit = (CardSuit)suit;
 			_deck = deck;
-			_deck.Game.CardsOLD.Add(this);
-		}*/
-
-
-        public CardVM(int number, int suit)
-		{
-			_rank = (CardRank)number;
-			_suit = (CardSuit)suit;
+			_deck.GameStateVM.Cards.Add(this);
 		}
 
 		#endregion
-
-		#region Methods
-
-		public void Shuffle()
-		{
-			Deck.CARDS.Remove(this);
-			Deck.CARDS.Insert(Deck.Game.Random.Next(0, Deck.CARDS.Count), this);
-		}
-
-        #endregion
     }
 }

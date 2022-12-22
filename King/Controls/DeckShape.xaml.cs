@@ -121,17 +121,17 @@ namespace King.Controls
 
 		public void UpdateCardShapes()
 		{
-			GameShape game = GameShape.GetGameShape(Deck.Game);
+			GameShape game = GameShape.GetGameShape(Deck.GameStateVM);
 			NextCardX = 0;
 			NextCardY = 0;
 
 			double localCardSpacerX = CardSpacerX;
 			double localCardSpacerY = CardSpacerY;
 
-			if ((MaxCardsSpace > 0) && (Deck.CARDS.Count > MaxCardsSpace))
+			if ((MaxCardsSpace > 0) && (Deck.Cards.Count > MaxCardsSpace))
 			{
-				localCardSpacerX = (CardSpacerX * MaxCardsSpace) / Deck.CARDS.Count;
-				localCardSpacerY = (CardSpacerY * MaxCardsSpace) / Deck.CARDS.Count;
+				localCardSpacerX = (CardSpacerX * MaxCardsSpace) / Deck.Cards.Count;
+				localCardSpacerY = (CardSpacerY * MaxCardsSpace) / Deck.Cards.Count;
 			}
 
 			Duration duration = new Duration(TimeSpan.FromSeconds(0.2));
@@ -139,9 +139,9 @@ namespace King.Controls
 			Storyboard sb = new Storyboard();
 			sb.Duration = duration;
 
-			for (int i = 0; i < Deck.CARDS.Count; i++)
+			for (int i = 0; i < Deck.Cards.Count; i++)
 			{
-				CardShape cardShape = game.GetCardShape(Deck.CARDS[i]);
+				CardShape cardShape = game.GetCardShape(Deck.Cards[i]);
 				if (cardShape.Parent != LayoutRoot)
 				{
 					LayoutRoot.Children.Add(cardShape);

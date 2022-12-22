@@ -179,7 +179,7 @@ namespace King.Controls
 
 		private void CardVisibleChanged(object sender, EventArgs e)
 		{
-			var gameShape = GameShape.GetGameShape(this.Card.Deck.Game);
+			var gameShape = GameShape.GetGameShape(this.Card.Deck.GameStateVM);
 			var cardShape = gameShape.GetCardShape((CardVM)sender);
 
 			if (double.IsNaN(Canvas.GetLeft(cardShape)))
@@ -197,7 +197,7 @@ namespace King.Controls
 
 		private void CardDeckChanged(object sender, EventArgs e)
 		{
-			GameShape gameShape = GameShape.GetGameShape(this.Card.Deck.Game);
+			GameShape gameShape = GameShape.GetGameShape(this.Card.Deck.GameStateVM);
 			DeckShape oldDeck = (DeckShape)((Canvas)this.Parent).Parent;
 			DeckShape newDeck = gameShape.GetDeckShape(this.Card.Deck);
 
@@ -249,7 +249,7 @@ namespace King.Controls
 				imgCard.ReleaseMouseCapture();
 				_isDrag = false;
 
-				GameShape gameShape = GameShape.GetGameShape(this.Card.Deck.Game);
+				GameShape gameShape = GameShape.GetGameShape(this.Card.Deck.GameStateVM);
 				DeckShape oldDeckShape = gameShape.GetDeckShape(this.Card.Deck);
 				DeckShape nearestDeckShape = null;
 				double nearestDistance = double.MaxValue;
@@ -299,11 +299,11 @@ namespace King.Controls
 				double dx = newMousePos.X - _oldMousePos.X;
 				double dy = newMousePos.Y - _oldMousePos.Y;
 
-				GameShape gameShape = GameShape.GetGameShape(this.Card.Deck.Game);
+				GameShape gameShape = GameShape.GetGameShape(this.Card.Deck.GameStateVM);
 
-				for (int i = this.Card.Deck.CARDS.IndexOf(this.Card); i < this.Card.Deck.CARDS.Count; i++)
+				for (int i = this.Card.Deck.Cards.IndexOf(this.Card); i < this.Card.Deck.Cards.Count; i++)
 				{
-					CardShape cardShape = gameShape.GetCardShape(this.Card.Deck.CARDS[i]);
+					CardShape cardShape = gameShape.GetCardShape(this.Card.Deck.Cards[i]);
 					Canvas.SetLeft(cardShape, Canvas.GetLeft(cardShape) + dx);
 					Canvas.SetTop(cardShape, Canvas.GetTop(cardShape) + dy);
 					Canvas.SetZIndex(gameShape.GetDeckShape(this.Card.Deck), 100);

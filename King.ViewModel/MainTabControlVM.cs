@@ -73,7 +73,7 @@ namespace King.ViewModel
 
         private void OnDataChanged(object sender, EventArgs e)
         {
-            _deckVM = new DeckVM(_webSocketClient.Game.State.Cards);
+            _deckVM = new DeckVM();
         }
     }
 }

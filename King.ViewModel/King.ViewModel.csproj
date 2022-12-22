@@ -63,7 +63,6 @@
     <Compile Include="Enumerations\CardRank.cs" />
     <Compile Include="Enumerations\CardSuit.cs" />
     <Compile Include="GameStateVM.cs" />
-    <Compile Include="GameVM.cs" />
     <Compile Include="MainTabControlVM.cs" />
     <Compile Include="MainWindowVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

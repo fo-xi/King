@@ -37,7 +37,7 @@ namespace King.Controls
 			}
 		}
 
-		public GameVM Game { get; set; }
+		public GameStateVM GameStateVM { get; set; }
 
 		#endregion
 
@@ -122,11 +122,11 @@ namespace King.Controls
 
 		#region Static Methods
 
-		public static GameShape GetGameShape(GameVM game)
+		public static GameShape GetGameShape(GameStateVM game)
 		{
 			for (int i = 0; i < GameShapes.Count; i++)
 			{
-				if (GameShapes[i].Game == game)
+				if (GameShapes[i].GameStateVM == game)
 				{
 					return GameShapes[i];
 				}

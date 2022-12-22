@@ -8,6 +8,6 @@
              Height="770.5"
 			 Width="1194">
 	<Image 
-        Source="/Resources/TableColor.jpg" 
+        Source="/Resources/TableColorNew.jpg" 
         Stretch="Fill" />
 </UserControl>
