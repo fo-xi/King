@@ -1,6 +1,8 @@
 ﻿using Client.WebSocketClient;
+using Core;
 using King.ViewModel;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -26,7 +28,7 @@ namespace King.Controls
 
 		private WebSocketClient _webSocketClient;
 
-		private GameVM _gameVM = new GameVM();
+		private MainTabControlVM _mainTabControlVM;
 
 		private DeckVM _dealer;
 
@@ -34,20 +36,15 @@ namespace King.Controls
 
 		#region Constructor
 
-		public MainTabControl(WebSocketClient webSocketClient)
+		public MainTabControl(WebSocketClient webSocketClient, MainTabControlVM dataContext)
 		{
 			InitializeComponent();
 
 			_webSocketClient = webSocketClient;
-            _webSocketClient.DataChanged +=
-				WebSocketClientDataChanged;
-		}
+			_webSocketClient.DataChanged += OnDataChanged;
 
-        private void WebSocketClientDataChanged(object sender, EventArgs e)
-        {
-			_gameVM.GameSessionID = _webSocketClient.Game.SessionID;
-			_gameVM.GameStateVM.GameStateCore = _webSocketClient.Game.GameState;
-			//odkPOSmbpomb
+			_mainTabControlVM = dataContext;
+			DataContext = dataContext;
 		}
 
 		#endregion
@@ -64,15 +61,7 @@ namespace King.Controls
 
 		private void NewGame()
 		{
-
-			//_gameVM.GameSessionID = _webSocketClient.Game.SessionID;
-			//_gameVM.GameState.State = _webSocketClient.Game.State.State;
-			//_gameVM.GameState.StartedBy = _webSocketClient.Game.State.StartedBy;
-			//_gameVM.GameState.GameNum = _webSocketClient.Game.State.GameNum;
-			//_gameVM.GameStateVM.CircleNum = _webSocketClient.Game.State.CircleNum;
-			//_gameVM.GameState.PlayerTurn = _webSocketClient.Game.State.PlayerTurn;
-			//_gameVM.GameState.Players.  = _webSocketClient.Game.State.Players;
-			GameShape.GameStateVM = _gameVM.GameStateVM;
+			GameShape.GameStateVM = _mainTabControlVM.GameVM.GameStateVM;
 			SetupDealerDeck();
 			SetupPlayerHandDecks();
 			SetupTrickDecks();
@@ -104,8 +93,9 @@ namespace King.Controls
 
 		private void SetupDealerDeck()
 		{
-			_dealer = new DeckVM(NumberDecks, _webSocketClient.Game.GameState.Cards,
-				GameShape.GameStateVM);
+			_dealer = new DeckVM(NumberDecks, 
+				new ObservableCollection<Card>(_webSocketClient.Game.GameState.Cards),
+				GameShape.GameStateVM, _webSocketClient.PlayerID);
 
 			_dealer.MakeAllCardsDragable(false);
 			_dealer.Enabled = true;
@@ -119,22 +109,22 @@ namespace King.Controls
 
 		private void SetupTrickDecks()
 		{
-			Player1Trick.Deck = new DeckVM(GameShape.GameStateVM)
+			Player1Trick.Deck = new DeckVM(GameShape.GameStateVM, _mainTabControlVM.FirstPlayer.ID)
 			{
 				Enabled = true
 			};
 
-			Player2Trick.Deck = new DeckVM(GameShape.GameStateVM)
+			Player2Trick.Deck = new DeckVM(GameShape.GameStateVM, _mainTabControlVM.SecondPlayer.ID)
 			{
 				Enabled = true
 			};
 
-			Player3Trick.Deck = new DeckVM(GameShape.GameStateVM)
+			Player3Trick.Deck = new DeckVM(GameShape.GameStateVM, _mainTabControlVM.ThirdPlayer.ID)
 			{
 				Enabled = true
 			};
 
-			Player4Trick.Deck = new DeckVM(GameShape.GameStateVM)
+			Player4Trick.Deck = new DeckVM(GameShape.GameStateVM, _webSocketClient.PlayerID)
 			{
 				Enabled = true
 			};
@@ -152,19 +142,19 @@ namespace King.Controls
 
 		private void SetupPlayerHandDecks()
 		{
-			Player1Hand.Deck = new DeckVM(GameShape.GameStateVM)
+			Player1Hand.Deck = new DeckVM(GameShape.GameStateVM, _mainTabControlVM.FirstPlayer.ID)
 			{
 				Enabled = true
 			};
-			Player2Hand.Deck = new DeckVM(GameShape.GameStateVM)
+			Player2Hand.Deck = new DeckVM(GameShape.GameStateVM, _mainTabControlVM.SecondPlayer.ID)
 			{
 				Enabled = true
 			};
-			Player3Hand.Deck = new DeckVM(GameShape.GameStateVM)
+			Player3Hand.Deck = new DeckVM(GameShape.GameStateVM, _mainTabControlVM.ThirdPlayer.ID)
 			{
 				Enabled = true
 			};
-			Player4Hand.Deck = new DeckVM(GameShape.GameStateVM)
+			Player4Hand.Deck = new DeckVM(GameShape.GameStateVM, _webSocketClient.PlayerID)
 			{
 				Enabled = true
 			};
@@ -183,6 +173,11 @@ namespace King.Controls
 		#endregion
 
 		#region Event Handlers
+
+		private void OnDataChanged(object sender, EventArgs e)
+		{
+			//Логика перемещения карт
+		}
 
 		private void LayoutRoot_Loaded(object sender, RoutedEventArgs e)
 		{

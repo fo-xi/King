@@ -1,8 +1,10 @@
-﻿using Core;
+﻿using Client.WebSocketClient;
+using Core;
 using GalaSoft.MvvmLight;
 using King.ViewModel.Enumerations;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +13,7 @@ namespace King.ViewModel
 {
     public class GameStateVM : ViewModelBase
     {
-        private GameState _gameStateCore;
+        private WebSocketClient _webSocketClient;
 
         private string _state;
 
@@ -29,36 +31,20 @@ namespace King.ViewModel
 
         private List<CardVM> _bribe = new List<CardVM>();
 
-        private List<DeckVM> _deck = new List<DeckVM>();
+        private List<DeckVM> _decks = new List<DeckVM>();
 
         public Dictionary<string, CardSuit> GetCardSuit { get; }
-
-        public GameState GameStateCore
-        {
-            get
-            {
-                return _gameStateCore;
-            }
-            set
-            {
-                _gameStateCore = value;
-                RaisePropertyChanged();
-                RaisePropertyChanged(nameof(State));
-                RaisePropertyChanged(nameof(StartedBy));
-                RaisePropertyChanged(nameof(GameNum));
-                RaisePropertyChanged(nameof(CircleNum));
-                RaisePropertyChanged(nameof(PlayerTurn));
-                RaisePropertyChanged(nameof(Players));
-                RaisePropertyChanged(nameof(Cards));
-                RaisePropertyChanged(nameof(Bribe));
-            }
-        }
 
         public string State
         {
             get
             {
-                return GameStateCore.State;
+                return _state;
+            }
+            set
+            {
+                _state = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -66,14 +52,25 @@ namespace King.ViewModel
         {
             get
             {
-                return GameStateCore.StartedBy;
+                return _startedBy;
+            }
+            set
+            {
+                _startedBy = value;
+                RaisePropertyChanged();
             }
         }
+
         public int GameNum
         {
             get
             {
-                return GameStateCore.GameNum;
+                return _gameNum;
+            }
+            set
+            {
+                _gameNum = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -81,7 +78,12 @@ namespace King.ViewModel
         {
             get
             {
-                return GameStateCore.CircleNum;
+                return _circleNum;
+            }
+            set
+            {
+                _circleNum = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -89,15 +91,25 @@ namespace King.ViewModel
         {
             get
             {
-                return GameStateCore.PlayerTurn;
+                return _playerTurn;
+            }
+            set
+            {
+                _playerTurn = value;
+                RaisePropertyChanged();
             }
         }
 
-        public List<Player> Players
+        public List<PlayerVM> Players
         {
             get
             {
-                return GameStateCore.Players;
+                return _players;
+            }
+            set
+            {
+                _players = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -127,22 +139,42 @@ namespace King.ViewModel
             }
         }
 
-        public List<DeckVM> Deck
+        public List<DeckVM> Decks
         {
             get
             {
-                return _deck;
+                return _decks;
             }
             set
             {
-                _deck = value;
+                _decks = value;
                 RaisePropertyChanged();
             }
         }
 
-        public GameStateVM()
+        public GameStateVM(WebSocketClient webSocketClient)
         {
-            
+            _webSocketClient = webSocketClient;
+            _webSocketClient.DataChanged += OnDataChanged;
+        }
+
+        private void OnDataChanged(object sender, EventArgs e)
+        {
+            var gameState = _webSocketClient.Game.GameState;
+            State = gameState.State;
+            StartedBy = gameState.StartedBy;
+            GameNum = gameState.GameNum;
+            CircleNum = gameState.CircleNum;
+            PlayerTurn = gameState.PlayerTurn;
+
+            Players = new List<PlayerVM>();
+            foreach (var player in gameState.Players)
+            {
+                Players.Add(new PlayerVM(player.ID, player.Name, player.Points));
+            }
+
+            var deck = Decks.Find(x => x.IDPlayer == _webSocketClient.PlayerID);
+            deck.UpdateCards(new ObservableCollection<Card>(gameState.Cards));
         }
     }
 }

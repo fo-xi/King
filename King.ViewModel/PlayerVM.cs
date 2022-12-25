@@ -54,9 +54,11 @@ namespace King.ViewModel
         }
 
 
-        public PlayerVM()
+        public PlayerVM(int id, string name, int points)
         {
-
+            ID = id;
+            Name = name;
+            Points = points;
         }
     }
 }

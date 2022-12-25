@@ -14,6 +14,8 @@ namespace King.ViewModel
 	{
 		#region Fields
 
+		private GameVM _gameVM;
+
 		private CurrentAccountVM _currentAccountVM;
 
 		private bool _isVisableState;
@@ -26,21 +28,28 @@ namespace King.ViewModel
 
 		private ObservableCollection<string> _playerNames;
 
-		#endregion
+		private PlayerVM _firstPlayer;
 
-		#region Player fields
+		private PlayerVM _secondPlayer;
 
-		private string _firstPlayer;
-
-		private string _secondPlayer;
-
-		private string _thirdPlayer;
-
-		private string _fourthPlayer;
+		private PlayerVM _thirdPlayer;
 
 		#endregion
 
 		#region Properties
+
+		public GameVM GameVM
+		{
+			get
+			{
+				return _gameVM;
+			}
+			set
+			{
+				_gameVM = value;
+				RaisePropertyChanged();
+			}
+		}
 
 		public CurrentAccountVM CurrentAccountVM
 		{
@@ -94,64 +103,6 @@ namespace King.ViewModel
 			}
 		}
 
-		#endregion
-
-		#region Player зroperties
-
-		public string FirstPlayer
-		{
-			get
-			{
-				return _firstPlayer;
-			}
-			set
-			{
-				_firstPlayer = value;
-				RaisePropertyChanged();
-			}
-		}
-
-		public string SecondPlayer
-		{
-			get
-			{
-				return _secondPlayer;
-			}
-			set
-			{
-				_secondPlayer = value;
-				RaisePropertyChanged();
-			}
-		}
-
-		public string ThirdPlayer
-		{
-			get
-			{
-				return _thirdPlayer;
-			}
-			set
-			{
-				_thirdPlayer = value;
-				RaisePropertyChanged();
-			}
-		}
-
-		public string FourthPlayer
-		{
-			get
-			{
-				return _fourthPlayer;
-			}
-			set
-			{
-				_fourthPlayer = value;
-				RaisePropertyChanged();
-			}
-		}
-
-		#endregion
-
 		public ObservableCollection<string> PlayerNames
 		{
 			get
@@ -165,6 +116,47 @@ namespace King.ViewModel
 			}
 		}
 
+		public PlayerVM FirstPlayer
+		{
+			get
+			{
+				return _firstPlayer;
+			}
+			set
+			{
+				_firstPlayer = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		public PlayerVM SecondPlayer
+		{
+			get
+			{
+				return _secondPlayer;
+			}
+			set
+			{
+				_secondPlayer = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		public PlayerVM ThirdPlayer
+		{
+			get
+			{
+				return _thirdPlayer;
+			}
+			set
+			{
+				_thirdPlayer = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		#endregion
+
 		#region Commands
 
 		public RelayCommand OpenRulesCommand { get; set; }
@@ -176,6 +168,7 @@ namespace King.ViewModel
 			_webSocketClient = webSocketClient;
 			_webSocketClient.DataChanged += OnDataChanged;
 
+			GameVM = new GameVM(_webSocketClient);
 			CurrentAccountVM = new CurrentAccountVM();
 
 
@@ -206,6 +199,10 @@ namespace King.ViewModel
 			{
 				PlayerNames[i] = players[i].Name;
 			}
+
+			FirstPlayer = new PlayerVM(players[0].ID, players[0].Name, players[0].Points);
+			SecondPlayer = new PlayerVM(players[1].ID, players[1].Name, players[1].Points);
+			ThirdPlayer = new PlayerVM(players[2].ID, players[2].Name, players[2].Points);
 		}
 
 		private string GetNameGame(string gameNumber)

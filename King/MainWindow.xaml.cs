@@ -30,10 +30,7 @@ namespace King
 			_mainWindowVM = new MainWindowVM(_webSocketClient);
 			DataContext = _mainWindowVM;
 
-			grid.Children.Add(new MainTabControl(_webSocketClient)
-			{
-				DataContext = _mainWindowVM.MainTabControlVM
-			});
+			grid.Children.Add(new MainTabControl(_webSocketClient, _mainWindowVM.MainTabControlVM));
 		}
 
 		#endregion

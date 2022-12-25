@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using Client.WebSocketClient;
+using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace King.ViewModel
 {
     public class GameVM : ViewModelBase
     {
+        private WebSocketClient _webSocketClient;
+
         private string _gameSessionID;
 
         private GameStateVM _gameStateVM;
@@ -39,9 +42,16 @@ namespace King.ViewModel
             }
         }
 
-        public GameVM()
+        public GameVM(WebSocketClient webSocketClient)
         {
-            GameStateVM = new GameStateVM();
+            GameStateVM = new GameStateVM(webSocketClient);
+            _webSocketClient = webSocketClient;
+            _webSocketClient.DataChanged += OnDataChanged;
+        }
+
+        private void OnDataChanged(object sender, EventArgs e)
+        {
+            GameSessionID = _webSocketClient.Game.GameState.State;
         }
     }
 }

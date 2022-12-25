@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight;
 using King.ViewModel.Enumerations;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -19,7 +20,9 @@ namespace King.ViewModel
 
 		private GameStateVM _gameStateVM;
 
-        private bool _enabled = true;
+		private int _idPlayer;
+
+		private bool _enabled = true;
 
 		#endregion
 
@@ -44,6 +47,18 @@ namespace King.ViewModel
             set
             {
 				_gameStateVM = value;
+			}
+		}
+
+		public int IDPlayer
+		{
+			get
+			{
+				return _idPlayer;
+			}
+			set
+			{
+				_idPlayer = value;
 			}
 		}
 
@@ -82,14 +97,15 @@ namespace King.ViewModel
 
 		}
 
-		public DeckVM(GameStateVM gameStateVM)
+		public DeckVM(GameStateVM gameStateVM, int idPlayer)
         {
 			GameStateVM = gameStateVM;
-			GameStateVM.Deck.Add(this);
+			GameStateVM.Decks.Add(this);
+			IDPlayer = idPlayer;
 		}
 
-		public DeckVM(int numberOfDecks, List<Card> cards, GameStateVM gameStateVM) 
-			: this(gameStateVM)
+		public DeckVM(int numberOfDecks, ObservableCollection<Card> cards, GameStateVM gameStateVM, int idPlayer) 
+			: this(gameStateVM, idPlayer)
 		{
 			GetCardSuit = new Dictionary<string, CardSuit>
 			{
@@ -105,6 +121,19 @@ namespace King.ViewModel
 				{
 					Cards.Add(new CardVM(card.Magnitude, Convert.ToInt32(GetCardSuit[card.Suit]), this));
 				}
+			}
+		}
+
+		#endregion
+
+		#region Methods
+
+		public void UpdateCards(ObservableCollection<Card> cards)
+        {
+			Cards.Clear();
+			foreach (var card in cards)
+			{
+				Cards.Add(new CardVM(card.Magnitude, Convert.ToInt32(GetCardSuit[card.Suit]), this));
 			}
 		}
 
