@@ -11,105 +11,95 @@ namespace King.ViewModel
 {
     public class GameStateVM : ViewModelBase
     {
-        //private string _state;
+        private GameState _gameStateCore;
 
-        //private int _startedBy;
+        private string _state;
 
-        //private int _gameNum;
+        private int _startedBy;
 
-        //private int _circleNum;
+        private int _gameNum;
 
-        //private int _playerTurn;
+        private int _circleNum;
 
-        //private List<Player> _players = new List<Player>();
+        private int _playerTurn;
 
-        //private List<CardVM> _bribes = new List<CardVM>();
+        private List<PlayerVM> _players = new List<PlayerVM>();
 
         private List<CardVM> _cards = new List<CardVM>();
 
-        //private List<CardVM> _bribes = new List<CardVM>();
+        private List<CardVM> _bribe = new List<CardVM>();
 
         private List<DeckVM> _deck = new List<DeckVM>();
 
         public Dictionary<string, CardSuit> GetCardSuit { get; }
 
+        public GameState GameStateCore
+        {
+            get
+            {
+                return _gameStateCore;
+            }
+            set
+            {
+                _gameStateCore = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(State));
+                RaisePropertyChanged(nameof(StartedBy));
+                RaisePropertyChanged(nameof(GameNum));
+                RaisePropertyChanged(nameof(CircleNum));
+                RaisePropertyChanged(nameof(PlayerTurn));
+                RaisePropertyChanged(nameof(Players));
+                RaisePropertyChanged(nameof(Cards));
+                RaisePropertyChanged(nameof(Bribe));
+            }
+        }
 
-        //public string State
-        //{
-        //    get
-        //    {
-        //        return _state;
-        //    }
-        //    set
-        //    {
-        //        _state = value;
-        //        RaisePropertyChanged();
-        //    }
-        //}
+        public string State
+        {
+            get
+            {
+                return GameStateCore.State;
+            }
+        }
 
-        //public int StartedBy
-        //{
-        //    get
-        //    {
-        //        return _startedBy;
-        //    }
-        //    set
-        //    {
-        //        _startedBy = value;
-        //        RaisePropertyChanged();
-        //    }
-        //}
-        //public int GameNum
-        //{
-        //    get
-        //    {
-        //        return _gameNum;
-        //    }
-        //    set
-        //    {
-        //        _gameNum = value;
-        //        RaisePropertyChanged();
-        //    }
-        //}
+        public int StartedBy
+        {
+            get
+            {
+                return GameStateCore.StartedBy;
+            }
+        }
+        public int GameNum
+        {
+            get
+            {
+                return GameStateCore.GameNum;
+            }
+        }
 
-        //public int CircleNum
-        //{
-        //    get
-        //    {
-        //        return _circleNum;
-        //    }
-        //    set
-        //    {
-        //        _circleNum = value;
-        //        RaisePropertyChanged();
-        //    }
-        //}
+        public int CircleNum
+        {
+            get
+            {
+                return GameStateCore.CircleNum;
+            }
+        }
 
-        //public int PlayerTurn
-        //{
-        //    get
-        //    {
-        //        return _playerTurn;
-        //    }
-        //    set
-        //    {
-        //        _playerTurn = value;
-        //        RaisePropertyChanged();
-        //    }
-        //}
+        public int PlayerTurn
+        {
+            get
+            {
+                return GameStateCore.PlayerTurn;
+            }
+        }
 
-        //public List<Player> Players
-        //{
-        //    get
-        //    {
-        //        return _players;
-        //    }
-        //    set
-        //    {
-        //        _players = value;
-        //        RaisePropertyChanged();
-        //    }
-        //}
+        public List<Player> Players
+        {
+            get
+            {
+                return GameStateCore.Players;
+            }
+        }
 
         public List<CardVM> Cards
         {
@@ -124,18 +114,18 @@ namespace King.ViewModel
             }
         }
 
-        //public List<CardVM> Bribes
-        //{
-        //    get
-        //    {
-        //        return _bribes;
-        //    }
-        //    set
-        //    {
-        //        _bribes = value;
-        //        RaisePropertyChanged();
-        //    }
-        //}
+        public List<CardVM> Bribe
+        {
+            get
+            {
+                return _bribe;
+            }
+            set
+            {
+                _bribe = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public List<DeckVM> Deck
         {

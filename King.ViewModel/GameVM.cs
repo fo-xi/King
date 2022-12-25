@@ -11,7 +11,7 @@ namespace King.ViewModel
     {
         private string _gameSessionID;
 
-        private GameStateVM _gameState;
+        private GameStateVM _gameStateVM;
 
         public string GameSessionID
         {
@@ -26,22 +26,22 @@ namespace King.ViewModel
             }
         }
 
-        public GameStateVM GameState
+        public GameStateVM GameStateVM
         {
             get
             {
-                return _gameState;
+                return _gameStateVM;
             }
             set
             {
-                _gameState = value;
+                _gameStateVM = value;
                 RaisePropertyChanged();
             }
         }
 
         public GameVM()
         {
-
+            GameStateVM = new GameStateVM();
         }
     }
 }

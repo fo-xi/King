@@ -9,34 +9,34 @@ namespace King.ViewModel
 {
     public class PlayerVM : ViewModelBase
     {
-        private int _playerID;
+        private int _id;
 
-        private string _playerName;
+        private string _name;
 
         private int _points;
 
-        public int PlayerID
+        public int ID
         {
             get
             {
-                return _playerID;
+                return _id;
             }
             set
             {
-                _playerID = value;
+                _id = value;
                 RaisePropertyChanged();
             }
         }
 
-        public string PlayerName
+        public string Name
         {
             get
             {
-                return _playerName;
+                return _name;
             }
             set
             {
-                _playerName = value;
+                _name = value;
                 RaisePropertyChanged();
             }
         }

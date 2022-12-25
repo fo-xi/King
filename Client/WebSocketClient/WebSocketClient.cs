@@ -15,7 +15,9 @@ namespace Client.WebSocketClient
 
 		private WebSocket _webSocketClient;
 
-		public event EventHandler DataChanged;
+		private int _playerID;
+
+		private string _playerName;
 
 		public Game Game
 		{
@@ -26,9 +28,38 @@ namespace Client.WebSocketClient
 			set
 			{
 				_game = value;
+				PlayerID = Game.GameState.Players.Find(x => x.Name.Contains(PlayerName)).ID;
 				DataChanged?.Invoke(this, EventArgs.Empty);
 			}
 		}
+
+		public int PlayerID
+		{
+			get
+			{
+				return _playerID;
+
+			}
+			set
+			{
+				_playerID = value;
+			}
+		}
+
+		public string PlayerName
+		{
+			get
+			{
+				return _playerName;
+
+			}
+			set
+			{
+				_playerName = value;
+			}
+		}
+
+		public event EventHandler DataChanged;
 
 		public WebSocketClient()
 		{
@@ -37,6 +68,8 @@ namespace Client.WebSocketClient
 
 		public void StartGame(string playerName)
 		{
+			PlayerName = playerName;
+
 			// Формируем запрос
 			var data = new
 			{

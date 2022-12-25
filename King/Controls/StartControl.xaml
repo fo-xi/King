@@ -12,10 +12,7 @@
         <BooleanToVisibilityConverter x:Key="VisibilityConverter"></BooleanToVisibilityConverter>
     </UserControl.Resources>
 
-    <UserControl.Background>
-        <ImageBrush
-                ImageSource="../Resources/TableColorNew.jpg" Stretch="Fill"/>
-    </UserControl.Background>
+
 
     <Grid 
         VerticalAlignment="Center"

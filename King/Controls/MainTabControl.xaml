@@ -66,8 +66,7 @@
 			Width="134"
 			Height="20"
 			Style="{StaticResource DefaultLabelText}"
-			Text="Player 1" 
-			RenderTransformOrigin="0.088,0.287" />
+			Text="{Binding PlayerNames[0]}" />
 
         <Controls:DeckShape 
 			x:Name="Player1Hand"
@@ -83,7 +82,7 @@
 			Width="134"
 			Height="20"
 			Style="{StaticResource DefaultLabelText}"
-			Text="Player 2" />
+			Text="{Binding PlayerNames[1]}" />
 
         <Controls:DeckShape 
 			x:Name="Player2Hand"
@@ -94,13 +93,12 @@
 			MaxCardsSpace="10" />
 
         <TextBlock 
-			Canvas.Top="209"
-			Canvas.Right="25"
+			Canvas.Left="1051"
+            Canvas.Top="209"
 			Width="90"
 			Height="20"
 			Style="{StaticResource DefaultLabelText}"
-			Text="Player 3" 
-			Canvas.Left="1061" />
+			Text="{Binding PlayerNames[2]}" />
 
         <Controls:DeckShape 
 			x:Name="Player3Hand"
@@ -113,13 +111,11 @@
 
         <TextBlock 
 			Canvas.Left="350"
-			Canvas.Bottom="225"
+			Canvas.Top="566" 
 			Width="134"
 			Height="20"
 			Style="{StaticResource DefaultLabelText}"
-			Text="Player 4" 
-			Canvas.Top="566" 
-			RenderTransformOrigin="0.445,0.523" />
+			Text="{Binding PlayerNames[3]}" />
 
         <Controls:DeckShape 
 			x:Name="Player4Hand"
@@ -176,9 +172,9 @@
             Text="{Binding CurrentNameGame}"/>
 
         <TextBlock
-            Canvas.Left="543"
-			Canvas.Top="552"
+            Canvas.Left="50"
+			Canvas.Top="572"
             Style="{StaticResource DefaultLabelText}"
-            Text="Ваш ход"/>
+            Text="{Binding PlayerMove}"/>
     </Canvas>
 </UserControl>

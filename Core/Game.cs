@@ -12,7 +12,7 @@ namespace Core
     {
         private string _sessionID;
 
-        private GameState _state;
+        private GameState _gameState;
 
         [JsonProperty("game_session_id")]
         public string SessionID
@@ -29,15 +29,15 @@ namespace Core
         }
 
         [JsonProperty("game_state")]
-        public GameState State
+        public GameState GameState
         {
             get
             {
-                return _state;
+                return _gameState;
             }
             set
             {
-                _state = value;
+                _gameState = value;
                 RaisePropertyChanged();
             }
         }

@@ -24,6 +24,8 @@ namespace Core
 
         private List<Card> _cards = new List<Card>();
 
+        private List<Card> _bribe = new List<Card>();
+
         [JsonProperty("state")]
         public string State
         {
@@ -118,6 +120,20 @@ namespace Core
             set
             {
                 _cards = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        [JsonProperty("bribe")]
+        public List<Card> Bribe
+        {
+            get
+            {
+                return _bribe;
+            }
+            set
+            {
+                _bribe = value;
                 RaisePropertyChanged();
             }
         }

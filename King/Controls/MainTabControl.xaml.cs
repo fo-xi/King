@@ -26,6 +26,8 @@ namespace King.Controls
 
 		private WebSocketClient _webSocketClient;
 
+		private GameVM _gameVM = new GameVM();
+
 		private DeckVM _dealer;
 
 		#endregion
@@ -37,6 +39,15 @@ namespace King.Controls
 			InitializeComponent();
 
 			_webSocketClient = webSocketClient;
+            _webSocketClient.DataChanged +=
+				WebSocketClientDataChanged;
+		}
+
+        private void WebSocketClientDataChanged(object sender, EventArgs e)
+        {
+			_gameVM.GameSessionID = _webSocketClient.Game.SessionID;
+			_gameVM.GameStateVM.GameStateCore = _webSocketClient.Game.GameState;
+			//odkPOSmbpomb
 		}
 
 		#endregion
@@ -53,7 +64,15 @@ namespace King.Controls
 
 		private void NewGame()
 		{
-			GameShape.GameStateVM = new GameStateVM();
+
+			//_gameVM.GameSessionID = _webSocketClient.Game.SessionID;
+			//_gameVM.GameState.State = _webSocketClient.Game.State.State;
+			//_gameVM.GameState.StartedBy = _webSocketClient.Game.State.StartedBy;
+			//_gameVM.GameState.GameNum = _webSocketClient.Game.State.GameNum;
+			//_gameVM.GameStateVM.CircleNum = _webSocketClient.Game.State.CircleNum;
+			//_gameVM.GameState.PlayerTurn = _webSocketClient.Game.State.PlayerTurn;
+			//_gameVM.GameState.Players.  = _webSocketClient.Game.State.Players;
+			GameShape.GameStateVM = _gameVM.GameStateVM;
 			SetupDealerDeck();
 			SetupPlayerHandDecks();
 			SetupTrickDecks();
@@ -85,7 +104,7 @@ namespace King.Controls
 
 		private void SetupDealerDeck()
 		{
-			_dealer = new DeckVM(NumberDecks, _webSocketClient.Game.State.Cards,
+			_dealer = new DeckVM(NumberDecks, _webSocketClient.Game.GameState.Cards,
 				GameShape.GameStateVM);
 
 			_dealer.MakeAllCardsDragable(false);
@@ -201,7 +220,25 @@ namespace King.Controls
 			var gameShape = GameShape.GetGameShape(card.Card.Deck.GameStateVM);
 			var oldDeckShape = gameShape.GetDeckShape(card.Card.Deck);
 
-			if (oldDeckShape.Name == "Player4Hand")
+			//Перемещение карт других игроков
+
+			if (oldDeckShape.Name == "Player1Hand")
+			{
+				card.Card.Deck = Player1Trick.Deck;
+			}
+
+			if (oldDeckShape.Name == "Player2Hand")
+			{
+				card.Card.Deck = Player2Trick.Deck;
+			}
+
+			if (oldDeckShape.Name == "Player3Hand")
+			{
+				card.Card.Deck = Player3Trick.Deck;
+			}
+
+			if (oldDeckShape.Name == "Player4Hand" & 
+				_webSocketClient.Game.GameState.StartedBy == _webSocketClient.PlayerID)
 			{
 				card.Card.Deck = Player4Trick.Deck;
 			}
@@ -217,7 +254,10 @@ namespace King.Controls
 			NewGame();
 
 			var result = MessageBox.Show("Deal a new hand?", "Confirm New Deal", MessageBoxButton.YesNo);
-			if (result == MessageBoxResult.No) return;
+			if (result == MessageBoxResult.No)
+			{
+				return;
+			}
 
 			DealNextHand();
 		}
