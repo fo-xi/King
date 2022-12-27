@@ -173,8 +173,11 @@ namespace King.ViewModel
                 Players.Add(new PlayerVM(player.ID, player.Name, player.Points));
             }
 
-            var deck = Decks.Find(x => x.IDPlayer == _webSocketClient.PlayerID);
-            deck.UpdateCards(new ObservableCollection<Card>(gameState.Cards));
+            if (Decks.Count != 0)
+            {
+                var deck = Decks.Find(x => x.IDPlayer == _webSocketClient.PlayerID);
+                deck.UpdateCards(new ObservableCollection<Card>(gameState.Cards));
+            }
         }
     }
 }

@@ -34,6 +34,12 @@ namespace King.Controls
 
 		#endregion
 
+		#region Events
+
+		public event EventHandler DataChangedControl;
+
+		#endregion
+
 		#region Constructor
 
 		public MainTabControl(WebSocketClient webSocketClient, MainTabControlVM dataContext)
@@ -42,6 +48,8 @@ namespace King.Controls
 
 			_webSocketClient = webSocketClient;
 			_webSocketClient.DataChanged += OnDataChanged;
+
+			DataChangedControl += OnDataChangedControl;
 
 			_mainTabControlVM = dataContext;
 			DataContext = dataContext;
@@ -176,7 +184,37 @@ namespace King.Controls
 
 		private void OnDataChanged(object sender, EventArgs e)
 		{
-			//Логика перемещения карт
+			DataChangedControl.Invoke(this, EventArgs.Empty);
+		}
+
+		private void OnDataChangedControl(object sender, EventArgs e)
+        {
+			var card = (CardShape)sender;
+			var gameShape = GameShape.GetGameShape(card.Card.Deck.GameStateVM);
+			var oldDeckShape = gameShape.GetDeckShape(card.Card.Deck);
+
+			//Перемещение карт других игроков
+
+			if (oldDeckShape.Name == "Player1Hand" && 
+				_webSocketClient.Game.GameState.StartedBy == _mainTabControlVM.FirstPlayer.ID)
+			{
+				card.Card.Deck = Player1Trick.Deck;
+			}
+
+			if (oldDeckShape.Name == "Player2Hand" &&
+				_webSocketClient.Game.GameState.StartedBy == _mainTabControlVM.SecondPlayer.ID)
+			{
+				card.Card.Deck = Player2Trick.Deck;
+			}
+
+			if (oldDeckShape.Name == "Player3Hand" &&
+				_webSocketClient.Game.GameState.StartedBy == _mainTabControlVM.ThirdPlayer.ID)
+			{
+				card.Card.Deck = Player3Trick.Deck;
+			}
+
+			gameShape.GetDeckShape(card.Card.Deck).UpdateCardShapes();
+			Canvas.SetZIndex(oldDeckShape, 0);
 		}
 
 		private void LayoutRoot_Loaded(object sender, RoutedEventArgs e)
@@ -214,23 +252,6 @@ namespace King.Controls
 			var card = (CardShape)sender;
 			var gameShape = GameShape.GetGameShape(card.Card.Deck.GameStateVM);
 			var oldDeckShape = gameShape.GetDeckShape(card.Card.Deck);
-
-			//Перемещение карт других игроков
-
-			if (oldDeckShape.Name == "Player1Hand")
-			{
-				card.Card.Deck = Player1Trick.Deck;
-			}
-
-			if (oldDeckShape.Name == "Player2Hand")
-			{
-				card.Card.Deck = Player2Trick.Deck;
-			}
-
-			if (oldDeckShape.Name == "Player3Hand")
-			{
-				card.Card.Deck = Player3Trick.Deck;
-			}
 
 			if (oldDeckShape.Name == "Player4Hand" & 
 				_webSocketClient.Game.GameState.StartedBy == _webSocketClient.PlayerID)

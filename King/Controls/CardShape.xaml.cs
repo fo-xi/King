@@ -45,7 +45,7 @@ namespace King.Controls
 
 		private bool _isDrag = false;
 
-		private CardVM _card = null;
+		private CardVM _cardVM = null;
 
 		#endregion
 
@@ -55,20 +55,20 @@ namespace King.Controls
 		{
 			get
 			{
-				return _card;
+				return _cardVM;
 			}
 			set
 			{
-				if (_card != null)
+				if (_cardVM != null)
 				{
-					_card.VisibleChanged -= new EventHandler(CardVisibleChanged);
-					_card.DeckChanged -= new EventHandler(CardDeckChanged);
+					_cardVM.VisibleChanged -= new EventHandler(CardVisibleChanged);
+					_cardVM.DeckChanged -= new EventHandler(CardDeckChanged);
 				}
 
-				_card = value;
+				_cardVM = value;
 
-				_card.VisibleChanged += new EventHandler(CardVisibleChanged);
-				_card.DeckChanged += new EventHandler(CardDeckChanged);
+				_cardVM.VisibleChanged += new EventHandler(CardVisibleChanged);
+				_cardVM.DeckChanged += new EventHandler(CardDeckChanged);
 
 				double x = 0;
 				double y = 0;

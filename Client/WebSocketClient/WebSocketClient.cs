@@ -83,6 +83,29 @@ namespace Client.WebSocketClient
 			_webSocketClient.Send(jsonData);
 		}
 
+		public void SendData(string sessionID, int gameNum, int circleNum, int playerID, string suit, int magnitude)
+        {
+			var data = new
+			{
+				session_id = sessionID,
+				action = "turn",
+				game_state = new
+				{
+					game_num = gameNum,
+					circle_num = circleNum
+				},
+				player_id = playerID,
+				turn = new
+                {
+					suit = suit,
+					magnitude = magnitude
+				}
+			};
+
+			string jsonData = JsonConvert.SerializeObject(data);
+			_webSocketClient.Send(jsonData);
+		}
+
 		public void CloseClient()
 		{
 			if (_webSocketClient != null && _webSocketClient.ReadyState == WebSocketState.Open)
