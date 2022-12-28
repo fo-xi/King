@@ -9,13 +9,34 @@ namespace King.ViewModel
 {
     public class CurrentAccountVM : ViewModelBase
     {
+        private string _firstPlayerName;
+
         private int _firstPlayerScore;
+
+        private string _secondPlayerName;
 
         private int _secondPlayerScore;
 
+        private string _thirdPlayerName;
+
         private int _thirdPlayerScore;
 
+        private string _fourthPlayerName;
+
         private int _fourthPlayerScore;
+
+        public string FirstPlayerName
+        {
+            get
+            {
+                return _firstPlayerName;
+            }
+            set
+            {
+                _firstPlayerName = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public int FirstPlayerScore
         {
@@ -26,6 +47,19 @@ namespace King.ViewModel
             set
             {
                 _firstPlayerScore = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public string SecondPlayerName
+        {
+            get
+            {
+                return _secondPlayerName;
+            }
+            set
+            {
+                _secondPlayerName = value;
                 RaisePropertyChanged();
             }
         }
@@ -43,6 +77,19 @@ namespace King.ViewModel
             }
         }
 
+        public string ThirdPlayerName
+        {
+            get
+            {
+                return _thirdPlayerName;
+            }
+            set
+            {
+                _thirdPlayerName = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public int ThirdPlayerScore
         {
             get
@@ -52,6 +99,19 @@ namespace King.ViewModel
             set
             {
                 _thirdPlayerScore = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public string FourthPlayerName
+        {
+            get
+            {
+                return _fourthPlayerName;
+            }
+            set
+            {
+                _fourthPlayerName = value;
                 RaisePropertyChanged();
             }
         }
@@ -71,10 +131,7 @@ namespace King.ViewModel
 
         public CurrentAccountVM()
         {
-            FirstPlayerScore = 100;
-            SecondPlayerScore = 100;
-            ThirdPlayerScore = 100;
-            FourthPlayerScore = 100;
+            
         }
     }
 }

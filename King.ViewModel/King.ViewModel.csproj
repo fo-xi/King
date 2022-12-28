@@ -70,6 +70,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RulesControlVM.cs" />
     <Compile Include="StartControlVM.cs" />
+    <Compile Include="WaitingConnectionControlVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

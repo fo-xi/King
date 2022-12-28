@@ -12,8 +12,6 @@
         <BooleanToVisibilityConverter x:Key="VisibilityConverter"></BooleanToVisibilityConverter>
     </UserControl.Resources>
 
-
-
     <Grid 
         VerticalAlignment="Center"
         Visibility="{Binding IsVisableState, Converter={StaticResource VisibilityConverter}}">
@@ -27,6 +25,7 @@
 			Grid.Row="0"
 			FontSize="19"
 			Foreground="#D6DBEF"
+			FontWeight="DemiBold"
 			HorizontalAlignment="Center"
 			VerticalAlignment="Center"
 			Margin="2.5 2.5 5 5"
@@ -46,6 +45,7 @@
             <TextBlock
 				FontSize="50"
 				Foreground="#D6DBEF"
+				FontWeight="DemiBold"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Center"
 				Text="Играть" />

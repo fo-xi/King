@@ -34,6 +34,8 @@ namespace King.ViewModel
 
 		private PlayerVM _thirdPlayer;
 
+		private bool _isNewGame;
+
 		#endregion
 
 		#region Properties
@@ -155,6 +157,19 @@ namespace King.ViewModel
 			}
 		}
 
+		public bool IsNewGame
+		{
+			get
+			{
+				return _isNewGame;
+			}
+			set
+			{
+				_isNewGame = value;
+				RaisePropertyChanged();
+			}
+		}
+
 		#endregion
 
 		#region Commands
@@ -171,6 +186,7 @@ namespace King.ViewModel
 			GameVM = new GameVM(_webSocketClient);
 			CurrentAccountVM = new CurrentAccountVM();
 
+			IsNewGame = true;
 
 			_playerNames = new ObservableCollection<string>
 			{
@@ -269,6 +285,18 @@ namespace King.ViewModel
 			NameInitialization();
 			PlayerMove = $"Ход игрока {_webSocketClient.Game.GameState.Players.Find(x => x.ID == _webSocketClient.Game.GameState.PlayerTurn).Name}";
 			CurrentNameGame = _webSocketClient.Game.GameState.GameNum.ToString();
+
+			CurrentAccountVM.FirstPlayerScore = FirstPlayer.Points;
+			CurrentAccountVM.SecondPlayerScore = SecondPlayer.Points;
+			CurrentAccountVM.ThirdPlayerScore = ThirdPlayer.Points;
+			CurrentAccountVM.FourthPlayerScore 
+				= _webSocketClient.Game.GameState.Players.Find(player => player.ID == _webSocketClient.PlayerID).Points;
+
+			CurrentAccountVM.FirstPlayerName = FirstPlayer.Name;
+			CurrentAccountVM.SecondPlayerName = SecondPlayer.Name;
+			CurrentAccountVM.ThirdPlayerName = ThirdPlayer.Name;
+			CurrentAccountVM.FourthPlayerName
+				= _webSocketClient.Game.GameState.Players.Find(player => player.ID == _webSocketClient.PlayerID).Name;
 		}
 
 		#endregion

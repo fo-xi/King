@@ -17,6 +17,8 @@ namespace King.ViewModel
 
 		private StartControlVM _startControlVM;
 
+		private WaitingConnectionControlVM _waitingConnectionControlVM;
+
 		private WebSocketClient _webSocketClient;
 
 		public MainTabControlVM MainTabControlVM 
@@ -61,6 +63,20 @@ namespace King.ViewModel
 			}
 		}
 
+		public WaitingConnectionControlVM WaitingConnectionControlVM
+		{
+			get
+			{
+				return _waitingConnectionControlVM;
+
+			}
+			set
+			{
+				_waitingConnectionControlVM = value;
+				RaisePropertyChanged();
+			}
+		}
+
 		public RelayCommand CloseWindowCommand { get; set; }
 
 		public MainWindowVM(WebSocketClient webSocketClient)
@@ -68,8 +84,10 @@ namespace King.ViewModel
 			MainTabControlVM = new MainTabControlVM(webSocketClient);
 			RulesControlVM = new RulesControlVM();
 			StartControlVM = new StartControlVM();
+			WaitingConnectionControlVM = new WaitingConnectionControlVM();
 
 			_webSocketClient = webSocketClient;
+			_webSocketClient.DataChanged += OnDataChanged;
 
 			MainTabControlVM.OpenRulesCommand = new RelayCommand(OpenRules);
 			RulesControlVM.BackCommand = new RelayCommand(Back);
@@ -79,6 +97,7 @@ namespace King.ViewModel
 			StartControlVM.IsVisableState = true;
 			MainTabControlVM.IsVisableState = false;
 			RulesControlVM.IsVisableState = false;
+			WaitingConnectionControlVM.IsVisableState = false;
 		}
 
         private void OpenRules()
@@ -97,12 +116,19 @@ namespace King.ViewModel
         {
 			_webSocketClient.StartGame(StartControlVM.PlayerName);
 			StartControlVM.IsVisableState = false;
-			MainTabControlVM.IsVisableState = true;
+			WaitingConnectionControlVM.IsVisableState = true;
+			//MainTabControlVM.IsVisableState = true;
 		}
 
 		private void CloseWindow()
         {
 			_webSocketClient.CloseClient();
+		}
+
+		private void OnDataChanged(object sender, EventArgs e)
+        {
+			WaitingConnectionControlVM.IsVisableState = false;
+			MainTabControlVM.IsVisableState = true;
 		}
 	}
 }

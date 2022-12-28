@@ -5,8 +5,6 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:Controls="clr-namespace:King.Controls"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:Converters="clr-namespace:King.VisibilityConverters"
-		xmlns:local="clr-namespace:King"
 		mc:Ignorable="d"
 		Title="MainWindow" 
 		Height="800" 
@@ -27,5 +25,7 @@
             DataContext="{Binding RulesControlVM}"/>
         <Controls:StartControl 
             DataContext="{Binding StartControlVM}"/>
+        <Controls:WaitingConnectionControl 
+            DataContext="{Binding WaitingConnectionControlVM}"/>
     </Grid>
 </Window>
