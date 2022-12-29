@@ -66,6 +66,8 @@
     <Compile Include="GameVM.cs" />
     <Compile Include="MainTabControlVM.cs" />
     <Compile Include="MainWindowVM.cs" />
+    <Compile Include="PauseControlVM.cs" />
+    <Compile Include="PausePlayerControlVM.cs" />
     <Compile Include="PlayerVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RulesControlVM.cs" />

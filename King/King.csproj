@@ -73,6 +73,12 @@
     <Compile Include="Controls\CurrentAccount.xaml.cs">
       <DependentUpon>CurrentAccount.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PauseControl.xaml.cs">
+      <DependentUpon>PauseControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PausePlayerControl.xaml.cs">
+      <DependentUpon>PausePlayerControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StartControl.xaml.cs">
       <DependentUpon>StartControl.xaml</DependentUpon>
     </Compile>
@@ -97,6 +103,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MainTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PauseControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PausePlayerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -206,6 +220,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\TableColorNew.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PauseIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

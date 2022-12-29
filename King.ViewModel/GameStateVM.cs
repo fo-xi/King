@@ -17,6 +17,8 @@ namespace King.ViewModel
 
         private string _state;
 
+        private int? _pausedBy;
+
         private int _startedBy;
 
         private int _gameNum;
@@ -44,6 +46,19 @@ namespace King.ViewModel
             set
             {
                 _state = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public int? PausedBy
+        {
+            get
+            {
+                return _pausedBy;
+            }
+            set
+            {
+                _pausedBy = value;
                 RaisePropertyChanged();
             }
         }
@@ -166,6 +181,7 @@ namespace King.ViewModel
             GameNum = gameState.GameNum;
             CircleNum = gameState.CircleNum;
             PlayerTurn = gameState.PlayerTurn;
+            PausedBy = gameState.PausedBy;
 
             Players = new List<PlayerVM>();
             foreach (var player in gameState.Players)

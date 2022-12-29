@@ -176,6 +176,8 @@ namespace King.ViewModel
 
 		public RelayCommand OpenRulesCommand { get; set; }
 
+		public RelayCommand PauseCommand { get; set; }
+
 		#endregion
 
 		public MainTabControlVM(WebSocketClient webSocketClient)
@@ -283,7 +285,11 @@ namespace King.ViewModel
 		private void OnDataChanged(object sender, EventArgs e)
 		{
 			NameInitialization();
-			PlayerMove = $"Ход игрока {_webSocketClient.Game.GameState.Players.Find(x => x.ID == _webSocketClient.Game.GameState.PlayerTurn).Name}";
+
+			if (_webSocketClient.Game.GameState.PlayerTurn != 0)
+			{
+				PlayerMove = _webSocketClient.Game.GameState.Players.Find(x => x.ID == _webSocketClient.Game.GameState.PlayerTurn).Name;
+			}
 			CurrentNameGame = _webSocketClient.Game.GameState.GameNum.ToString();
 
 			CurrentAccountVM.FirstPlayerScore = FirstPlayer.Points;

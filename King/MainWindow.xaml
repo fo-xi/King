@@ -27,5 +27,9 @@
             DataContext="{Binding StartControlVM}"/>
         <Controls:WaitingConnectionControl 
             DataContext="{Binding WaitingConnectionControlVM}"/>
+        <Controls:PauseControl 
+            DataContext="{Binding PauseControlVM}"/>
+        <Controls:PausePlayerControl 
+            DataContext="{Binding PausePlayerControlVM}"/>
     </Grid>
 </Window>

@@ -135,8 +135,8 @@
 			Content="deal" />
 
         <Button 
-			Width="25"
-			Height="25"
+			Width="30"
+			Height="30"
 			Canvas.Left="70"
 			Canvas.Top="25"
 			Command="{Binding OpenRulesCommand}"
@@ -146,14 +146,25 @@
         </Button>
 
         <Button 
-			Width="25"
-			Height="25"
-			Canvas.Left="100"
+			Width="30"
+			Height="30"
+			Canvas.Left="105"
 			Canvas.Top="25"
 			Command="{Binding OpenRulesCommand}"
 			Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
             <Image
 				Source="/Resources/StatisticsIcon.png" />
+        </Button>
+
+        <Button 
+			Width="30"
+			Height="30"
+			Canvas.Left="145"
+			Canvas.Top="25"
+			Command="{Binding PauseCommand}"
+			Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+            <Image
+				Source="/Resources/PauseIcon.png" />
         </Button>
 
         <Controls:CurrentAccount 
@@ -170,12 +181,28 @@
 			Foreground="#D6DBEF"
             Text="{Binding CurrentNameGame}"/>
 
-        <TextBlock
+        <Grid
             Canvas.Left="50"
-			Canvas.Top="571"
-			FontSize="18"
-			FontWeight="DemiBold"
-			Foreground="#D6DBEF"
-            Text="{Binding PlayerMove}"/>
+			Canvas.Top="571">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Column="0"
+				FontSize="18"
+				FontWeight="DemiBold"
+				Foreground="#D6DBEF"
+				Text="Ход игрока: "/>
+
+            <TextBlock
+                Grid.Column="1"
+				FontSize="18"
+				FontWeight="DemiBold"
+                HorizontalAlignment="Left"
+				Foreground="#D6DBEF"
+				Text="{Binding PlayerMove}"/>
+        </Grid>
     </Canvas>
 </UserControl>

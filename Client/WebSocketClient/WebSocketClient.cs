@@ -83,11 +83,11 @@ namespace Client.WebSocketClient
 			_webSocketClient.Send(jsonData);
 		}
 
-		public void SendData(string sessionID, int gameNum, int circleNum, int playerID, string suit, int magnitude)
+		public void SendData(string gameSessionID, int gameNum, int circleNum, int playerID, string suit, int magnitude)
         {
 			var data = new
 			{
-				session_id = sessionID,
+				game_session_id = gameSessionID,
 				action = "turn",
 				game_state = new
 				{
@@ -100,6 +100,32 @@ namespace Client.WebSocketClient
 					suit = suit,
 					magnitude = magnitude
 				}
+			};
+
+			string jsonData = JsonConvert.SerializeObject(data);
+			_webSocketClient.Send(jsonData);
+		}
+
+		public void SendDataPauseGame(string gameSessionID)
+        {
+			var data = new
+			{
+				game_session_id = gameSessionID,
+				player_id = PlayerID,
+				action = "pause",
+			};
+
+			string jsonData = JsonConvert.SerializeObject(data);
+			_webSocketClient.Send(jsonData);
+		}
+
+		public void SendDataResumeGame(string gameSessionID)
+		{
+			var data = new
+			{
+				game_session_id = gameSessionID,
+				player_id = PlayerID,
+				action = "resume",
 			};
 
 			string jsonData = JsonConvert.SerializeObject(data);
@@ -147,6 +173,14 @@ namespace Client.WebSocketClient
                 !string.IsNullOrEmpty(state) &&
                 state == "started")
 			{
+				Game = JsonConvert.DeserializeObject<Game>(json.ToString());
+				return;
+			}
+
+			if (json.ContainsKey("game_session_id") &&
+				!string.IsNullOrEmpty(state) &&
+				state == "paused")
+            {
 				Game = JsonConvert.DeserializeObject<Game>(json.ToString());
 				return;
 			}

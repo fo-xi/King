@@ -4,45 +4,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
-namespace Core
+namespace King.ViewModel
 {
-    public class Game : ViewModelBase
+    public class PauseControlVM : ViewModelBase
     {
-        private string _gameSessionID;
+        private string _playerName;
 
-        private GameState _gameState;
+        private bool _isVisableState;
 
-        [JsonProperty("game_session_id")]
-        public string GameSessionID
+        public string PlayerName
         {
             get
             {
-                return _gameSessionID;
+                return _playerName;
             }
             set
             {
-                _gameSessionID = value;
+                _playerName = value;
                 RaisePropertyChanged();
             }
         }
 
-        [JsonProperty("game_state")]
-        public GameState GameState
+        public bool IsVisableState
         {
             get
             {
-                return _gameState;
+                return _isVisableState;
             }
             set
             {
-                _gameState = value;
+                _isVisableState = value;
                 RaisePropertyChanged();
             }
         }
 
-        public Game()
+        public PauseControlVM()
         {
 
         }

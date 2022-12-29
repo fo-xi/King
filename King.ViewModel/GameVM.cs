@@ -51,7 +51,7 @@ namespace King.ViewModel
 
         private void OnDataChanged(object sender, EventArgs e)
         {
-            GameSessionID = _webSocketClient.Game.SessionID;
+            GameSessionID = _webSocketClient.Game.GameSessionID;
         }
     }
 }

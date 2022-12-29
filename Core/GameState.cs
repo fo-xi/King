@@ -13,6 +13,8 @@ namespace Core
     {
         private string _state;
 
+        private int? _pausedBy;
+
         private int _startedBy;
 
         private int _gameNum;
@@ -37,6 +39,20 @@ namespace Core
             set
             {
                 _state = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        [JsonProperty("paused_by")]
+        public int? PausedBy
+        {
+            get
+            {
+                return _pausedBy;
+            }
+            set
+            {
+                _pausedBy = value;
                 RaisePropertyChanged();
             }
         }
