@@ -194,6 +194,11 @@ namespace King.ViewModel
                 var deck = Decks.Find(x => x.IDPlayer == _webSocketClient.PlayerID);
                 deck.UpdateCards(new ObservableCollection<Card>(gameState.Cards));
             }
+
+            foreach (var bribe in _webSocketClient.Game.GameState.Bribe)
+            {
+                Bribe.Add(new CardVM(bribe.Magnitude, Convert.ToInt32(GetCardSuit[bribe.Suit]), this));
+            }
         }
     }
 }

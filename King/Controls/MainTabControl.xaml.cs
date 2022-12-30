@@ -34,6 +34,8 @@ namespace King.Controls
 
 		private DeckVM _dealer;
 
+		private bool _isNewGame = true;
+
 		#endregion
 
 		#region Events
@@ -186,7 +188,39 @@ namespace King.Controls
 
 		private void OnDataChanged(object sender, EventArgs e)
 		{
-			DataChangedControl.Invoke(this, EventArgs.Empty);
+			if (_isNewGame)
+            {
+				Application.Current.Dispatcher.Invoke(() =>
+				{
+					NewGame();
+					DealNextHand();
+				});
+				_isNewGame = false;
+			}
+
+			var card = (CardShape)sender;
+			var gameShape = GameShape.GetGameShape(card.Card.Deck.GameStateVM);
+			var oldDeckShape = gameShape.GetDeckShape(card.Card.Deck);
+
+			if (oldDeckShape.Name == "Player1Hand")
+			{
+				card.Card.Deck = Player1Trick.Deck;
+			}
+
+			if (oldDeckShape.Name == "Player2Hand")
+			{
+				card.Card.Deck = Player2Trick.Deck;
+			}
+
+			if (oldDeckShape.Name == "Player3Hand")
+			{
+				card.Card.Deck = Player3Trick.Deck;
+			}
+
+			gameShape.GetDeckShape(card.Card.Deck).UpdateCardShapes();
+			Canvas.SetZIndex(oldDeckShape, 0);
+
+			//DataChangedControl.Invoke(this, EventArgs.Empty);
 		}
 
 		private void OnDataChangedControl(object sender, EventArgs e)
@@ -258,7 +292,7 @@ namespace King.Controls
 
 			//if (oldDeckShape.Name == "Player4Hand" &&
 			//	_webSocketClient.Game.GameState.StartedBy == _webSocketClient.PlayerID)
-				if (oldDeckShape.Name == "Player4Hand")
+			if (oldDeckShape.Name == "Player4Hand")
 			{
 				card.Card.Deck = Player4Trick.Deck;
 			}
@@ -280,17 +314,5 @@ namespace King.Controls
 		}
 
 		#endregion
-        private void MainWindow_DealButton_Click(object sender, RoutedEventArgs e)
-        {
-            NewGame();
-
-            var result = MessageBox.Show("Deal a new hand?", "Confirm New Deal", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.No)
-            {
-                return;
-            }
-
-            DealNextHand();
-        }
     }
 }

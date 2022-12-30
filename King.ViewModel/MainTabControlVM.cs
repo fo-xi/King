@@ -34,7 +34,9 @@ namespace King.ViewModel
 
 		private PlayerVM _thirdPlayer;
 
-		private bool _isNewGame;
+		private int _currentPlayerTurn;
+
+		//private List<CardVM> _oldBribe;
 
 		#endregion
 
@@ -157,18 +159,31 @@ namespace King.ViewModel
 			}
 		}
 
-		public bool IsNewGame
+		public int CurrentPlayerTurn
 		{
 			get
 			{
-				return _isNewGame;
+				return _currentPlayerTurn;
 			}
 			set
 			{
-				_isNewGame = value;
+				_currentPlayerTurn = value;
 				RaisePropertyChanged();
 			}
 		}
+
+		//public List<CardVM> OldBribe
+		//{
+		//	get
+		//	{
+		//		return _oldBribe;
+		//	}
+		//	set
+		//	{
+		//		_oldBribe = value;
+		//		RaisePropertyChanged();
+		//	}
+		//}
 
 		#endregion
 
@@ -187,8 +202,6 @@ namespace King.ViewModel
 
 			GameVM = new GameVM(_webSocketClient);
 			CurrentAccountVM = new CurrentAccountVM();
-
-			IsNewGame = true;
 
 			_playerNames = new ObservableCollection<string>
 			{
@@ -291,6 +304,13 @@ namespace King.ViewModel
 				PlayerMove = _webSocketClient.Game.GameState.Players.Find(x => x.ID == _webSocketClient.Game.GameState.PlayerTurn).Name;
 			}
 			CurrentNameGame = _webSocketClient.Game.GameState.GameNum.ToString();
+
+			//if (_webSocketClient.Game.GameState.Players.Any(player => player.ID == CurrentPlayerTurn) && OldBribe != null)
+			//{
+				
+			//}
+			//CurrentPlayerTurn = _webSocketClient.Game.GameState.PlayerTurn;
+			//OldBribe = _webSocketClient.Game.GameState.Bribe;
 
 			CurrentAccountVM.FirstPlayerScore = FirstPlayer.Points;
 			CurrentAccountVM.SecondPlayerScore = SecondPlayer.Points;

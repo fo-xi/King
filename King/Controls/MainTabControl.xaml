@@ -124,16 +124,6 @@
 			CardSpacerY="0"
 			MaxCardsSpace="10" />
 
-        <!--  Deal Button  -->
-        <Button 
-			x:Name="MainWindow_DealButton"
-			Canvas.Left="12"
-			Canvas.Top="27"
-			Width="50"
-			Height="20"
-			Click="MainWindow_DealButton_Click"
-			Content="deal" />
-
         <Button 
 			Width="30"
 			Height="30"
