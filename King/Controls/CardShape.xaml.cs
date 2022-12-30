@@ -75,11 +75,17 @@ namespace King.Controls
 
 				if (Card.Visible)
 				{
+					var number = Card.Number;
+					if (number == 14)
+                    {
+						number = 1;
+                    }
+
 					//Отображение карты
-					if (Card.Number <= 10)
+					if (number <= 10)
 					{
-						x = (Card.Number - 1) % 2;
-						y = (Card.Number - 1) / 2;
+						x = (number - 1) % 2;
+						y = (number - 1) / 2;
 
 						switch (Card.Suit)
 						{
@@ -99,25 +105,25 @@ namespace King.Controls
 					}
 					else
 					{
-						int number = Card.Number - 11;
+						int highNumber = number - 11;
 						switch (Card.Suit)
 						{
 							case CardSuit.Spades:
-								number += 6;
+								highNumber += 6;
 								break;
 							case CardSuit.Hearts:
-								number += 9;
+								highNumber += 9;
 								break;
 							case CardSuit.Diamonds:
-								number += 3;
+								highNumber += 3;
 								break;
 							case CardSuit.Clubs:
-								number += 0;
+								highNumber += 0;
 								break;
 						}
 
-						x = (number % 2) + 8;
-						y = number / 2;
+						x = (highNumber % 2) + 8;
+						y = highNumber / 2;
 					}
 				}
 				else

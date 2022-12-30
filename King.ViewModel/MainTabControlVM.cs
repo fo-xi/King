@@ -1,4 +1,5 @@
 ﻿using Client.WebSocketClient;
+using Core;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
@@ -36,13 +37,13 @@ namespace King.ViewModel
 
 		private int _currentPlayerTurn;
 
-		//private List<CardVM> _oldBribe;
+        private List<Card> _oldBribe;
 
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		public GameVM GameVM
+        public GameVM GameVM
 		{
 			get
 			{
@@ -172,18 +173,24 @@ namespace King.ViewModel
 			}
 		}
 
-		//public List<CardVM> OldBribe
-		//{
-		//	get
-		//	{
-		//		return _oldBribe;
-		//	}
-		//	set
-		//	{
-		//		_oldBribe = value;
-		//		RaisePropertyChanged();
-		//	}
-		//}
+        public List<Card> OldBribe
+        {
+            get
+            {
+                return _oldBribe;
+            }
+            set
+            {
+                _oldBribe = value;
+                RaisePropertyChanged();
+            }
+        }
+
+		#endregion
+
+		#region Events
+
+		public event EventHandler<(Card bribeCard, int currentPlayerTurn)> FoundNewBribeCard;
 
 		#endregion
 
@@ -305,14 +312,31 @@ namespace King.ViewModel
 			}
 			CurrentNameGame = _webSocketClient.Game.GameState.GameNum.ToString();
 
-			//if (_webSocketClient.Game.GameState.Players.Any(player => player.ID == CurrentPlayerTurn) && OldBribe != null)
-			//{
-				
-			//}
-			//CurrentPlayerTurn = _webSocketClient.Game.GameState.PlayerTurn;
-			//OldBribe = _webSocketClient.Game.GameState.Bribe;
+			//Находим карту которую добавили во взятку
+            if (_webSocketClient.Game.GameState.Players.Any(player => player.ID == CurrentPlayerTurn) && OldBribe != null)
+            {
+				Card addedCard = null;
+				foreach (var bribe in _webSocketClient.Game.GameState.Bribe)
+                {
+					if (OldBribe.Any(oldBribe => oldBribe.Magnitude != bribe.Magnitude && oldBribe.Suit != bribe.Suit))
+                    {
+						addedCard = bribe;
+						break;
+					}
+                }
 
-			CurrentAccountVM.FirstPlayerScore = FirstPlayer.Points;
+				if (addedCard != null)
+                {
+					FoundNewBribeCard?.Invoke(this, (addedCard, CurrentPlayerTurn));
+					//Сообщить вью что мы нашли карту и отправить ее и CurrentPlayerTurn
+					//и через CurrentPlayerTurn определить трики
+				}
+
+			}
+            CurrentPlayerTurn = _webSocketClient.Game.GameState.PlayerTurn;
+            OldBribe = _webSocketClient.Game.GameState.Bribe;
+
+            CurrentAccountVM.FirstPlayerScore = FirstPlayer.Points;
 			CurrentAccountVM.SecondPlayerScore = SecondPlayer.Points;
 			CurrentAccountVM.ThirdPlayerScore = ThirdPlayer.Points;
 			CurrentAccountVM.FourthPlayerScore 

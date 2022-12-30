@@ -36,6 +36,8 @@ namespace King.Controls
 
 		private bool _isNewGame = true;
 
+		private Dictionary<int, DeckVM> _playerBribeDecks;
+
 		#endregion
 
 		#region Events
@@ -57,13 +59,16 @@ namespace King.Controls
 
 			_mainTabControlVM = dataContext;
 			DataContext = dataContext;
+			dataContext.FoundNewBribeCard += OnFoundNewBribeCard;
+
+			_playerBribeDecks = new Dictionary<int, DeckVM>();
 		}
 
-		#endregion
+        #endregion
 
-		#region Methods
+        #region Methods
 
-		private void DrawCards(DeckVM deckVM)
+        private void DrawCards(DeckVM deckVM)
         {
 			for (var cardCount = 0; cardCount < CardsPerPlayer; cardCount++)
 			{
@@ -100,6 +105,7 @@ namespace King.Controls
 			Player1Hand.Deck.Draw(_dealer, Player1Hand.Deck.Cards.Count);
 			Player2Hand.Deck.Draw(_dealer, Player2Hand.Deck.Cards.Count);
 			Player3Hand.Deck.Draw(_dealer, Player3Hand.Deck.Cards.Count);
+			Player4Hand.Deck.FlipAllCards();
 			Player4Hand.Deck.Draw(_dealer, Player1Hand.Deck.Cards.Count);
 		}
 
@@ -140,6 +146,12 @@ namespace King.Controls
 			{
 				Enabled = true
 			};
+
+			//Сопоставление id и триков
+			_playerBribeDecks.Add(_mainTabControlVM.FirstPlayer.ID, Player1Trick.Deck);
+			_playerBribeDecks.Add(_mainTabControlVM.SecondPlayer.ID, Player2Trick.Deck);
+			_playerBribeDecks.Add(_mainTabControlVM.ThirdPlayer.ID, Player3Trick.Deck);
+			_playerBribeDecks.Add(_webSocketClient.PlayerID, Player4Trick.Deck);
 
 			Player1Trick.Deck.MakeAllCardsDragable(false);
 			Player2Trick.Deck.MakeAllCardsDragable(false);
@@ -198,30 +210,30 @@ namespace King.Controls
 				_isNewGame = false;
 			}
 
-			var card = (CardShape)sender;
-			var gameShape = GameShape.GetGameShape(card.Card.Deck.GameStateVM);
-			var oldDeckShape = gameShape.GetDeckShape(card.Card.Deck);
+            //var card = (CardShape)sender;
+            //var gameShape = GameShape.GetGameShape(card.Card.Deck.GameStateVM);
+            //var oldDeckShape = gameShape.GetDeckShape(card.Card.Deck);
 
-			if (oldDeckShape.Name == "Player1Hand")
-			{
-				card.Card.Deck = Player1Trick.Deck;
-			}
+            //if (oldDeckShape.Name == "Player1Hand")
+            //{
+            //	card.Card.Deck = Player1Trick.Deck;
+            //}
 
-			if (oldDeckShape.Name == "Player2Hand")
-			{
-				card.Card.Deck = Player2Trick.Deck;
-			}
+            //if (oldDeckShape.Name == "Player2Hand")
+            //{
+            //	card.Card.Deck = Player2Trick.Deck;
+            //}
 
-			if (oldDeckShape.Name == "Player3Hand")
-			{
-				card.Card.Deck = Player3Trick.Deck;
-			}
+            //if (oldDeckShape.Name == "Player3Hand")
+            //{
+            //	card.Card.Deck = Player3Trick.Deck;
+            //}
 
-			gameShape.GetDeckShape(card.Card.Deck).UpdateCardShapes();
-			Canvas.SetZIndex(oldDeckShape, 0);
+            //gameShape.GetDeckShape(card.Card.Deck).UpdateCardShapes();
+            //Canvas.SetZIndex(oldDeckShape, 0);
 
-			//DataChangedControl.Invoke(this, EventArgs.Empty);
-		}
+            //DataChangedControl.Invoke(this, EventArgs.Empty);
+        }
 
 		private void OnDataChangedControl(object sender, EventArgs e)
         {
@@ -252,6 +264,23 @@ namespace King.Controls
 
 			//gameShape.GetDeckShape(card.Card.Deck).UpdateCardShapes();
 			//Canvas.SetZIndex(oldDeckShape, 0);
+		}
+
+		private void OnFoundNewBribeCard(object sender, (Card bribeCard, int currentPlayerTurn) e)
+		{
+			var getCardSuit = new Dictionary<string, CardSuit>
+			{
+				{ "hearts", CardSuit.Hearts },
+				{ "clubs", CardSuit.Clubs },
+				{ "diamonds", CardSuit.Diamonds },
+				{ "spades", CardSuit.Spades }
+			};
+
+			if (_webSocketClient.Game.GameState.Bribe != null)
+			{
+				_mainTabControlVM.GameVM.GameStateVM.Bribe.Add(new CardVM(e.bribeCard.Magnitude,
+					Convert.ToInt32(getCardSuit[e.bribeCard.Suit]), _playerBribeDecks[e.currentPlayerTurn]));
+			}
 		}
 
 		private void LayoutRoot_Loaded(object sender, RoutedEventArgs e)
