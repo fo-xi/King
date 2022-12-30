@@ -315,12 +315,15 @@ namespace King.Controls
 
 		private void GameShape_CardMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
+			if (_webSocketClient.PlayerID != _webSocketClient.Game.GameState.PlayerTurn)
+            {
+				return;
+            }
+
 			var card = (CardShape)sender;
 			var gameShape = GameShape.GetGameShape(card.Card.Deck.GameStateVM);
 			var oldDeckShape = gameShape.GetDeckShape(card.Card.Deck);
 
-			//if (oldDeckShape.Name == "Player4Hand" &&
-			//	_webSocketClient.Game.GameState.StartedBy == _webSocketClient.PlayerID)
 			if (oldDeckShape.Name == "Player4Hand")
 			{
 				card.Card.Deck = Player4Trick.Deck;
