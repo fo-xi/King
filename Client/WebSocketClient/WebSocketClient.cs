@@ -184,6 +184,22 @@ namespace Client.WebSocketClient
 				Game = JsonConvert.DeserializeObject<Game>(json.ToString());
 				return;
 			}
+
+			if (json.ContainsKey("game_session_id") &&
+				!string.IsNullOrEmpty(state) &&
+				state == "cancelled")
+			{
+				Game = JsonConvert.DeserializeObject<Game>(json.ToString());
+				return;
+			}
+
+			if (json.ContainsKey("game_session_id") &&
+				!string.IsNullOrEmpty(state) &&
+				state == "finished")
+			{
+				Game = JsonConvert.DeserializeObject<Game>(json.ToString());
+				return;
+			}
 		}
 	}
 }

@@ -73,6 +73,9 @@
     <Compile Include="Controls\CurrentAccount.xaml.cs">
       <DependentUpon>CurrentAccount.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GameOverControl.xaml.cs">
+      <DependentUpon>GameOverControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PauseControl.xaml.cs">
       <DependentUpon>PauseControl.xaml</DependentUpon>
     </Compile>
@@ -85,6 +88,9 @@
     <Compile Include="Controls\WaitingConnectionControl.xaml.cs">
       <DependentUpon>WaitingConnectionControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NotStartedControl.xaml.cs">
+      <DependentUpon>NotStartedControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VisibilityConverters\BooleanToVisibilityConverter.cs" />
     <Page Include="Controls\CardShape.xaml">
       <SubType>Designer</SubType>
@@ -95,6 +101,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DeckShape.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\GameOverControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -153,6 +163,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Controls\NotStartedControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Brushes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

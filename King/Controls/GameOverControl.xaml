@@ -1,0 +1,253 @@
+﻿<UserControl x:Class="King.Controls.GameOverControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:King.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter"></BooleanToVisibilityConverter>
+    </UserControl.Resources>
+
+    <Grid
+        VerticalAlignment="Center"
+		Visibility="{Binding IsVisableState, Converter={StaticResource VisibilityConverter}}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+			Grid.Row="0"
+			FontSize ="50"
+			Foreground="#D6DBEF"
+			FontWeight="DemiBold"
+            HorizontalAlignment="Center"
+			Margin="5"
+			Text="Игра окончена!"/>
+
+        <TextBlock
+			Grid.Row="1"
+			FontSize="35"
+			Foreground="#D6DBEF"
+			FontWeight="DemiBold"
+            HorizontalAlignment="Center"
+			Margin="5"
+			Text="Результаты"/>
+
+        <Grid
+            Grid.Row="2"
+            HorizontalAlignment="Center"
+            Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+			    Grid.Column="0"
+			    FontSize="23"
+			    Foreground="#D6DBEF"
+			    FontWeight="DemiBold"
+                HorizontalAlignment="Center"
+			    Margin="2"
+			    Text="Победил игрок "/>
+
+            <TextBlock
+			    Grid.Column="1"
+			    FontSize="23"
+			    Foreground="#D6DBEF"
+			    FontWeight="DemiBold"
+                HorizontalAlignment="Center"
+			    Margin="2"
+			    Text="{Binding WinnerName}"/>
+
+            <TextBlock
+			    Grid.Column="2"
+			    FontSize="23"
+			    Foreground="#D6DBEF"
+			    FontWeight="DemiBold"
+                HorizontalAlignment="Center"
+			    Margin="2"
+			    Text="со счетом "/>
+
+            <TextBlock
+			    Grid.Column="3"
+			    FontSize="23"
+			    Foreground="#D6DBEF"
+			    FontWeight="DemiBold"
+                HorizontalAlignment="Center"
+			    Margin="2"
+			    Text="{Binding WinnerScore}"/>
+        </Grid>
+
+        <Grid
+            Grid.Row="3"
+            HorizontalAlignment="Center"
+            Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid
+                Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+			        Grid.Column="0"
+			        FontSize="23"
+			        Foreground="#D6DBEF"
+			        FontWeight="DemiBold"
+                    HorizontalAlignment="Center"
+			        Margin="2"
+			        Text="{Binding PlayersName[0]}"/>
+
+                <TextBlock
+			        Grid.Column="0"
+			        FontSize="23"
+			        Foreground="#D6DBEF"
+			        FontWeight="DemiBold"
+                    HorizontalAlignment="Center"
+			        Margin="2"
+			        Text=": "/>
+
+                <TextBlock
+			        Grid.Column="0"
+			        FontSize="23"
+			        Foreground="#D6DBEF"
+			        FontWeight="DemiBold"
+                    HorizontalAlignment="Center"
+			        Margin="2"
+			        Text="{Binding PlayersScore[0]}"/>
+            </Grid>
+
+            <Grid
+                Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+			        Grid.Column="0"
+			        FontSize="23"
+			        Foreground="#D6DBEF"
+			        FontWeight="DemiBold"
+                    HorizontalAlignment="Center"
+			        Margin="2"
+			        Text="{Binding PlayersName[1]}"/>
+
+                <TextBlock
+			        Grid.Column="0"
+			        FontSize="23"
+			        Foreground="#D6DBEF"
+			        FontWeight="DemiBold"
+                    HorizontalAlignment="Center"
+			        Margin="2"
+			        Text=": "/>
+
+                <TextBlock
+			        Grid.Column="0"
+			        FontSize="23"
+			        Foreground="#D6DBEF"
+			        FontWeight="DemiBold"
+                    HorizontalAlignment="Center"
+			        Margin="2"
+			        Text="{Binding PlayersScore[1]}"/>
+            </Grid>
+
+            <Grid
+                Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+			        Grid.Column="0"
+			        FontSize="23"
+			        Foreground="#D6DBEF"
+			        FontWeight="DemiBold"
+                    HorizontalAlignment="Center"
+			        Margin="2"
+			        Text="{Binding PlayersName[2]}"/>
+
+                <TextBlock
+			        Grid.Column="0"
+			        FontSize="23"
+			        Foreground="#D6DBEF"
+			        FontWeight="DemiBold"
+                    HorizontalAlignment="Center"
+			        Margin="2"
+			        Text=": "/>
+
+                <TextBlock
+			        Grid.Column="0"
+			        FontSize="23"
+			        Foreground="#D6DBEF"
+			        FontWeight="DemiBold"
+                    HorizontalAlignment="Center"
+			        Margin="2"
+			        Text="{Binding PlayersScore[2]}"/>
+            </Grid>
+        </Grid>
+
+        <Grid
+            Grid.Row="4"
+            HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button 
+			    Grid.Column="0"
+			    Command="{Binding NewGameCommand}"
+                Width="170"
+                Height="30"
+                Margin="5"
+                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <TextBlock
+				    FontSize="20"
+				    Foreground="#D6DBEF"
+				    FontWeight="DemiBold"
+				    HorizontalAlignment="Center"
+				    VerticalAlignment="Center"
+				    Text="Новая игра" />
+            </Button>
+
+            <Button 
+			    Grid.Column="1"
+			    Command="{Binding FinishGameCommand}"
+                Width="170"
+                Height="30"
+                Margin="5"
+                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <TextBlock
+				    FontSize="20"
+				    Foreground="#D6DBEF"
+				    FontWeight="DemiBold"
+				    HorizontalAlignment="Center"
+				    VerticalAlignment="Center"
+				    Text="Закончить игру" />
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

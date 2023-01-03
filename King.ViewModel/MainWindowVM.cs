@@ -23,6 +23,10 @@ namespace King.ViewModel
 
 		private PausePlayerControlVM _pausePlayerControlVM;
 
+		private NotStartedControlVM _notStartedControlVM;
+
+		private GameOverControlVM _gameOverControlVM;
+
 		private WebSocketClient _webSocketClient;
 
 		public MainTabControlVM MainTabControlVM 
@@ -109,6 +113,34 @@ namespace King.ViewModel
 			}
 		}
 
+		public NotStartedControlVM NotStartedControlVM
+		{
+			get
+			{
+				return _notStartedControlVM;
+
+			}
+			set
+			{
+				_notStartedControlVM = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		public GameOverControlVM GameOverControlVM
+		{
+			get
+			{
+				return _gameOverControlVM;
+
+			}
+			set
+			{
+				_gameOverControlVM = value;
+				RaisePropertyChanged();
+			}
+		}
+
 		public RelayCommand CloseWindowCommand { get; set; }
 
 		public MainWindowVM(WebSocketClient webSocketClient)
@@ -119,6 +151,8 @@ namespace King.ViewModel
 			WaitingConnectionControlVM = new WaitingConnectionControlVM();
 			PauseControlVM = new PauseControlVM();
 			PausePlayerControlVM = new PausePlayerControlVM();
+			NotStartedControlVM = new NotStartedControlVM();
+			GameOverControlVM = new GameOverControlVM();
 
 			_webSocketClient = webSocketClient;
 			_webSocketClient.DataChanged += OnDataChanged;
@@ -128,6 +162,9 @@ namespace King.ViewModel
 			RulesControlVM.BackCommand = new RelayCommand(Back);
 			StartControlVM.StartGameCommand = new RelayCommand(StartGame);
 			PausePlayerControlVM.ResumeGameCommand = new RelayCommand(ResumeGame);
+			NotStartedControlVM.NewGameCommand = new RelayCommand(NewGame);
+			GameOverControlVM.NewGameCommand = new RelayCommand(NewGame);
+			GameOverControlVM.FinishGameCommand = new RelayCommand(CloseWindow);
 
 			CloseWindowCommand = new RelayCommand(CloseWindow);
 
@@ -137,6 +174,8 @@ namespace King.ViewModel
 			WaitingConnectionControlVM.IsVisableState = false;
 			PauseControlVM.IsVisableState = false;
 			PausePlayerControlVM.IsVisableState = false;
+			NotStartedControlVM.IsVisableState = false;
+			GameOverControlVM.IsVisableState = false;
 		}
 
         private void OpenRules()
@@ -171,29 +210,75 @@ namespace King.ViewModel
 			MainTabControlVM.IsVisableState = true;
 		}
 
+		private void NewGame()
+        {
+			NotStartedControlVM.IsVisableState = false;
+			StartControlVM.IsVisableState = true;
+		}
+
 		private void CloseWindow()
         {
 			_webSocketClient.CloseClient();
 		}
 
 		private void OnDataChanged(object sender, EventArgs e)
-        {
+		{
 			WaitingConnectionControlVM.IsVisableState = false;
 
 			if (_webSocketClient.Game.GameState.State == "started")
-            {
+			{
 				_webSocketClient.Game.GameState.PausedBy = null;
 				MainTabControlVM.IsVisableState = true;
 				PauseControlVM.IsVisableState = false;
 			}
 
-			if (_webSocketClient.Game.GameState.State == "paused" && 
+			if (_webSocketClient.Game.GameState.State == "paused" &&
 				_webSocketClient.PlayerID != _webSocketClient.Game.GameState.PausedBy)
-            {
-				PauseControlVM.PlayerName = 
-					_webSocketClient.Game.GameState.Players.Find(player => player.ID == _webSocketClient.Game.GameState.PausedBy).Name;
-				PauseControlVM.IsVisableState = true;
+			{
+				PauseControlVM.PlayerName =
+					_webSocketClient.Game.GameState.Players.Find(player => player.ID ==
+					_webSocketClient.Game.GameState.PausedBy).Name;
 				MainTabControlVM.IsVisableState = false;
+				PauseControlVM.IsVisableState = true;
+				RulesControlVM.IsVisableState = false;
+				NotStartedControlVM.IsVisableState = false;
+				GameOverControlVM.IsVisableState = false;
+			}
+
+			if (_webSocketClient.Game.GameState.State == "cancelled")
+			{
+				MainTabControlVM.IsVisableState = false;
+				RulesControlVM.IsVisableState = false;
+				PauseControlVM.IsVisableState = false;
+				PausePlayerControlVM.IsVisableState = false;
+				NotStartedControlVM.IsVisableState = true;
+			}
+
+			if (_webSocketClient.Game.GameState.State == "finished")
+            {
+				MainTabControlVM.IsVisableState = false;
+				RulesControlVM.IsVisableState = false;
+
+				var players = _webSocketClient.Game.GameState.Players;
+				var index = players.IndexOf(players.First(player => player.ID == _webSocketClient.Game.GameState.Winner));
+				int numberOtherPlayers = 3;
+				int winnerIndex = 4;
+
+				if (index != numberOtherPlayers)
+				{
+					var temp = players[index];
+					players[index] = players[3];
+					players[3] = temp;
+				}
+
+				for (int i = 0; i < numberOtherPlayers; i++)
+				{
+					GameOverControlVM.PlayersName[i] = players[i].Name;
+					GameOverControlVM.PlayersScore[i] = players[i].Points;
+				}
+
+				GameOverControlVM.WinnerName = players[winnerIndex].Name;
+				GameOverControlVM.WinnerScore = players[winnerIndex].Points;
 			}
 		}
 	}

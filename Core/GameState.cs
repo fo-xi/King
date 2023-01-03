@@ -23,6 +23,10 @@ namespace Core
 
         private int _playerTurn;
 
+        private int _cancelledBy;
+
+        private int _winner;
+
         private List<Player> _players = new List<Player>();
 
         private List<Card> _cards = new List<Card>();
@@ -109,6 +113,34 @@ namespace Core
             set
             {
                 _playerTurn = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        [JsonProperty("cancelled_by")]
+        public int CancelledBy
+        {
+            get
+            {
+                return _cancelledBy;
+            }
+            set
+            {
+                _cancelledBy = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        [JsonProperty("winner")]
+        public int Winner
+        {
+            get
+            {
+                return _winner;
+            }
+            set
+            {
+                _winner = value;
                 RaisePropertyChanged();
             }
         }

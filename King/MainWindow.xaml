@@ -31,5 +31,9 @@
             DataContext="{Binding PauseControlVM}"/>
         <Controls:PausePlayerControl 
             DataContext="{Binding PausePlayerControlVM}"/>
+        <Controls:NotStartedControl 
+            DataContext="{Binding NotStartedControlVM}"/>
+        <Controls:GameOverControl 
+            DataContext="{Binding GameOverControlVM}"/>
     </Grid>
 </Window>

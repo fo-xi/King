@@ -27,6 +27,10 @@ namespace King.ViewModel
 
         private int _playerTurn;
 
+        private int _cancelledBy;
+
+        private int _winner;
+
         private List<PlayerVM> _players = new List<PlayerVM>();
 
         private List<CardVM> _cards = new List<CardVM>();
@@ -111,6 +115,32 @@ namespace King.ViewModel
             set
             {
                 _playerTurn = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public int CancelledBy
+        {
+            get
+            {
+                return _cancelledBy;
+            }
+            set
+            {
+                _cancelledBy = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public int Winner
+        {
+            get
+            {
+                return _winner;
+            }
+            set
+            {
+                _winner = value;
                 RaisePropertyChanged();
             }
         }
