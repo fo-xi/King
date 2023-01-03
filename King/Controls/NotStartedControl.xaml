@@ -21,13 +21,13 @@
         </Grid.RowDefinitions>
 
         <TextBlock
-				Grid.Column="0"
-				FontSize="25"
-				Foreground="#D6DBEF"
-				FontWeight="DemiBold"
-                HorizontalAlignment="Center"
-				Margin="2"
-				Text="Игра не состоялась"/>
+			Grid.Column="0"
+			FontSize="25"
+			Foreground="#D6DBEF"
+			FontWeight="DemiBold"
+            HorizontalAlignment="Center"
+			Margin="2"
+			Text="Игра не состоялась"/>
 
         <Button 
 			Grid.Row="1"
@@ -44,6 +44,5 @@
 				VerticalAlignment="Center"
 				Text="Новая игра" />
         </Button>
-
     </Grid>
 </UserControl>

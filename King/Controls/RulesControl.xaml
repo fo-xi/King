@@ -8,49 +8,49 @@
 			 Height="770.5"
 			 Width="1194">
 
-    <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="VisibilityConverter"></BooleanToVisibilityConverter>
-    </UserControl.Resources>
+	<UserControl.Resources>
+		<BooleanToVisibilityConverter x:Key="VisibilityConverter"></BooleanToVisibilityConverter>
+	</UserControl.Resources>
 
-    <UserControl.Background>
-        <ImageBrush
-                ImageSource="../Resources/TableColorNew.jpg" Stretch="Fill"/>
-    </UserControl.Background>
+	<UserControl.Background>
+		<ImageBrush
+			ImageSource="../Resources/TableColorNew.jpg" Stretch="Fill"/>
+	</UserControl.Background>
 
-    <Grid 
-        Visibility="{Binding IsVisableState, Converter={StaticResource VisibilityConverter}}"
-        VerticalAlignment="Center">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+	<Grid 
+		Visibility="{Binding IsVisableState, Converter={StaticResource VisibilityConverter}}"
+		VerticalAlignment="Center">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
 
-        <Button
+		<Button
 			Grid.Row="0"
 			VerticalAlignment="Top"
 			HorizontalAlignment="Left"
-            Margin="15 0 0 0 "
+			Margin="15 0 0 0 "
 			Command="{Binding BackCommand}"
 			Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" >
-            <StackPanel 
-					Orientation="Horizontal">
-                <Image
-						Width="20"
-						Height="20"
-						Source="/Resources/ArrowIcon.png"
-						Margin="5 5 2.5 5"/>
-                <TextBlock
-						FontSize="19"
-						Foreground="#D6DBEF"
-						HorizontalAlignment="Center"
-						VerticalAlignment="Center"
-						Margin="2.5 2.5 5 5"
-						Text="Назад" />
-            </StackPanel>
-        </Button>
+			<StackPanel 
+				Orientation="Horizontal">
+				<Image
+					Width="20"
+					Height="20"
+					Source="/Resources/ArrowIcon.png"
+					Margin="5 5 2.5 5"/>
+				<TextBlock
+					FontSize="19"
+					Foreground="#D6DBEF"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center"
+					Margin="2.5 2.5 5 5"
+					Text="Назад" />
+			</StackPanel>
+		</Button>
 
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
+		<Grid Grid.Row="1">
+			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
@@ -58,9 +58,9 @@
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+			</Grid.RowDefinitions>
 
-            <TextBlock
+			<TextBlock
 				Grid.Row="0"
 				FontSize="40"
 				FontWeight="Bold"
@@ -68,162 +68,166 @@
 				HorizontalAlignment="Center"
 				Text="Правила игры"/>
 
-            <Grid 
+			<Grid 
 				Margin="0 20 0 30" 
 				Grid.Row="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <TextBlock
-				Grid.Row="0"
-				FontSize="25"
-				FontWeight="Bold"
-				Foreground="#C1AD7B"
-				HorizontalAlignment="Center"
-				Text="&quot;Не брать взяток&quot;"/>
-                <TextBlock
-				Grid.Row="1"
-				FontSize="20"
-				FontWeight="DemiBold"
-				Foreground="#D6DBEF"
-				HorizontalAlignment="Center"
-				Text="В этой игре надо стараться не брать взяток. За каждую взятую игроком взятку -2 очка." />
-            </Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<TextBlock
+					Grid.Row="0"
+					FontSize="25"
+					FontWeight="Bold"
+					Foreground="#C1AD7B"
+					HorizontalAlignment="Center"
+					Text="&quot;Не брать взяток&quot;"/>
+				<TextBlock
+					Grid.Row="1"
+					FontSize="20"
+					FontWeight="DemiBold"
+					Foreground="#D6DBEF"
+					HorizontalAlignment="Center"
+					Text="В этой игре надо стараться не брать взяток. За каждую взятую игроком взятку -2 очка." />
+			</Grid>
 
-            <Grid
-			Grid.Row="2"
-			Margin="0 0 0 30">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <TextBlock
-				Grid.Row="0"
-				FontSize="25"
-				FontWeight="Bold"
-				Foreground="#C1AD7B"
-				HorizontalAlignment="Center"
-				Text="&quot;Не брать мальчиков&quot;"/>
-                <TextBlock
-				Grid.Row="1"
-				FontSize="20"
-				FontWeight="DemiBold"
-				Foreground="#D6DBEF"
-				HorizontalAlignment="Center"
-				Text="В этой игре надо стараться не брать королей. За каждого взятого игроком короля -4 очка."/>
-            </Grid>
-
-            <Grid Grid.Row="3"
-			Margin="0 0 0 30">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <TextBlock
-				Grid.Row="0"
-				FontSize="25"
-				FontWeight="Bold"
-				Foreground="#C1AD7B"
-				HorizontalAlignment="Center"
-				Text="&quot;Не брать девочек&quot;"/>
-                <TextBlock
-				Grid.Row="1"
-				FontSize="20"
-				FontWeight="DemiBold"
-				Foreground="#D6DBEF"
-				HorizontalAlignment="Center"
-				Text=" В этой игре надо стараться не брать дам. За каждую взятую игроком даму -4 очка."/>
-            </Grid>
-
-            <Grid Grid.Row="4"
-			Margin="0 0 0 30">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <TextBlock
-				Grid.Row="0"
-				FontSize="25"
-				FontWeight="Bold"
-				Foreground="#C1AD7B"
-				HorizontalAlignment="Center"
-				Text="&quot;Не брать червей&quot;"/>
-                <TextBlock
-				Grid.Row="1"
-				FontSize="20"
-				FontWeight="DemiBold"
-				Foreground="#D6DBEF"
-				HorizontalAlignment="Center"
-				Text="В этой игре надо стараться не брать карт червовой масти. За каждую взятую игроком карту червовой масти -2 очка."/>
-                <TextBlock
+			<Grid
 				Grid.Row="2"
-                Margin="0 3 0 0 "
-				FontSize="20"
-				FontWeight="DemiBold"
-				Foreground="#D6DBEF"
-				HorizontalAlignment="Center"
-				Text="Ходить с червей, пока есть карты другой масти при этой игре нельзя."/>
-            </Grid>
+				Margin="0 0 0 30">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
 
-            <Grid Grid.Row="5"
-			Margin="0 0 0 30">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+				<TextBlock
+					Grid.Row="0"
+					FontSize="25"
+					FontWeight="Bold"
+					Foreground="#C1AD7B"
+					HorizontalAlignment="Center"
+					Text="&quot;Не брать мальчиков&quot;"/>
+				<TextBlock
+					Grid.Row="1"
+					FontSize="20"
+					FontWeight="DemiBold"
+					Foreground="#D6DBEF"
+					HorizontalAlignment="Center"
+					Text="В этой игре надо стараться не брать королей. За каждого взятого игроком короля -4 очка."/>
+			</Grid>
 
-                <TextBlock
-				Grid.Row="0"
-				FontSize="25"
-				FontWeight="Bold"
-				Foreground="#C1AD7B"
-				HorizontalAlignment="Center"
-				Text="&quot;Не брать Кинга&quot;"/>
-                <TextBlock
-				Grid.Row="1"
-				FontSize="20"
-				FontWeight="DemiBold"
-				Foreground="#D6DBEF"
-				HorizontalAlignment="Center"
-				Text="Кинг = король червей. Игроку, который возьмет Кинга -16 очков."/>
-                <TextBlock
-				Grid.Row="2"
-                Margin="0 3 0 0"
-				FontSize="20"
-				FontWeight="DemiBold"
-				Foreground="#D6DBEF"
-				HorizontalAlignment="Center"
-				Text="Ходить с червей, пока есть карты другой масти при этой игре нельзя."/>
-            </Grid>
+			<Grid 
+                Grid.Row="3"
+				Margin="0 0 0 30">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
 
-            <Grid Grid.Row="6"
-			Margin="0 0 0 30">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+				<TextBlock
+					Grid.Row="0"
+					FontSize="25"
+					FontWeight="Bold"
+					Foreground="#C1AD7B"
+					HorizontalAlignment="Center"
+					Text="&quot;Не брать девочек&quot;"/>
+				<TextBlock
+					Grid.Row="1"
+					FontSize="20"
+					FontWeight="DemiBold"
+					Foreground="#D6DBEF"
+					HorizontalAlignment="Center"
+					Text=" В этой игре надо стараться не брать дам. За каждую взятую игроком даму -4 очка."/>
+			</Grid>
 
-                <TextBlock
-				Grid.Row="0"
-				FontSize="25"
-				FontWeight="Bold"
-				Foreground="#C1AD7B"
-				HorizontalAlignment="Center"
-				Text="&quot;Не брать 2 последние взятки&quot;"/>
-                <TextBlock
-				Grid.Row="1"
-				FontSize="20"
-				FontWeight="DemiBold"
-				Foreground="#D6DBEF"
-				HorizontalAlignment="Center"
-				Text="За взятую последнюю или предпоследнюю взятку в раздаче -8 очков."/>
-            </Grid>
-        </Grid>
-    </Grid>
+			<Grid 
+                Grid.Row="4"
+				Margin="0 0 0 30">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+
+				<TextBlock
+					Grid.Row="0"
+					FontSize="25"
+					FontWeight="Bold"
+					Foreground="#C1AD7B"
+					HorizontalAlignment="Center"
+					Text="&quot;Не брать червей&quot;"/>
+				<TextBlock
+					Grid.Row="1"
+					FontSize="20"
+					FontWeight="DemiBold"
+					Foreground="#D6DBEF"
+					HorizontalAlignment="Center"
+					Text="В этой игре надо стараться не брать карт червовой масти. За каждую взятую игроком карту червовой масти -2 очка."/>
+				<TextBlock
+					Grid.Row="2"
+					Margin="0 3 0 0 "
+					FontSize="20"
+					FontWeight="DemiBold"
+					Foreground="#D6DBEF"
+					HorizontalAlignment="Center"
+					Text="Ходить с червей, пока есть карты другой масти при этой игре нельзя."/>
+			</Grid>
+
+			<Grid 
+                Grid.Row="5"
+				Margin="0 0 0 30">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+
+				<TextBlock
+					Grid.Row="0"
+					FontSize="25"
+					FontWeight="Bold"
+					Foreground="#C1AD7B"
+					HorizontalAlignment="Center"
+					Text="&quot;Не брать Кинга&quot;"/>
+				<TextBlock
+					Grid.Row="1"
+					FontSize="20"
+					FontWeight="DemiBold"
+					Foreground="#D6DBEF"
+					HorizontalAlignment="Center"
+					Text="Кинг = король червей. Игроку, который возьмет Кинга -16 очков."/>
+				<TextBlock
+					Grid.Row="2"
+					Margin="0 3 0 0"
+					FontSize="20"
+					FontWeight="DemiBold"
+					Foreground="#D6DBEF"
+					HorizontalAlignment="Center"
+					Text="Ходить с червей, пока есть карты другой масти при этой игре нельзя."/>
+			</Grid>
+
+			<Grid 
+                Grid.Row="6"
+				Margin="0 0 0 30">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+
+				<TextBlock
+					Grid.Row="0"
+					FontSize="25"
+					FontWeight="Bold"
+					Foreground="#C1AD7B"
+					HorizontalAlignment="Center"
+					Text="&quot;Не брать 2 последние взятки&quot;"/>
+				<TextBlock
+					Grid.Row="1"
+					FontSize="20"
+					FontWeight="DemiBold"
+					Foreground="#D6DBEF"
+					HorizontalAlignment="Center"
+					Text="За взятую последнюю или предпоследнюю взятку в раздаче -8 очков."/>
+			</Grid>
+		</Grid>
+	</Grid>
 </UserControl>

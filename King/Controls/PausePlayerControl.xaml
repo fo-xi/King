@@ -43,6 +43,5 @@
 				VerticalAlignment="Center"
 				Text="Продолжить" />
         </Button>
-
     </Grid>
 </UserControl>
