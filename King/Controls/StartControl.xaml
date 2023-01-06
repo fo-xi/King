@@ -8,47 +8,69 @@
 			 d:DesignHeight="450" 
 			 d:DesignWidth="800">
 
-    <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="VisibilityConverter"></BooleanToVisibilityConverter>
-    </UserControl.Resources>
+	<UserControl.Resources>
+		<BooleanToVisibilityConverter x:Key="VisibilityConverter"></BooleanToVisibilityConverter>
+	</UserControl.Resources>
 
-    <Grid 
-        VerticalAlignment="Center"
-        Visibility="{Binding IsVisableState, Converter={StaticResource VisibilityConverter}}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+	<Grid
+		Visibility="{Binding IsVisableState, Converter={StaticResource VisibilityConverter}}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
-        <TextBlock
-			Grid.Row="0"
-			FontSize="19"
-			Foreground="#D6DBEF"
-			FontWeight="DemiBold"
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			Margin="2.5 2.5 5 5"
-			Text="Введите имя:" />
 
-        <TextBox
-			Grid.Row="1"
+        <Grid
+            Grid.Row="0"
+            Grid.RowSpan="2"
             HorizontalAlignment="Center"
-            MinWidth="150"
-            Text="{Binding PlayerName}"/>
-
-        <Button
-            Grid.Row ="2"
-            Margin="5"
-			Command="{Binding StartGameCommand}"
-			Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" >
+			VerticalAlignment="Top"
+            Margin="20">
             <TextBlock
-				FontSize="50"
+				Grid.Row="0"
+				FontSize="60"
+				Foreground="#D6DBEF"
+				FontWeight="DemiBold"
+				Margin="2.5 2.5 5 5"
+				Text="King" />
+        </Grid>
+
+        <Grid
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+				Grid.Row="0"
+				FontSize="19"
 				Foreground="#D6DBEF"
 				FontWeight="DemiBold"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Center"
-				Text="Играть" />
-        </Button>
-    </Grid>
+				Margin="10"
+				Text="Введите имя:" />
+
+			<TextBox
+				Grid.Row="1"
+				HorizontalAlignment="Center"
+				MinWidth="200"
+				Text="{Binding PlayerName}"/>
+
+			<Button
+				Grid.Row ="2"
+				Margin="5"
+				Command="{Binding StartGameCommand}"
+				Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" >
+				<TextBlock
+					FontSize="50"
+					Foreground="#D6DBEF"
+					FontWeight="DemiBold"
+					Text="Играть" />
+			</Button>
+		</Grid>
+	</Grid>
 </UserControl>

@@ -316,14 +316,22 @@ namespace King.ViewModel
             if (_webSocketClient.Game.GameState.Players.Any(player => player.ID == CurrentPlayerTurn) && OldBribe != null)
             {
 				Card addedCard = null;
-				foreach (var bribe in _webSocketClient.Game.GameState.Bribe)
-                {
-					if (OldBribe.Any(oldBribe => oldBribe.Magnitude != bribe.Magnitude && oldBribe.Suit != bribe.Suit))
-                    {
-						addedCard = bribe;
-						break;
+
+				if (OldBribe.Count == 0)
+				{
+					addedCard = _webSocketClient.Game.GameState.Bribe.Last();
+				}
+				else
+				{
+					foreach (var bribe in _webSocketClient.Game.GameState.Bribe)
+					{
+						if (OldBribe.Any(oldBribe => oldBribe.Magnitude != bribe.Magnitude && oldBribe.Suit != bribe.Suit))
+						{
+							addedCard = bribe;
+							break;
+						}
 					}
-                }
+				}
 
 				if (addedCard != null)
                 {

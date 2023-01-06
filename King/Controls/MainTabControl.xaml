@@ -154,7 +154,7 @@
 			Command="{Binding PauseCommand}"
 			Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
             <Image
-				Source="/Resources/PauseIcon.png" />
+				Source="/Resources/PauseIcon1.png" />
         </Button>
 
         <Controls:CurrentAccount 
