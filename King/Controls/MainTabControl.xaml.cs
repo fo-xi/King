@@ -5,6 +5,7 @@ using King.ViewModel.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -216,17 +217,17 @@ namespace King.Controls
 
             //if (oldDeckShape.Name == "Player1Hand")
             //{
-            //	card.Card.Deck = Player1Trick.Deck;
+            //    card.Card.Deck = Player1Trick.Deck;
             //}
 
             //if (oldDeckShape.Name == "Player2Hand")
             //{
-            //	card.Card.Deck = Player2Trick.Deck;
+            //    card.Card.Deck = Player2Trick.Deck;
             //}
 
             //if (oldDeckShape.Name == "Player3Hand")
             //{
-            //	card.Card.Deck = Player3Trick.Deck;
+            //    card.Card.Deck = Player3Trick.Deck;
             //}
 
             //gameShape.GetDeckShape(card.Card.Deck).UpdateCardShapes();
@@ -278,8 +279,22 @@ namespace King.Controls
 
 			if (_webSocketClient.Game.GameState.Bribe != null)
 			{
-				_mainTabControlVM.GameVM.GameStateVM.Bribe.Add(new CardVM(e.bribeCard.Magnitude,
-					Convert.ToInt32(getCardSuit[e.bribeCard.Suit]), _playerBribeDecks[e.currentPlayerTurn]));
+				var card = new CardVM(e.bribeCard.Magnitude,
+					Convert.ToInt32(getCardSuit[e.bribeCard.Suit]), _playerBribeDecks[e.currentPlayerTurn]);
+				_mainTabControlVM.GameVM.GameStateVM.Bribe.Add(card);
+				Application.Current.Dispatcher.Invoke(() =>
+				{
+                    if (_playerBribeDecks[e.currentPlayerTurn].Cards.Any())
+                    {
+						_playerBribeDecks[e.currentPlayerTurn].Cards.Clear();
+					}
+
+					var gameShape = GameShape.GetGameShape(card.Deck.GameStateVM);
+					var cardShape = gameShape.GetCardShape(card);
+					cardShape.Card.Deck = _playerBribeDecks[e.currentPlayerTurn];
+					_playerBribeDecks[e.currentPlayerTurn].Cards.Add(cardShape.Card);
+					gameShape.GetDeckShape(cardShape.Card.Deck).UpdateCardShapes();
+				});
 			}
 		}
 
@@ -346,5 +361,5 @@ namespace King.Controls
 		}
 
 		#endregion
-    }
+	}
 }

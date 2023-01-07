@@ -143,6 +143,11 @@ namespace King.ViewModel
 
 		public void Draw(DeckVM toDeck, int count)
 		{
+			if (TopCard == null)
+            {
+				return;
+            }
+
 			for (var i = 0; i < count; i++)
 			{
 				TopCard.Deck = toDeck;

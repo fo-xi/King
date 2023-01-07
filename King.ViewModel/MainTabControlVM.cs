@@ -325,7 +325,7 @@ namespace King.ViewModel
 				{
 					foreach (var bribe in _webSocketClient.Game.GameState.Bribe)
 					{
-						if (OldBribe.Any(oldBribe => oldBribe.Magnitude != bribe.Magnitude && oldBribe.Suit != bribe.Suit))
+						if (!OldBribe.Any(oldBribe => oldBribe.Magnitude == bribe.Magnitude && oldBribe.Suit == bribe.Suit))
 						{
 							addedCard = bribe;
 							break;
@@ -344,7 +344,7 @@ namespace King.ViewModel
             CurrentPlayerTurn = _webSocketClient.Game.GameState.PlayerTurn;
             OldBribe = _webSocketClient.Game.GameState.Bribe;
 
-            CurrentAccountVM.FirstPlayerScore = FirstPlayer.Points;
+			CurrentAccountVM.FirstPlayerScore = FirstPlayer.Points;
 			CurrentAccountVM.SecondPlayerScore = SecondPlayer.Points;
 			CurrentAccountVM.ThirdPlayerScore = ThirdPlayer.Points;
 			CurrentAccountVM.FourthPlayerScore 

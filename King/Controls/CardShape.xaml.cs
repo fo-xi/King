@@ -1,6 +1,7 @@
 ﻿using King.ViewModel;
 using King.ViewModel.Enumerations;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -307,7 +308,8 @@ namespace King.Controls
 
 				GameShape gameShape = GameShape.GetGameShape(this.Card.Deck.GameStateVM);
 
-				for (int i = this.Card.Deck.Cards.IndexOf(this.Card); i < this.Card.Deck.Cards.Count; i++)
+				var card = Card.Deck.Cards.First(c => c.Suit == Card.Suit && c.Number == Card.Number);
+				for (int i = this.Card.Deck.Cards.IndexOf(card); i < this.Card.Deck.Cards.Count; i++)
 				{
 					CardShape cardShape = gameShape.GetCardShape(this.Card.Deck.Cards[i]);
 					Canvas.SetLeft(cardShape, Canvas.GetLeft(cardShape) + dx);
