@@ -287,8 +287,11 @@ namespace King.Controls
 					CardDrag(this, gameShape.GetDeckShape(this.Card.Deck), nearestDeckShape);
 				}
 
-				gameShape.GetDeckShape(this.Card.Deck).UpdateCardShapes();
-				Canvas.SetZIndex(oldDeckShape, 0);
+				gameShape.GetDeckShape(this.Card.Deck)?.UpdateCardShapes();
+				if (oldDeckShape != null)
+				{
+					Canvas.SetZIndex(oldDeckShape, 0);
+				}
 			}
 
 			if (CardMouseLeftButtonUp != null)
@@ -308,7 +311,12 @@ namespace King.Controls
 
 				GameShape gameShape = GameShape.GetGameShape(this.Card.Deck.GameStateVM);
 
-				var card = Card.Deck.Cards.First(c => c.Suit == Card.Suit && c.Number == Card.Number);
+				var card = Card.Deck.Cards.FirstOrDefault(c => c.Suit == Card.Suit && c.Number == Card.Number);
+				if(card == null)
+                {
+					return;
+                }
+
 				for (int i = this.Card.Deck.Cards.IndexOf(card); i < this.Card.Deck.Cards.Count; i++)
 				{
 					CardShape cardShape = gameShape.GetCardShape(this.Card.Deck.Cards[i]);
