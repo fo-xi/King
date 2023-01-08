@@ -420,6 +420,15 @@ namespace King.Controls
             }
 
 			var card = (CardShape)sender;
+
+			if ((_webSocketClient.Game.GameState.GameNum == 4 || 
+				_webSocketClient.Game.GameState.GameNum == 10) && 
+				card.Card.Suit == CardSuit.Hearts && 
+				Player4Hand.Deck.Cards.Any(cardDeck => cardDeck.Suit != CardSuit.Hearts))
+			{
+				return;
+			}
+
 			var gameShape = GameShape.GetGameShape(card.Card.Deck.GameStateVM);
 			var oldDeckShape = gameShape.GetDeckShape(card.Card.Deck);
 
