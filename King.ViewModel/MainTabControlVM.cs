@@ -317,6 +317,11 @@ namespace King.ViewModel
             {
 				Card addedCard = null;
 
+				if (_webSocketClient.Game.GameState.Bribe.Count == 0)
+                {
+					return;
+                }
+
 				if (OldBribe.Count == 0)
 				{
 					addedCard = _webSocketClient.Game.GameState.Bribe.Last();
