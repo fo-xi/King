@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -41,7 +42,15 @@ namespace King.Controls
 
 		private int _oldGameNum = 1;
 
+		private int _oldCircleNum = 0;
+
 		private bool _isNewOldGameNum = false;
+
+		private DeckVM _bin;
+
+		private int _firstPlayerMove;
+
+		private DeckVM _trump;
 
 		#endregion
 
@@ -118,19 +127,31 @@ namespace King.Controls
 				new ObservableCollection<Card>(_webSocketClient.Game.GameState.Cards),
 				GameShape.GameStateVM, _webSocketClient.PlayerID);
 
+			_bin = new DeckVM(GameShape.GameStateVM);
+
 			_dealer.MakeAllCardsDragable(false);
 			_dealer.Enabled = true;
 			_dealer.FlipAllCards();
 
+			_bin.MakeAllCardsDragable(false);
+			_bin.Enabled = true;
+			_bin.FlipAllCards();
+
 			Dealer.Deck = _dealer;
+			Bin.Deck = _bin;
 
 			if (!_isNewOldGameNum)
 			{
 				GameShape.DeckShapes.Add(Dealer);
-			}
+				GameShape.DeckShapes.Add(Bin);
 
-			Dealer.DeckMouseLeftButtonDown +=
-				new MouseButtonEventHandler(Dealer_DeckMouseLeftButtonDown);
+				_trump = new DeckVM(GameShape.GameStateVM);
+				_trump.MakeAllCardsDragable(false);
+				_trump.Enabled = true;
+				_trump.FlipAllCards();
+				Trump.Deck = _trump;
+				GameShape.DeckShapes.Add(Trump);
+			}
 		}
 
 		private void SetupTrickDecks()
@@ -218,17 +239,88 @@ namespace King.Controls
             }
 		}
 
+		private void SendBin()
+        {
+			Thread.Sleep(1000);
+			Application.Current.Dispatcher.Invoke(() =>
+			{
+				while (Player1Trick.Deck.Cards.Count != 0)
+				{
+					var card = Player1Trick.Deck.Cards[0];
+					var gameShape = GameShape.GetGameShape(card.Deck.GameStateVM);
+					var cardShape = gameShape.GetCardShape(card);
+					cardShape.Card.Deck = _bin;
+					_bin.Cards.Add(cardShape.Card);
+					gameShape.GetDeckShape(cardShape.Card.Deck).UpdateCardShapes();
+				}
+
+				while (Player2Trick.Deck.Cards.Count != 0)
+				{
+					var card = Player2Trick.Deck.Cards[0];
+					var gameShape = GameShape.GetGameShape(card.Deck.GameStateVM);
+					var cardShape = gameShape.GetCardShape(card);
+					cardShape.Card.Deck = _bin;
+					_bin.Cards.Add(cardShape.Card);
+					gameShape.GetDeckShape(cardShape.Card.Deck).UpdateCardShapes();
+				}
+
+				while (Player3Trick.Deck.Cards.Count != 0)
+				{
+					var card = Player3Trick.Deck.Cards[0];
+					var gameShape = GameShape.GetGameShape(card.Deck.GameStateVM);
+					var cardShape = gameShape.GetCardShape(card);
+					cardShape.Card.Deck = _bin;
+					_bin.Cards.Add(cardShape.Card);
+					gameShape.GetDeckShape(cardShape.Card.Deck).UpdateCardShapes();
+				}
+
+				while (Player4Trick.Deck.Cards.Count != 0)
+				{
+					var card = Player4Trick.Deck.Cards[0];
+					var gameShape = GameShape.GetGameShape(card.Deck.GameStateVM);
+					var cardShape = gameShape.GetCardShape(card);
+					cardShape.Card.Deck = _bin;
+					_bin.Cards.Add(cardShape.Card);
+					gameShape.GetDeckShape(cardShape.Card.Deck).UpdateCardShapes();
+				}
+
+				while (Trump.Deck.Cards.Count != 0)
+				{
+					var card = Trump.Deck.Cards[0];
+					var gameShape = GameShape.GetGameShape(card.Deck.GameStateVM);
+					var cardShape = gameShape.GetCardShape(card);
+					cardShape.Card.Deck = _bin;
+					_bin.Cards.Add(cardShape.Card);
+					gameShape.GetDeckShape(cardShape.Card.Deck).UpdateCardShapes();
+				}
+			});
+		}
+
 		#endregion
 
 		#region Event Handlers
 
 		private void OnDataChanged(object sender, EventArgs e)
 		{
+			if (_oldCircleNum != _webSocketClient.Game.GameState.CircleNum)
+			{
+				if (_webSocketClient.Game.GameState.CircleNum != 1)
+				{
+					SendBin();
+				}
 
+				_oldCircleNum = _webSocketClient.Game.GameState.CircleNum;
+				_firstPlayerMove = _webSocketClient.Game.GameState.PlayerTurn;
+			}
+			
 			if (_oldGameNum != _webSocketClient.Game.GameState.GameNum)
-            {
+			{
 				_isNewGame = true;
 				_isNewOldGameNum = true;
+
+				SendBin();
+
+				_oldGameNum = _webSocketClient.Game.GameState.GameNum;
 			}
 
 			if (_isNewGame)
@@ -241,24 +333,37 @@ namespace King.Controls
 				});
 				_isNewGame = false;
 			}
-
-			_oldGameNum = _webSocketClient.Game.GameState.GameNum;
 		}
 
 		private void OnFoundNewBribeCard(object sender, (Card bribeCard, int currentPlayerTurn) e)
 		{
-			if(e.currentPlayerTurn == _webSocketClient.PlayerID)
-            {
-				return;
-            }
-
 			var getCardSuit = new Dictionary<string, CardSuit>
 			{
 				{ "hearts", CardSuit.Hearts },
 				{ "clubs", CardSuit.Clubs },
 				{ "diamonds", CardSuit.Diamonds },
 				{ "spades", CardSuit.Spades }
-			};
+			}; 
+			
+			if (_firstPlayerMove == e.currentPlayerTurn)
+			{
+				var card = new CardVM(e.bribeCard.Magnitude,
+					Convert.ToInt32(getCardSuit[e.bribeCard.Suit]), _trump);
+
+				Application.Current.Dispatcher.Invoke(() =>
+				{
+					var gameShape = GameShape.GetGameShape(card.Deck.GameStateVM);
+					var cardShape = gameShape.GetCardShape(card);
+					cardShape.Card.Deck = _trump;
+					_trump.Cards.Add(cardShape.Card);
+					gameShape.GetDeckShape(cardShape.Card.Deck).UpdateCardShapes();
+				});
+			}
+
+			if (e.currentPlayerTurn == _webSocketClient.PlayerID)
+            {
+				return;
+            }
 
 			if (_webSocketClient.Game.GameState.Bribe != null)
 			{
@@ -274,6 +379,7 @@ namespace King.Controls
 					gameShape.GetDeckShape(cardShape.Card.Deck).UpdateCardShapes();
 				});
 			}
+
 		}
 
 		private void LayoutRoot_Loaded(object sender, RoutedEventArgs e)
@@ -338,6 +444,6 @@ namespace King.Controls
 				_webSocketClient.PlayerID, getCardSuit[card.Card.Suit], card.Card.Number);
 		}
 
-		#endregion
-	}
+        #endregion
+    }
 }

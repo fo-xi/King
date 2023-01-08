@@ -27,6 +27,40 @@
         <!--  Dealer Deck  -->
         <Controls:DeckShape
 			x:Name="Dealer"
+			Canvas.Left="900"
+			Canvas.Top="595"
+			CardSpacerX="1"
+			CardSpacerY="0"
+			MaxCardsSpace="10" 
+            Visibility="Hidden"/>
+
+        <TextBlock 
+			Canvas.Left="900"
+			Canvas.Top="566" 
+            FontSize="18"
+			FontWeight="DemiBold"
+			Foreground="#D6DBEF"
+			Text="Козырь" />
+        
+        <Controls:DeckShape
+			x:Name="Trump"
+			Canvas.Left="900"
+			Canvas.Top="595"
+			CardSpacerX="1"
+			CardSpacerY="0"
+			MaxCardsSpace="10" />
+
+
+        <TextBlock 
+			Canvas.Left="1051"
+			Canvas.Top="566" 
+            FontSize="18"
+			FontWeight="DemiBold"
+			Foreground="#D6DBEF"
+			Text="Бито" />
+
+        <Controls:DeckShape
+			x:Name="Bin"
 			Canvas.Left="1051"
 			Canvas.Top="595"
 			CardSpacerX="1"
@@ -64,7 +98,9 @@
 			Canvas.Top="209"
 			Width="134"
 			Height="20"
-			Style="{StaticResource DefaultLabelText}"
+			FontSize="18"
+			FontWeight="DemiBold"
+			Foreground="#D6DBEF"
 			Text="{Binding PlayerNames[0]}" />
 
         <Controls:DeckShape 
@@ -80,7 +116,9 @@
 			Canvas.Top="182"
 			Width="134"
 			Height="20"
-			Style="{StaticResource DefaultLabelText}"
+			 FontSize="18"
+			FontWeight="DemiBold"
+			Foreground="#D6DBEF"
 			Text="{Binding PlayerNames[1]}" />
 
         <Controls:DeckShape 
@@ -96,7 +134,9 @@
             Canvas.Top="209"
 			Width="90"
 			Height="20"
-			Style="{StaticResource DefaultLabelText}"
+			FontSize="18"
+			FontWeight="DemiBold"
+			Foreground="#D6DBEF"
 			Text="{Binding PlayerNames[2]}" />
 
         <Controls:DeckShape 
@@ -113,7 +153,9 @@
 			Canvas.Top="566" 
 			Width="134"
 			Height="20"
-			Style="{StaticResource DefaultLabelText}"
+            FontSize="18"
+			FontWeight="DemiBold"
+			Foreground="#D6DBEF"
 			Text="{Binding PlayerNames[3]}" />
 
         <Controls:DeckShape 

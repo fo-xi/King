@@ -97,6 +97,12 @@ namespace King.ViewModel
 
 		}
 
+		public DeckVM(GameStateVM gameStateVM)
+		{
+			GameStateVM = gameStateVM;
+			GameStateVM.Decks.Add(this);
+		}
+
 		public DeckVM(GameStateVM gameStateVM, int idPlayer)
         {
 			GameStateVM = gameStateVM;
