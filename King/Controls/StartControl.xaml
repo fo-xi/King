@@ -58,11 +58,12 @@
 				Grid.Row="1"
 				HorizontalAlignment="Center"
 				MinWidth="200"
-				Text="{Binding PlayerName}"/>
+				Text="{Binding PlayerName, UpdateSourceTrigger=PropertyChanged}"/>
 
 			<Button
 				Grid.Row ="2"
 				Margin="5"
+                IsEnabled="{Binding IsEnabled}"
 				Command="{Binding StartGameCommand}"
 				Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" >
 				<TextBlock

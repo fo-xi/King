@@ -85,6 +85,18 @@ namespace Client.WebSocketClient
 
 		public void SendData(string gameSessionID, int gameNum, int circleNum, int playerID, string suit, int magnitude)
         {
+			if (_webSocketClient.ReadyState == WebSocketState.Closed)
+			{
+				try
+				{
+					Reconnect(gameSessionID, playerID);
+				}
+				catch (WebSocketException e)
+				{
+
+				}
+			}
+
 			var data = new
 			{
 				game_session_id = gameSessionID,
@@ -108,6 +120,18 @@ namespace Client.WebSocketClient
 
 		public void SendDataPauseGame(string gameSessionID)
         {
+			if (_webSocketClient.ReadyState == WebSocketState.Closed)
+			{
+				try
+				{
+					Reconnect(gameSessionID, PlayerID);
+				}
+				catch (WebSocketException e)
+				{
+
+				}
+			}
+
 			var data = new
 			{
 				game_session_id = gameSessionID,
@@ -121,6 +145,18 @@ namespace Client.WebSocketClient
 
 		public void SendDataResumeGame(string gameSessionID)
 		{
+			if (_webSocketClient.ReadyState == WebSocketState.Closed)
+			{
+				try
+				{
+					Reconnect(gameSessionID, PlayerID);
+				}
+				catch (WebSocketException e)
+				{
+
+				}
+			}
+
 			var data = new
 			{
 				game_session_id = gameSessionID,
@@ -153,6 +189,20 @@ namespace Client.WebSocketClient
 			{
 				return;
 			}
+		}
+
+		private void Reconnect(string gameSessionID, int playerID)
+        {
+			_webSocketClient.Connect();
+			var data = new
+			{
+				game_session_id = gameSessionID,
+				player_id = playerID,
+				action = "reconnect"
+			};
+
+			string jsonData = JsonConvert.SerializeObject(data);
+			_webSocketClient.Send(jsonData);
 		}
 
 		private void IdentifyAnswer(string data)

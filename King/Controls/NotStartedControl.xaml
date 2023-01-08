@@ -28,21 +28,5 @@
             HorizontalAlignment="Center"
 			Margin="2"
 			Text="Игра не состоялась"/>
-
-        <Button 
-			Grid.Row="1"
-			Command="{Binding NewGameCommand}"
-            Width="150"
-            Height="30"
-            Margin="5"
-            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-            <TextBlock
-				FontSize="20"
-				Foreground="#D6DBEF"
-				FontWeight="DemiBold"
-				HorizontalAlignment="Center"
-				VerticalAlignment="Center"
-				Text="Новая игра" />
-        </Button>
     </Grid>
 </UserControl>

@@ -216,38 +216,6 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-
-            <Button 
-			    Grid.Column="0"
-			    Command="{Binding NewGameCommand}"
-                Width="170"
-                Height="30"
-                Margin="5"
-                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <TextBlock
-				    FontSize="20"
-				    Foreground="#D6DBEF"
-				    FontWeight="DemiBold"
-				    HorizontalAlignment="Center"
-				    VerticalAlignment="Center"
-				    Text="Новая игра" />
-            </Button>
-
-            <Button 
-			    Grid.Column="1"
-			    Command="{Binding FinishGameCommand}"
-                Width="170"
-                Height="30"
-                Margin="5"
-                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <TextBlock
-				    FontSize="20"
-				    Foreground="#D6DBEF"
-				    FontWeight="DemiBold"
-				    HorizontalAlignment="Center"
-				    VerticalAlignment="Center"
-				    Text="Закончить игру" />
-            </Button>
         </Grid>
     </Grid>
 </UserControl>

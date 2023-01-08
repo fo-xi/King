@@ -86,10 +86,6 @@ namespace King.ViewModel
             }
         }
 
-        public RelayCommand NewGameCommand { get; set; }
-
-        public RelayCommand FinishGameCommand { get; set; }
-
         public GameOverControlVM()
         {
 

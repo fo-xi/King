@@ -14,6 +14,8 @@ namespace King.ViewModel
 
 		private bool _isVisableState;
 
+		private bool _isEnabled = false;
+
 		public string PlayerName
 		{
 			get
@@ -23,6 +25,7 @@ namespace King.ViewModel
 			}
 			set
 			{
+				IsEnabled = !string.IsNullOrEmpty(value);
 				_playerName = value;
 				RaisePropertyChanged();
 			}
@@ -37,6 +40,19 @@ namespace King.ViewModel
 			set
 			{
 				_isVisableState = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		public bool IsEnabled
+		{
+			get
+			{
+				return _isEnabled;
+			}
+			set
+			{
+				_isEnabled = value;
 				RaisePropertyChanged();
 			}
 		}

@@ -162,9 +162,6 @@ namespace King.ViewModel
 			RulesControlVM.BackCommand = new RelayCommand(Back);
 			StartControlVM.StartGameCommand = new RelayCommand(StartGame);
 			PausePlayerControlVM.ResumeGameCommand = new RelayCommand(ResumeGame);
-			NotStartedControlVM.NewGameCommand = new RelayCommand(NewGame);
-			GameOverControlVM.NewGameCommand = new RelayCommand(NewGame);
-			GameOverControlVM.FinishGameCommand = new RelayCommand(CloseWindow);
 
 			CloseWindowCommand = new RelayCommand(CloseWindow);
 
@@ -208,12 +205,6 @@ namespace King.ViewModel
 			_webSocketClient.SendDataResumeGame(_webSocketClient.Game.GameSessionID);
 			PausePlayerControlVM.IsVisableState = false;
 			MainTabControlVM.IsVisableState = true;
-		}
-
-		private void NewGame()
-        {
-			NotStartedControlVM.IsVisableState = false;
-			StartControlVM.IsVisableState = true;
 		}
 
 		private void CloseWindow()
