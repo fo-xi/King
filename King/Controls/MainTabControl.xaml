@@ -169,7 +169,7 @@
         <Button 
 			Width="30"
 			Height="30"
-			Canvas.Left="70"
+			Canvas.Left="25"
 			Canvas.Top="25"
 			Command="{Binding OpenRulesCommand}"
 			Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
@@ -180,7 +180,7 @@
         <Button 
 			Width="30"
 			Height="30"
-			Canvas.Left="105"
+			Canvas.Left="60"
 			Canvas.Top="25"
 			Command="{Binding PauseCommand}"
 			Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
