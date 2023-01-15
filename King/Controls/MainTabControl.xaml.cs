@@ -40,6 +40,8 @@ namespace King.Controls
 
 		private Dictionary<int, DeckVM> _playerBribeDecks;
 
+		private Dictionary<int, DeckVM> _playerHandDecks;
+
 		private int _oldGameNum = 1;
 
 		private int _oldCircleNum = 0;
@@ -74,6 +76,8 @@ namespace King.Controls
 			dataContext.FoundNewBribeCard += OnFoundNewBribeCard;
 
 			_playerBribeDecks = new Dictionary<int, DeckVM>();
+
+			_playerHandDecks = new Dictionary<int, DeckVM>();
 		}
 
         #endregion
@@ -215,6 +219,10 @@ namespace King.Controls
 				Enabled = true
 			};
 
+			_playerHandDecks.Add(_mainTabControlVM.FirstPlayer.ID, Player1Hand.Deck);
+			_playerHandDecks.Add(_mainTabControlVM.SecondPlayer.ID, Player2Hand.Deck);
+			_playerHandDecks.Add(_mainTabControlVM.ThirdPlayer.ID, Player3Hand.Deck);
+
 			Player1Hand.Deck.MakeAllCardsDragable(true);
 			Player2Hand.Deck.MakeAllCardsDragable(true);
 			Player3Hand.Deck.MakeAllCardsDragable(true);
@@ -232,6 +240,7 @@ namespace King.Controls
 		private void ClearData()
         {
 			_playerBribeDecks.Clear();
+			_playerHandDecks.Clear();
 			foreach(var deckShape in GameShape.DeckShapes)
             {
 				deckShape.Deck.Cards.Clear();
@@ -361,9 +370,31 @@ namespace King.Controls
 			}
 
 			if (e.currentPlayerTurn == _webSocketClient.PlayerID)
+			{
+				Application.Current.Dispatcher.Invoke(() =>
+				{
+					var card = Player4Hand.Deck.Cards.First(c => c.Number == e.bribeCard.Magnitude && c.Suit == getCardSuit[e.bribeCard.Suit]);
+					var gameShape = GameShape.GetGameShape(card.Deck.GameStateVM);
+					var cardShape = gameShape.GetCardShape(card);
+					cardShape.Visibility = Visibility.Hidden;
+					cardShape.Card.Deck = _bin;
+					_bin.Cards.Add(cardShape.Card);
+					gameShape.GetDeckShape(cardShape.Card.Deck).UpdateCardShapes();
+				});
+			}
+            else
             {
-				return;
-            }
+				Application.Current.Dispatcher.Invoke(() =>
+				{
+					var card = _playerHandDecks[e.currentPlayerTurn].Cards[0];
+					var gameShape = GameShape.GetGameShape(card.Deck.GameStateVM);
+					var cardShape = gameShape.GetCardShape(card);
+					cardShape.Visibility = Visibility.Hidden;
+					cardShape.Card.Deck = _bin;
+					_bin.Cards.Add(cardShape.Card);
+					gameShape.GetDeckShape(cardShape.Card.Deck).UpdateCardShapes();
+				});
+			}
 
 			if (_webSocketClient.Game.GameState.Bribe != null)
 			{
@@ -429,16 +460,16 @@ namespace King.Controls
 				return;
 			}
 
-			var gameShape = GameShape.GetGameShape(card.Card.Deck.GameStateVM);
-			var oldDeckShape = gameShape.GetDeckShape(card.Card.Deck);
+			//var gameShape = GameShape.GetGameShape(card.Card.Deck.GameStateVM);
+			//var oldDeckShape = gameShape.GetDeckShape(card.Card.Deck);
 
-			if (oldDeckShape.Name == "Player4Hand")
-			{
-				card.Card.Deck = Player4Trick.Deck;
-			}
+			//if (oldDeckShape.Name == "Player4Hand")
+			//{
+			//	card.Card.Deck = Player4Trick.Deck;
+			//}
 
-			gameShape.GetDeckShape(card.Card.Deck).UpdateCardShapes();
-			Canvas.SetZIndex(oldDeckShape, 0);
+			//gameShape.GetDeckShape(card.Card.Deck).UpdateCardShapes();
+			//Canvas.SetZIndex(oldDeckShape, 0);
 
 			var getCardSuit = new Dictionary<CardSuit, string>
 			{
