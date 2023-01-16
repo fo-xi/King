@@ -178,7 +178,8 @@ namespace Client.WebSocketClient
 
 		private async void Start()
 		{
-			_webSocketClient = new WebSocket("ws://localhost:8080/ws");
+			_webSocketClient = new WebSocket("ws://89.208.231.175:8080/ws");
+			//_webSocketClient = new WebSocket("ws://localhost:8080/ws");
 			try
 			{
 				_webSocketClient.OnMessage += (sender, e) => IdentifyAnswer(e.Data);
